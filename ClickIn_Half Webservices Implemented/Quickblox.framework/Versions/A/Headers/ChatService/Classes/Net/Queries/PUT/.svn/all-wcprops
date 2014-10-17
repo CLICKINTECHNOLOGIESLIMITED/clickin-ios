@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/ChatService/Classes/Net/Queries/PUT
+END
+QBChatDialogUpdateQuery.h
+K 25
+svn:wc:ra_dav:version-url
+V 174
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/ChatService/Classes/Net/Queries/PUT/QBChatDialogUpdateQuery.h
+END
+QBChatHistoryMessageUpdateQuery.h
+K 25
+svn:wc:ra_dav:version-url
+V 182
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/ChatService/Classes/Net/Queries/PUT/QBChatHistoryMessageUpdateQuery.h
+END

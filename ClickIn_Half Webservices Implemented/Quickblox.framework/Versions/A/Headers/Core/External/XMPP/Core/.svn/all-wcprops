@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Core
+END
+QBXMPPMessage.h
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Core/QBXMPPMessage.h
+END
+QBXMPPPresence.h
+K 25
+svn:wc:ra_dav:version-url
+V 153
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Core/QBXMPPPresence.h
+END
+QBXMPPModule.h
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Core/QBXMPPModule.h
+END
+QBXMPPJID.h
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Core/QBXMPPJID.h
+END
+QBXMPPLogging.h
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Core/QBXMPPLogging.h
+END
+QBXMPPElement.h
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Core/QBXMPPElement.h
+END
+QBXMPPIQ.h
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Core/QBXMPPIQ.h
+END
+QBXMPPStream.h
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Core/QBXMPPStream.h
+END
+QBXMPPInternal.h
+K 25
+svn:wc:ra_dav:version-url
+V 153
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Core/QBXMPPInternal.h
+END
+QBXMPPParser.h
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Core/QBXMPPParser.h
+END
+QBXMPPFramework.h
+K 25
+svn:wc:ra_dav:version-url
+V 154
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Core/QBXMPPFramework.h
+END
+QBXMPP.h
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/XMPP/Core/QBXMPP.h
+END

@@ -1,0 +1,89 @@
+10
+
+dir
+1308
+http://sourcefuse.svnrepository.com/svn/clickin/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers
+http://sourcefuse.svnrepository.com/svn/clickin
+
+
+
+2014-10-15T10:29:43.959695Z
+1304
+gurkarandeep.singh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+b6e60f94-c076-4862-a73b-417d7401f8fe
+
+ChatService
+dir
+
+AuthService
+dir
+
+UsersService
+dir
+
+CustomObjects
+dir
+
+Quickblox.h
+file
+
+
+
+
+2014-10-17T10:20:46.154607Z
+3cc32cd45db5879e8a0bb500d5b547a1
+2014-10-15T10:29:43.959695Z
+1304
+gurkarandeep.singh
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+559
+
+Core
+dir
+
+MessagesService
+dir
+
+RatingsService
+dir
+
+LocationService
+dir
+
+ContentService
+dir
+

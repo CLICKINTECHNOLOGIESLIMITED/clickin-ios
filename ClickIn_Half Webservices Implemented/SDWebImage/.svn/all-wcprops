@@ -1,0 +1,215 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage
+END
+MKAnnotationView+WebCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/clickin/!svn/ver/63/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/MKAnnotationView+WebCache.h
+END
+UIImageView+UIActivityIndicatorForSDWebImage.h
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/clickin/!svn/ver/67/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/UIImageView+UIActivityIndicatorForSDWebImage.h
+END
+SDImageCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/SDImageCache.h
+END
+SDWebImageDecoder.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/clickin/!svn/ver/63/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/SDWebImageDecoder.h
+END
+MKAnnotationView+WebCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/MKAnnotationView+WebCache.m
+END
+SDWebImageManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/SDWebImageManager.h
+END
+SDImageCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/SDImageCache.m
+END
+SDWebImageDecoder.m
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/SDWebImageDecoder.m
+END
+UIImageView+UIActivityIndicatorForSDWebImage.m
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/clickin/!svn/ver/67/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/UIImageView+UIActivityIndicatorForSDWebImage.m
+END
+UIButton+WebCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/clickin/!svn/ver/63/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/UIButton+WebCache.h
+END
+SDWebImageManager.m
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/SDWebImageManager.m
+END
+SDWebImageDownloaderOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/clickin/!svn/ver/63/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/SDWebImageDownloaderOperation.h
+END
+UIImageView+WebCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/UIImageView+WebCache.h
+END
+UIImage+WebP.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/UIImage+WebP.h
+END
+UIButton+WebCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/UIButton+WebCache.m
+END
+SDWebImageDownloaderOperation.m
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/SDWebImageDownloaderOperation.m
+END
+UIImageView+WebCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/UIImageView+WebCache.m
+END
+UIImage+WebP.m
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/UIImage+WebP.m
+END
+NSData+ImageContentType.h
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/NSData+ImageContentType.h
+END
+SDWebImageDownloader.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/SDWebImageDownloader.h
+END
+NSData+ImageContentType.m
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/NSData+ImageContentType.m
+END
+SDWebImageDownloader.m
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/SDWebImageDownloader.m
+END
+UIImageView+HighlightedWebCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/UIImageView+HighlightedWebCache.h
+END
+NSData+GIF.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/clickin/!svn/ver/63/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/NSData+GIF.h
+END
+SDWebImageCompat.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/SDWebImageCompat.h
+END
+UIImageView+HighlightedWebCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/UIImageView+HighlightedWebCache.m
+END
+UIImage+MultiFormat.h
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/clickin/!svn/ver/63/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/UIImage+MultiFormat.h
+END
+SDWebImagePrefetcher.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/SDWebImagePrefetcher.h
+END
+NSData+GIF.m
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/clickin/!svn/ver/63/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/NSData+GIF.m
+END
+SDWebImageCompat.m
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/SDWebImageCompat.m
+END
+UIImage+GIF.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/UIImage+GIF.h
+END
+UIImage+MultiFormat.m
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/UIImage+MultiFormat.m
+END
+SDWebImagePrefetcher.m
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/SDWebImagePrefetcher.m
+END
+UIImage+GIF.m
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/clickin/!svn/ver/881/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/UIImage+GIF.m
+END
+SDWebImageOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/clickin/!svn/ver/63/xcode/ClickIn_Half%20Webservices%20Implemented/SDWebImage/SDWebImageOperation.h
+END

@@ -1,0 +1,89 @@
+10
+
+dir
+1308
+http://sourcefuse.svnrepository.com/svn/clickin/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/ContentService/Classes/Net/Queries/Blob
+http://sourcefuse.svnrepository.com/svn/clickin
+
+
+
+2014-10-15T10:29:43.959695Z
+1304
+gurkarandeep.singh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+b6e60f94-c076-4862-a73b-417d7401f8fe
+
+Get
+dir
+
+Delete
+dir
+
+Retain
+dir
+
+Update
+dir
+
+BlobQueries.h
+file
+
+
+
+
+2014-10-17T10:20:46.126607Z
+4179e4940b99aedd2d4e15561b41edb7
+2014-10-15T10:29:43.959695Z
+1304
+gurkarandeep.singh
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+441
+
+Create
+dir
+
+Upload
+dir
+
+Download
+dir
+
+Common
+dir
+
+Complete
+dir
+

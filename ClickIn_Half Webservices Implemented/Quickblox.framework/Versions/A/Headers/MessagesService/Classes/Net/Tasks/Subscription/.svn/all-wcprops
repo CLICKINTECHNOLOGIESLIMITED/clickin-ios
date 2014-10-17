@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/MessagesService/Classes/Net/Tasks/Subscription
+END
+QBMRegisterSubscriptionTask.h
+K 25
+svn:wc:ra_dav:version-url
+V 189
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/MessagesService/Classes/Net/Tasks/Subscription/QBMRegisterSubscriptionTask.h
+END
+QBMUnregisterSubscriptionTask.h
+K 25
+svn:wc:ra_dav:version-url
+V 191
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/MessagesService/Classes/Net/Tasks/Subscription/QBMUnregisterSubscriptionTask.h
+END

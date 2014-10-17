@@ -1,0 +1,82 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <Quickblox/Quickblox.h> 
+
+#define IS_IOS_7 ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0 && [[UIDevice currentDevice].systemVersion floatValue]<8.0)
+
+#define IS_IPHONE_5  ([[UIScreen mainScreen] bounds].size.width >= 568 || [[UIScreen mainScreen] bounds].size.height >= 568)?YES:NO
+
+#define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+
+#define app ((AppDelegate *)[[UIApplication sharedApplication] delegate])
+
+#define story self.storyboard
+
+#define Notification_PlaySound @"Notification_PlaySound"
+#define Notification_InAppSoundsFlag @"Notification_InAppSoundsFlag"
+
+#define Notification_UpdateProfile @"Notification_UpdateProfile"
+#define Notification_updateOwnerRelations @"Notification_updateOwnerRelations"
+
+#define NotificationDidReceiveSharedMessage @"NotificationDidReceiveSharedMessage"
+
+#define kMessage @"message"
+#define NotificationDidReceiveNewMessage @"NotificationDidReceiveNewMessage"
+#define Notification_ChatHistoryFetched @"Notification_ChatHistoryFetched"
+
+#define Notification_CreateChatSession @"Notification_CreateChatSession"
+#define Notification_ChatDidLogin @"Notification_ChatDidLogin"
+
+#define Notification_ChatLoginStatusChanged @"Notification_ChatLoginStatusChanged"
+
+#define Notification_EventsUpdated @"Notification_EventsList_Updated"
+#define Notification_EventDataUpdated @"Notification_EventData_Updated"
+
+#define Notification_RelationsUpdated @"Notification_RelationsList_Updated"
+#define Notification_RelationRequestSent @"Notification_RelationRequest_Sent"
+#define Notification_RelationVisibilityUpdated @"Notification_RelationVisibility_Updated"
+#define Notification_ProfileInfoUpdated @"Notification_ProfileInformation_Updated"
+#define Notification_FollowersFollowingUpdated @"Notification_FollowersFollowing_Updated"
+
+#define Notification_NewsfeedsUpdated @"Notification_NewsfeedsList_Updated"
+#define Notification_NewsfeedByID @"Notification_Newsfeed_Updated"
+#define Notification_NewsfeedCommentsUpdated @"Notification_NewsfeedCommentsList_Updated"
+#define Notification_NewsfeedStarredUsersUpdated @"Notification_NewsfeedStarredUsersList_Updated"
+#define Notification_NewsfeedUserStarred @"Notification_NewsfeedUserStarred_Updated"
+
+#define Notification_RightMenuToggled @"Notification_RightMenuToggled"
+
+#define alertTitleNetRech NSLocalizedString(@"Network Error",@"")
+
+#define alertNetRechMessage NSLocalizedString(@"Please check your internet connection.",@"")
+
+//#define DomainNameUrl @"http://dev.sourcefuse.com/clickin/"
+
+#define DomainNameUrl @"http://23.21.65.97/"
+
+//#define DomainNameUrl @"https://api.clickinapp.com/"
+
+#define QBchatTable @"chats"
+
+//#define QBAppId 6768
+//#define QBAppKey @"QVr4uK5tt6cu6dN"
+//#define QBAppSecret @"4thHbq-eyLVJrhe"
+
+#import "LabeledActivityIndicatorView.h"
+
+#import "MODropAlert/MODropAlertView.h"
+
+#endif

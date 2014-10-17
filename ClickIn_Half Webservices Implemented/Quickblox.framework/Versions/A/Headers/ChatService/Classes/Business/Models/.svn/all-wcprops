@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/ChatService/Classes/Business/Models
+END
+QBChatHistoryMessage.h
+K 25
+svn:wc:ra_dav:version-url
+V 171
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/ChatService/Classes/Business/Models/QBChatHistoryMessage.h
+END
+QBContactListItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 168
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/ChatService/Classes/Business/Models/QBContactListItem.h
+END
+QBContactList.h
+K 25
+svn:wc:ra_dav:version-url
+V 164
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/ChatService/Classes/Business/Models/QBContactList.h
+END
+QBChatAbstractMessage.h
+K 25
+svn:wc:ra_dav:version-url
+V 172
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/ChatService/Classes/Business/Models/QBChatAbstractMessage.h
+END
+QBChatAttachment.h
+K 25
+svn:wc:ra_dav:version-url
+V 167
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/ChatService/Classes/Business/Models/QBChatAttachment.h
+END
+QBChatRoomOccupant.h
+K 25
+svn:wc:ra_dav:version-url
+V 169
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/ChatService/Classes/Business/Models/QBChatRoomOccupant.h
+END
+QBChatRoom.h
+K 25
+svn:wc:ra_dav:version-url
+V 161
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/ChatService/Classes/Business/Models/QBChatRoom.h
+END
+QBChatDialog.h
+K 25
+svn:wc:ra_dav:version-url
+V 163
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/ChatService/Classes/Business/Models/QBChatDialog.h
+END
+QBChatMessage.h
+K 25
+svn:wc:ra_dav:version-url
+V 164
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/ChatService/Classes/Business/Models/QBChatMessage.h
+END

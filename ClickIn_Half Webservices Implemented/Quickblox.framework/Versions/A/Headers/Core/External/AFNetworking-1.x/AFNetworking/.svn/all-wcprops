@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AFNetworking-1.x/AFNetworking
+END
+AFJSONRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 181
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AFNetworking-1.x/AFNetworking/AFJSONRequestOperation.h
+END
+QBAFURLConnectionOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 185
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AFNetworking-1.x/AFNetworking/QBAFURLConnectionOperation.h
+END
+AFPropertyListRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 189
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AFNetworking-1.x/AFNetworking/AFPropertyListRequestOperation.h
+END
+AFXMLRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 180
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AFNetworking-1.x/AFNetworking/AFXMLRequestOperation.h
+END
+QBAFNetworking.h
+K 25
+svn:wc:ra_dav:version-url
+V 173
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AFNetworking-1.x/AFNetworking/QBAFNetworking.h
+END
+AFImageRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 182
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AFNetworking-1.x/AFNetworking/AFImageRequestOperation.h
+END
+QBAFHTTPRequestOperation.h
+K 25
+svn:wc:ra_dav:version-url
+V 183
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AFNetworking-1.x/AFNetworking/QBAFHTTPRequestOperation.h
+END
+AFNetworkActivityIndicatorManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 192
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AFNetworking-1.x/AFNetworking/AFNetworkActivityIndicatorManager.h
+END
+UIImageView+AFNetworking.h
+K 25
+svn:wc:ra_dav:version-url
+V 183
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AFNetworking-1.x/AFNetworking/UIImageView+AFNetworking.h
+END
+QBAFHTTPClient.h
+K 25
+svn:wc:ra_dav:version-url
+V 173
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AFNetworking-1.x/AFNetworking/QBAFHTTPClient.h
+END

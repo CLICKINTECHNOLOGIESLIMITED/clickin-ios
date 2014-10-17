@@ -1,0 +1,485 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/clickin/!svn/ver/1308/xcode/ClickIn_Half%20Webservices%20Implemented
+END
+ChatMessageTableViewCell.m
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/clickin/!svn/ver/936/xcode/ClickIn_Half%20Webservices%20Implemented/ChatMessageTableViewCell.m
+END
+GAIDictionaryBuilder.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/clickin/!svn/ver/1136/xcode/ClickIn_Half%20Webservices%20Implemented/GAIDictionaryBuilder.h
+END
+CommentStarCommonView.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/clickin/!svn/ver/1053/xcode/ClickIn_Half%20Webservices%20Implemented/CommentStarCommonView.h
+END
+EditProfileViewController.xib
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/EditProfileViewController.xib
+END
+profile_otheruser.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/clickin/!svn/ver/1283/xcode/ClickIn_Half%20Webservices%20Implemented/profile_otheruser.h
+END
+NewsfeedTableViewCell.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/clickin/!svn/ver/679/xcode/ClickIn_Half%20Webservices%20Implemented/NewsfeedTableViewCell.h
+END
+LableInsets.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/clickin/!svn/ver/701/xcode/ClickIn_Half%20Webservices%20Implemented/LableInsets.h
+END
+CommentStarCommonView.m
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/clickin/!svn/ver/1283/xcode/ClickIn_Half%20Webservices%20Implemented/CommentStarCommonView.m
+END
+EditProfileViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/clickin/!svn/ver/1283/xcode/ClickIn_Half%20Webservices%20Implemented/EditProfileViewController.h
+END
+profile_otheruser.m
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/profile_otheruser.m
+END
+RightViewController.xib
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/clickin/!svn/ver/24/xcode/ClickIn_Half%20Webservices%20Implemented/RightViewController.xib
+END
+NewsfeedTableViewCell.m
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/clickin/!svn/ver/1283/xcode/ClickIn_Half%20Webservices%20Implemented/NewsfeedTableViewCell.m
+END
+ChangePassword.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/clickin/!svn/ver/568/xcode/ClickIn_Half%20Webservices%20Implemented/ChangePassword.h
+END
+following_owner.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/clickin/!svn/ver/1283/xcode/ClickIn_Half%20Webservices%20Implemented/following_owner.h
+END
+EditProfileViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/clickin/!svn/ver/1307/xcode/ClickIn_Half%20Webservices%20Implemented/EditProfileViewController.m
+END
+LableInsets.m
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/clickin/!svn/ver/936/xcode/ClickIn_Half%20Webservices%20Implemented/LableInsets.m
+END
+ChangePassword.m
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/clickin/!svn/ver/1283/xcode/ClickIn_Half%20Webservices%20Implemented/ChangePassword.m
+END
+CommentsViewController.xib
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/clickin/!svn/ver/1063/xcode/ClickIn_Half%20Webservices%20Implemented/CommentsViewController.xib
+END
+following_owner.m
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/following_owner.m
+END
+GAIEcommerceProduct.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/clickin/!svn/ver/1136/xcode/ClickIn_Half%20Webservices%20Implemented/GAIEcommerceProduct.h
+END
+InvitationViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/clickin/!svn/ver/1045/xcode/ClickIn_Half%20Webservices%20Implemented/InvitationViewController.h
+END
+GAIEcommercePromotion.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/clickin/!svn/ver/1136/xcode/ClickIn_Half%20Webservices%20Implemented/GAIEcommercePromotion.h
+END
+InvitationViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/InvitationViewController.m
+END
+SettingsViewController.xib
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/clickin/!svn/ver/1146/xcode/ClickIn_Half%20Webservices%20Implemented/SettingsViewController.xib
+END
+ShareViewController.xib
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/ShareViewController.xib
+END
+TermConditionsAndPrivacypolicyViewController.xib
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/TermConditionsAndPrivacypolicyViewController.xib
+END
+StarredViewController.xib
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/clickin/!svn/ver/659/xcode/ClickIn_Half%20Webservices%20Implemented/StarredViewController.xib
+END
+SettingsViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/clickin/!svn/ver/1283/xcode/ClickIn_Half%20Webservices%20Implemented/SettingsViewController.h
+END
+TermConditionsAndPrivacypolicyViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/TermConditionsAndPrivacypolicyViewController.h
+END
+ShareViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/clickin/!svn/ver/1133/xcode/ClickIn_Half%20Webservices%20Implemented/ShareViewController.h
+END
+StarredViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/clickin/!svn/ver/1283/xcode/ClickIn_Half%20Webservices%20Implemented/StarredViewController.h
+END
+NotificationsViewController.xib
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/clickin/!svn/ver/936/xcode/ClickIn_Half%20Webservices%20Implemented/NotificationsViewController.xib
+END
+SettingsViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/SettingsViewController.m
+END
+ShareViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/ShareViewController.m
+END
+TermConditionsAndPrivacypolicyViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/clickin/!svn/ver/1180/xcode/ClickIn_Half%20Webservices%20Implemented/TermConditionsAndPrivacypolicyViewController.m
+END
+GAIEcommerceFields.h
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/clickin/!svn/ver/1136/xcode/ClickIn_Half%20Webservices%20Implemented/GAIEcommerceFields.h
+END
+StarredViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/StarredViewController.m
+END
+profile_owner.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/clickin/!svn/ver/1283/xcode/ClickIn_Half%20Webservices%20Implemented/profile_owner.h
+END
+UITextField+LeftAlignment.h
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/clickin/!svn/ver/598/xcode/ClickIn_Half%20Webservices%20Implemented/UITextField+LeftAlignment.h
+END
+GAITracker.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/clickin/!svn/ver/1136/xcode/ClickIn_Half%20Webservices%20Implemented/GAITracker.h
+END
+GAIEcommerceProductAction.h
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/clickin/!svn/ver/1136/xcode/ClickIn_Half%20Webservices%20Implemented/GAIEcommerceProductAction.h
+END
+profile_owner.m
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/profile_owner.m
+END
+UITextField+LeftAlignment.m
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/clickin/!svn/ver/598/xcode/ClickIn_Half%20Webservices%20Implemented/UITextField+LeftAlignment.m
+END
+Default-568h@2x.png
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/clickin/!svn/ver/24/xcode/ClickIn_Half%20Webservices%20Implemented/Default-568h@2x.png
+END
+LeftViewController.xib
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/LeftViewController.xib
+END
+GAIFields.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/clickin/!svn/ver/1136/xcode/ClickIn_Half%20Webservices%20Implemented/GAIFields.h
+END
+LeftViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/clickin/!svn/ver/1049/xcode/ClickIn_Half%20Webservices%20Implemented/LeftViewController.h
+END
+CommentStarCommonView.xib
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/clickin/!svn/ver/1063/xcode/ClickIn_Half%20Webservices%20Implemented/CommentStarCommonView.xib
+END
+GAITrackedViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/clickin/!svn/ver/1136/xcode/ClickIn_Half%20Webservices%20Implemented/GAITrackedViewController.h
+END
+LeftViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/LeftViewController.m
+END
+GAI.h
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/clickin/!svn/ver/1136/xcode/ClickIn_Half%20Webservices%20Implemented/GAI.h
+END
+HPGrowingTextView.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/clickin/!svn/ver/960/xcode/ClickIn_Half%20Webservices%20Implemented/HPGrowingTextView.h
+END
+HPTextViewInternal.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/clickin/!svn/ver/480/xcode/ClickIn_Half%20Webservices%20Implemented/HPTextViewInternal.h
+END
+HPGrowingTextView.m
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/clickin/!svn/ver/960/xcode/ClickIn_Half%20Webservices%20Implemented/HPGrowingTextView.m
+END
+HPTextViewInternal.m
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/clickin/!svn/ver/480/xcode/ClickIn_Half%20Webservices%20Implemented/HPTextViewInternal.m
+END
+CenterViewController.xib
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/CenterViewController.xib
+END
+RightViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/clickin/!svn/ver/24/xcode/ClickIn_Half%20Webservices%20Implemented/RightViewController.h
+END
+CenterViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/clickin/!svn/ver/1283/xcode/ClickIn_Half%20Webservices%20Implemented/CenterViewController.h
+END
+RightViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/clickin/!svn/ver/24/xcode/ClickIn_Half%20Webservices%20Implemented/RightViewController.m
+END
+CenterViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/CenterViewController.m
+END
+CommentsViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/clickin/!svn/ver/768/xcode/ClickIn_Half%20Webservices%20Implemented/CommentsViewController.h
+END
+CommentsViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/clickin/!svn/ver/1283/xcode/ClickIn_Half%20Webservices%20Implemented/CommentsViewController.m
+END
+NewsfeedViewController.xib
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/clickin/!svn/ver/843/xcode/ClickIn_Half%20Webservices%20Implemented/NewsfeedViewController.xib
+END
+NewsfeedViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/clickin/!svn/ver/844/xcode/ClickIn_Half%20Webservices%20Implemented/NewsfeedViewController.h
+END
+GAILogger.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/clickin/!svn/ver/1136/xcode/ClickIn_Half%20Webservices%20Implemented/GAILogger.h
+END
+SSKeychain.h
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/clickin/!svn/ver/24/xcode/ClickIn_Half%20Webservices%20Implemented/SSKeychain.h
+END
+follower_owner.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/clickin/!svn/ver/1283/xcode/ClickIn_Half%20Webservices%20Implemented/follower_owner.h
+END
+NewsfeedViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/NewsfeedViewController.m
+END
+SSKeychain.m
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/clickin/!svn/ver/24/xcode/ClickIn_Half%20Webservices%20Implemented/SSKeychain.m
+END
+NotificationsViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/clickin/!svn/ver/1038/xcode/ClickIn_Half%20Webservices%20Implemented/NotificationsViewController.h
+END
+follower_owner.m
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/follower_owner.m
+END
+libGoogleAnalyticsServices.a
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/clickin/!svn/ver/1136/xcode/ClickIn_Half%20Webservices%20Implemented/libGoogleAnalyticsServices.a
+END
+SpamAbuseViewController.xib
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/clickin/!svn/ver/1038/xcode/ClickIn_Half%20Webservices%20Implemented/SpamAbuseViewController.xib
+END
+DeactivateAccountView.xib
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/clickin/!svn/ver/1049/xcode/ClickIn_Half%20Webservices%20Implemented/DeactivateAccountView.xib
+END
+NotificationsViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/clickin/!svn/ver/1283/xcode/ClickIn_Half%20Webservices%20Implemented/NotificationsViewController.m
+END
+SpamAbuseViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/clickin/!svn/ver/1038/xcode/ClickIn_Half%20Webservices%20Implemented/SpamAbuseViewController.h
+END
+DeactivateAccountView.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/clickin/!svn/ver/1038/xcode/ClickIn_Half%20Webservices%20Implemented/DeactivateAccountView.h
+END
+SpamAbuseViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/SpamAbuseViewController.m
+END
+DeactivateAccountView.m
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/DeactivateAccountView.m
+END
+ChatMessageTableViewCell.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/clickin/!svn/ver/936/xcode/ClickIn_Half%20Webservices%20Implemented/ChatMessageTableViewCell.h
+END

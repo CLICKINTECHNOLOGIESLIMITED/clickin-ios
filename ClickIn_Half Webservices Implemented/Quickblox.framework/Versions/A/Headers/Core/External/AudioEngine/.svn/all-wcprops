@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AudioEngine
+END
+QBiLBCEncoder.h
+K 25
+svn:wc:ra_dav:version-url
+V 154
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AudioEngine/QBiLBCEncoder.h
+END
+QBAudioIOService.h
+K 25
+svn:wc:ra_dav:version-url
+V 157
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AudioEngine/QBAudioIOService.h
+END
+QBiLBCDecoder.h
+K 25
+svn:wc:ra_dav:version-url
+V 154
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AudioEngine/QBiLBCDecoder.h
+END
+QBAudioUtils.h
+K 25
+svn:wc:ra_dav:version-url
+V 153
+/svn/clickin/!svn/ver/1304/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/Core/External/AudioEngine/QBAudioUtils.h
+END
