@@ -1,113 +1,0 @@
-10
-
-dir
-1308
-http://sourcefuse.svnrepository.com/svn/clickin/xcode/ClickIn_Half%20Webservices%20Implemented/Quickblox.framework/Versions/A/Headers/UsersService/Classes/Net/Queries/User
-http://sourcefuse.svnrepository.com/svn/clickin
-
-
-
-2014-10-15T10:29:43.959695Z
-1304
-gurkarandeep.singh
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-b6e60f94-c076-4862-a73b-417d7401f8fe
-
-GetByFacebookID
-dir
-
-GetByEmail
-dir
-
-Update
-dir
-
-GetByID
-dir
-
-Common
-dir
-
-GetByTags
-dir
-
-GetByExternalID
-dir
-
-GetByFullname
-dir
-
-GetUsers
-dir
-
-UserQueries.h
-file
-
-
-
-
-2014-10-17T10:20:43.225609Z
-f7fa8ade1684b3fcbf340a455c1ab72a
-2014-10-15T10:29:43.959695Z
-1304
-gurkarandeep.singh
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-888
-
-GetByLogin
-dir
-
-Create
-dir
-
-ResetPassword
-dir
-
-LogIn
-dir
-
-Logout
-dir
-
-GetByTwitterID
-dir
-
-DeleteByID
-dir
-
-DeleteByExternalID
-dir
-
