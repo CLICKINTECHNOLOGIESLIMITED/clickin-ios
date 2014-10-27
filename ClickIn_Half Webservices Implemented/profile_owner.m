@@ -48,6 +48,8 @@
         profileLoadedFirstTime = false;
         isFromNotification = false;
     }
+    // update pic
+    [owner_profilepic setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]]];
 }
 
 - (void)viewDidLoad

@@ -211,13 +211,29 @@ AppDelegate *appDelegate;
     {
         if (IS_IPHONE_5)
         {
-            txt_PhoneNo.frame=CGRectMake(94+10+10,185, 238-68-15, 30+5) ;
-            txt_CountryCode.frame=CGRectMake(38,185, 58, 30+5) ;
+            if([dict count]>0)
+            {
+                txt_PhoneNo.frame=CGRectMake(94+10+10,185+75, 238-68-15, 30+5) ;
+                txt_CountryCode.frame=CGRectMake(38,185+75, 58, 30+5) ;
+            }
+            else
+            {
+                txt_PhoneNo.frame=CGRectMake(94+10+10,145+40, 238-68-15, 30+5) ;
+                txt_CountryCode.frame=CGRectMake(38,145+40, 58, 30+5) ;
+            }
         }
         else
         {
-            txt_CountryCode.frame=CGRectMake(38,142-5, 58, 30) ;
-            txt_PhoneNo.frame=CGRectMake(94+10,142-5, 238-38, 30) ;
+            if([dict count]>0)
+            {
+                txt_CountryCode.frame=CGRectMake(38,145+75, 58, 30) ;
+                txt_PhoneNo.frame=CGRectMake(94+10,145+75, 238-38, 30) ;
+            }
+            else
+            {
+                txt_CountryCode.frame=CGRectMake(38,145+40, 58, 30) ;
+                txt_PhoneNo.frame=CGRectMake(94+10,145+40, 238-38, 30) ;
+            }
         }
     }
   //txt_PhoneNo.backgroundColor = [UIColor redColor];
@@ -335,8 +351,6 @@ AppDelegate *appDelegate;
         {
             strPhoneNumber = [strPhoneNumber substringFromIndex:1];
         }
-    
-    
     }
     else if (![[NSString stringWithFormat:@"%@",(NSString*)[dict objectForKey:@"phoneNumber"]] hasPrefix:@"00"] && ![[NSString stringWithFormat:@"%@",(NSString*)[dict objectForKey:@"phoneNumber"]] hasPrefix:@"+"])
     {
@@ -397,6 +411,7 @@ AppDelegate *appDelegate;
     //    [btn_VerifyPhone setTitle: @"VERIFY MY PHONE" forState: UIControlStateNormal];
     [GetClickin.titleLabel setFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:13]];
     
+    
     if([dict count] > 0)
         GetClickin.frame = CGRectMake(38, 220+47, 242, 45);
     else
@@ -420,10 +435,20 @@ AppDelegate *appDelegate;
     else
     {
         if (IS_IPHONE_5)
-            GetClickin.frame=CGRectMake(38,315-70, 242, 45);
+        {
+            if([dict count]>0)
+                GetClickin.frame=CGRectMake(38,315, 242, 45);
+            else
+                GetClickin.frame=CGRectMake(38,270-35, 242, 45);
+        }
         
         else
-            GetClickin.frame=CGRectMake(38,270-70, 242, 45);
+        {
+            if([dict count]>0)
+                GetClickin.frame=CGRectMake(38,270, 242, 45); //270-70
+            else
+                GetClickin.frame=CGRectMake(38,270-35, 242, 45); //270-70
+        }
     }
     
     [GetClickin setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -450,10 +475,12 @@ AppDelegate *appDelegate;
         imgView = [[UIImageView alloc] initWithFrame:CGRectMake(42, 158+30-3, 39, 39)];
         else
         imgView = [[UIImageView alloc] initWithFrame:CGRectMake(37, 158, 30, 30)];
+        
         imgView.image = [UIImage imageWithData:[dict objectForKey:@"photo"]];
         [self.view addSubview:imgView];
      // Name
      // phoneNumber
+        
         UILabel *lblName;
         lblName.textColor=[UIColor colorWithRed:(61.0/255.0) green:(71.0/255.0) blue:(101.0/255.0) alpha:1.0];
         lblName.font = [UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:16];
@@ -466,6 +493,7 @@ AppDelegate *appDelegate;
         {
             lblName = [[UILabel alloc] initWithFrame:CGRectMake(77, 158, 150, 30)];
         }
+        
         lblName.text = [dict objectForKey:@"Name"];
         [self.view addSubview:lblName];
     }

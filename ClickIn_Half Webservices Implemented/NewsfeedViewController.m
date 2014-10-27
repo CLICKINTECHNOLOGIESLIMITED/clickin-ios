@@ -711,7 +711,15 @@ AppDelegate *appDelegate;
 
 -(void)removeNewsfeedWebserviceCall:(UIButton*)sender
 {
-    NewsfeedTableViewCell *cell = (NewsfeedTableViewCell *)[[[sender superview] superview] superview];
+    NewsfeedTableViewCell *cell ;
+    if (IS_IOS_7)
+    {
+        cell= (NewsfeedTableViewCell *)[[[sender superview] superview] superview];
+    }
+    else
+    {
+        cell= (NewsfeedTableViewCell *)[[sender superview] superview] ;
+    }
     NSIndexPath *indexPath = [tblView indexPathForCell:cell];
     
     @try
@@ -741,7 +749,16 @@ AppDelegate *appDelegate;
 
 -(void)reportInappBtnPressed:(UIButton*)sender
 {
-    NewsfeedTableViewCell *cell = (NewsfeedTableViewCell *)[[[sender superview] superview] superview];
+    NewsfeedTableViewCell *cell;
+    if (IS_IOS_7)
+    {
+        cell= (NewsfeedTableViewCell *)[[[sender superview] superview] superview];
+    }
+    else
+    {
+        cell= (NewsfeedTableViewCell *)[[sender superview] superview] ;
+    }
+    
     NSIndexPath *indexPath = [tblView indexPathForCell:cell];
     
     [((Newsfeed*)[newsfeedmanager.array_model_feeds objectAtIndex:indexPath.section]) reportNewsfeedInappropriate];
@@ -920,7 +937,8 @@ AppDelegate *appDelegate;
     
     // Create cell
 	NewsfeedTableViewCell *cell = (NewsfeedTableViewCell *)[_tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	if (cell == nil) {
+	if (cell == nil)
+    {
 		cell = [[NewsfeedTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                             reuseIdentifier:CellIdentifier];
 	}

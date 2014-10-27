@@ -231,6 +231,7 @@ AppDelegate *appDelegate;
     [txt_PhoneNo setAutocorrectionType:UITextAutocorrectionTypeNo];
     [txt_CountryCode setAutocorrectionType:UITextAutocorrectionTypeNo];
     
+    
     if (IS_IOS_7)
     {
         if (IS_IPHONE_5)
@@ -248,8 +249,8 @@ AppDelegate *appDelegate;
         }
         else
         {
-            txt_CountryCode.frame=CGRectMake(28,275-75, 58, 30) ;
-            txt_PhoneNo.frame=CGRectMake(99,275-75, 238-38-5, 30) ;
+            txt_CountryCode.frame=CGRectMake(28,275-75-45, 58, 30) ;
+            txt_PhoneNo.frame=CGRectMake(99,275-75-45, 238-38-5, 30) ;
         }
     }
     //txt_PhoneNo.backgroundColor = [UIColor redColor];
@@ -263,7 +264,6 @@ AppDelegate *appDelegate;
     txt_PhoneNo.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     txt_PhoneNo.keyboardType = UIKeyboardTypePhonePad;
     [txt_PhoneNo setKeyboardAppearance:UIKeyboardAppearanceDark];
-    
     
 //  txt_CountryCode.backgroundColor = [UIColor greenColor];
 //  txt_PhoneNo.placeholder=@"Phone Number";
@@ -279,6 +279,8 @@ AppDelegate *appDelegate;
     [txt_CountryCode setKeyboardAppearance:UIKeyboardAppearanceDark];
     txt_CountryCode.text = [NSString stringWithFormat:@"+%@",StrCountryCode];
 
+    txt_CountryCode.backgroundColor=[UIColor clearColor];
+    
     [scroll addSubview:txt_PhoneNo];
     [scroll addSubview:txt_CountryCode];
     

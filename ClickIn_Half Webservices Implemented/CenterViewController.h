@@ -17,9 +17,10 @@
 #import "RelationInfo.h"
 #import "ShareViewController.h"
 #import "CSAnimationView.h"
+#import "PreviewAttachment_View.h"
 
 
-@interface CenterViewController : TKTintedKeyboardViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UIScrollViewDelegate,AVAudioPlayerDelegate,AVAudioRecorderDelegate,FBLoginViewDelegate,FBViewControllerDelegate,HPGrowingTextViewDelegate,SharedMessageDelegate,CenterchatReceiveProtocol,CenterCustomObjectProtocol,MODropAlertViewDelegate>
+@interface CenterViewController : TKTintedKeyboardViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UIScrollViewDelegate,AVAudioPlayerDelegate,AVAudioRecorderDelegate,FBLoginViewDelegate,FBViewControllerDelegate,HPGrowingTextViewDelegate,SharedMessageDelegate,CenterchatReceiveProtocol,CenterCustomObjectProtocol,MODropAlertViewDelegate,AttachmentProtocol>
 {
     // models references
     ModelManager *modelmanager;
@@ -116,6 +117,9 @@
     
     
     CSAnimationView *attachmentAnimationView;
+    PreviewAttachment_View *viewAttachment;
+    UIImage *imgAttachment;
+    
 }
 @property (retain, nonatomic) IBOutlet UIImageView *LeftSmallClickImageView;
 @property (retain, nonatomic) IBOutlet UILabel *PartnerNameLbl;

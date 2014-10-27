@@ -1756,11 +1756,11 @@ AppDelegate *appDelegate;
     
     if (IS_IPHONE_5)
     {
-        rectTableView.size.height = 188;
+        rectTableView.size.height = 188-35;
     }
     else
     {
-        rectTableView.size.height = 188-88;
+        rectTableView.size.height = 188-88-35;
     }
    
    [self.tableView setFrame:rectTableView];
@@ -2071,9 +2071,94 @@ AppDelegate *appDelegate;
 //{
 //    self.HistoryButton.enabled = true;
 //}
-
+#pragma mark - 
+#pragma mark attachment delegates
+-(void)cancelAttachment
+{
+    [self dismissViewControllerAnimated:YES completion:^
+    {
+         [viewAttachment removeFromSuperview];
+    }];
+    
+}
+-(void)addAttachment
+{
+    if (viewAttachment.isAttachmentImage)
+    {
+        tempImageRatio = 1;
+        
+        
+        //NSURL *imagePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
+        
+        //NSString *imageName = [imagePath lastPathComponent];
+        
+        NSDate *currDate = [NSDate date];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        [dateFormatter setDateFormat:@"ddMMYYHHmmss"];
+        NSString *dateString = [dateFormatter stringFromDate:currDate];
+        NSLog(@"dateString: %@",dateString);
+        
+        
+        // Upload selected file
+        
+        CGFloat compression = 0.9f;
+        CGFloat maxCompression = 0.5f;
+        int maxFileSize = 2*1024;
+        
+        NSData *imageData = UIImageJPEGRepresentation(imgAttachment, compression);
+        
+        while ([imageData length] > maxFileSize && compression > maxCompression)
+        {
+            compression -= 0.1;
+            imageData = UIImageJPEGRepresentation(imgAttachment, compression);
+        }
+        
+        
+        NSLog(@"Size of Image(bytes):%d",[imageData length]);
+        
+        if(([imageData length]/1000000.0f)>25)
+        {
+            //            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Sorry!" message:@"Image size is too big. Maximum limit allowed is 25 MB." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            //            [alert show];
+            //            alert = nil;
+            
+            MODropAlertView *alertView = [[MODropAlertView alloc]initDropAlertWithTitle:@"Sorry!"
+                                                                            description:@"Image size is too big. Maximum limit allowed is 25 MB."
+                                                                          okButtonTitle:@"OK"];
+            alertView.delegate = nil;
+            [alertView show];
+            alertView = nil;
+        }
+        else
+        {
+            tempMediaData  = imageData ;
+            [mediaAttachButton setImage:[UIImage imageWithData:tempMediaData] forState:UIControlStateNormal];
+            mediaAttachButton.tag = 2; //tag 2 for image
+        }
+        
+    }
+    else
+    {
+        MPMoviePlayerController *player = [[MPMoviePlayerController alloc] initWithContentURL:viewAttachment.videoURL];
+        UIImage *thumbnail = [player thumbnailImageAtTime:1.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
+        [player stop];
+        player=Nil;
+        
+        thumbnail = [self scaleImage:thumbnail toSize:CGSizeMake(175, 175)];
+        
+        NSData *imageData = UIImageJPEGRepresentation(thumbnail, 0.4);
+        
+        tempMediaData  = imageData ;
+        tempVideoUrl = viewAttachment.videoURL;
+        [mediaAttachButton setImage:[UIImage imageNamed:@"video_icon.png"] forState:UIControlStateNormal];
+        mediaAttachButton.tag = 4; //tag 4 for video
+    }
+    
+    [viewAttachment removeFromSuperview];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 #pragma mark -
-#pragma mark - custom actions
+#pragma mark custom actions
 
 -(IBAction)btnUserImgAction:(id)sender
 {
@@ -4569,6 +4654,7 @@ AppDelegate *appDelegate;
 
 -(void)AlertForSeLectionTheImageCapturing
 {
+    [self hideRecordingView];
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"TAKE A PICTURE",@"FROM YOUR GALLERY",nil];
     [alert show];
     alert.tag=4; // for image selection
@@ -4577,6 +4663,7 @@ AppDelegate *appDelegate;
 
 -(void)AlertForSeLectionTheVideoCapturing
 {
+     [self hideRecordingView];
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"CAPTURE A VIDEO",@"FROM YOUR GALLERY",nil];
     [alert show];
     alert.tag=5;  //for video selection
@@ -4692,7 +4779,7 @@ AppDelegate *appDelegate;
         if (_imgPicker.sourceType == UIImagePickerControllerSourceTypeCamera)
         {
             _imgPicker.showsCameraControls = YES;
-            [_imgPicker setAllowsEditing:NO];
+            _imgPicker.allowsEditing=NO;
         }
         else
         {
@@ -4722,7 +4809,6 @@ AppDelegate *appDelegate;
         [_imgPicker setAllowsEditing:NO];
         
         _imgPicker.delegate = self;
-        
         _imgPicker.videoQuality = UIImagePickerControllerQualityTypeMedium;
         
         isVideoPickedFromLibrary = true;
@@ -4804,7 +4890,12 @@ AppDelegate *appDelegate;
         }
         else
         {
-        
+//            viewAttachment=[[PreviewAttachment_View alloc] initWithFrame:self.view.frame];
+//            viewAttachment.isAttachmentImage=NO;
+//            viewAttachment.videoURL=videoUrl;
+//            viewAttachment.attachmentDelegate=self;
+//            [_imgPicker.view addSubview:viewAttachment];
+          
             MPMoviePlayerController *player = [[MPMoviePlayerController alloc] initWithContentURL:videoUrl];
             UIImage *thumbnail = [player thumbnailImageAtTime:1.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
             [player stop];
@@ -4852,6 +4943,7 @@ AppDelegate *appDelegate;
          }
         
         videoData = nil;
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
     
     if (CFStringCompare ((__bridge CFStringRef) mediaType, kUTTypeImage, 0)
@@ -4871,10 +4963,31 @@ AppDelegate *appDelegate;
         else
             image = [self scaleImage:image toSize:CGSizeMake(image.size.width/4, image.size.height/4)];*/
         
-        image = [self reSizeImage:image];
+        imgAttachment = [self reSizeImage:image];
+        
+        viewAttachment=[[PreviewAttachment_View alloc] initWithFrame:self.view.frame];
+        if (picker.sourceType==UIImagePickerControllerSourceTypeCamera )
+        {
+            viewAttachment.isFromCamera=YES;
+        }
+        else
+        {
+            viewAttachment.isFromCamera=NO;
+        }
+        viewAttachment.attachmentDelegate=self;
+        viewAttachment.isAttachmentImage=YES;
+        
+        viewAttachment.imgAttachment=imgAttachment;
+        [UIView transitionWithView:containerView
+                          duration:0.5
+                           options:UIViewAnimationTransitionFlipFromLeft //any animation
+                        animations:^ { [_imgPicker.view addSubview:viewAttachment]; }
+                        completion:nil];
+        
+        
         
 //        tempImageRatio = image.size.width/image.size.height;
-        
+        /*
         tempImageRatio = 1;
 
         
@@ -4926,6 +5039,8 @@ AppDelegate *appDelegate;
             mediaAttachButton.tag = 2; //tag 2 for image
         }
         
+        
+        */
         //NSData *imageData = UIImageJPEGRepresentation(image, 0.75f);
         
 //        if(imageData==nil)
@@ -5013,14 +5128,15 @@ AppDelegate *appDelegate;
   
         
         image=nil;
-        imageData=nil;
+      //  imageData=nil;
         //imgUrl=nil;
         //imageName=nil;
         //imagePath=nil;
 
     }
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
-    [self dismissViewControllerAnimated:YES completion:nil];
+
+   //
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{

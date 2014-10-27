@@ -35,6 +35,8 @@ static NSInteger kKeyboardTintViewTag = 12345;
     tintView = [[UIView alloc] init];
 //    tintView.backgroundColor = [[[[UIApplication sharedApplication] delegate] window] tintColor];
     [self.view addSubview:tintView];
+    tintView.frame=CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 0);
+    tintView.backgroundColor = [[[[UIApplication sharedApplication] delegate] window] tintColor];
     tintView.hidden=YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleShowTintedKeyboard:) name:UIKeyboardWillShowNotification object:nil];
@@ -45,7 +47,7 @@ static NSInteger kKeyboardTintViewTag = 12345;
 
 - (void) handleShowTintedKeyboard:(NSNotification*)notification
 {
-   // NSLog(@"show keyboard");
+    NSLog(@"show keyboard");
     tintView.hidden=NO;
     NSDictionary *userInfo = notification.userInfo;
     
@@ -80,7 +82,7 @@ static NSInteger kKeyboardTintViewTag = 12345;
 }
 - (void) handleHideTintedKeyboard:(NSNotification*)notification
 {
-   // NSLog(@"Hide keyboard");
+   NSLog(@"Hide keyboard");
     tintView.hidden=YES;
     NSDictionary *userInfo = notification.userInfo;
     

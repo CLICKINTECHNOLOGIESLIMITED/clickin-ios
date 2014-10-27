@@ -65,9 +65,9 @@
 
 //#define DomainNameUrl @"http://dev.sourcefuse.com/clickin/"
 
-#define DomainNameUrl @"http://23.21.65.97/"
+//#define DomainNameUrl @"http://23.21.65.97/"
 
-//#define DomainNameUrl @"https://api.clickinapp.com/"
+#define DomainNameUrl @"https://api.clickinapp.com/"
 
 #define QBchatTable @"chats"
 

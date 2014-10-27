@@ -962,7 +962,9 @@ AppDelegate *appDelegate;
         [alert show];
         alert = nil;
     }
+ 
     [activity hide];
+    
 }
 
 -(void)callSlideMenu
@@ -1173,11 +1175,12 @@ AppDelegate *appDelegate;
                 if(FBusersOnCLickin.count>0)
                 {
                     UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                    followBtn.frame = CGRectMake(185, 10 , 70 , 22);
                     followBtn.tag=33333;
                     [followBtn addTarget:self action:@selector(followBtnPressed:)
                         forControlEvents:UIControlEventTouchUpInside];
-                    [followBtn setBackgroundImage:[UIImage imageNamed:@"follow.png"] forState:UIControlStateNormal];
-                    followBtn.frame = CGRectMake(185, 10 , 70 , 22);
+                    [followBtn setImage:[UIImage imageNamed:@"follow.png"] forState:UIControlStateNormal];
+                    
                     //                if([[existingFollowing objectAtIndex:indexPath.row] isEqualToString:@"1"])
                     //                {
                     //                    [followBtn setEnabled:false];
@@ -1192,11 +1195,12 @@ AppDelegate *appDelegate;
                 if(existingContacts.count>0)
                 {
                     UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                    followBtn.frame = CGRectMake(185, 10 , 70 , 22);
                     followBtn.tag=33333;
                     [followBtn addTarget:self action:@selector(followBtnPressed:)
                         forControlEvents:UIControlEventTouchUpInside];
-                    [followBtn setBackgroundImage:[UIImage imageNamed:@"follow.png"] forState:UIControlStateNormal];
-                    followBtn.frame = CGRectMake(185, 10 , 70 , 22);
+                    [followBtn setImage:[UIImage imageNamed:@"follow.png"] forState:UIControlStateNormal];
+                    
                     //                if([[existingFollowing objectAtIndex:indexPath.row] isEqualToString:@"1"])
                     //                {
                     //                    [followBtn setEnabled:false];
@@ -1298,20 +1302,18 @@ AppDelegate *appDelegate;
                 {
                     //[(UIButton*)[cell.contentView viewWithTag:33333] setEnabled:false];
                     //((UIButton*)[cell.contentView viewWithTag:33333]).hidden=true;
-                    [(UIButton*)[cell.contentView viewWithTag:33333] setBackgroundImage:[UIImage imageNamed:@"requested.png"] forState:UIControlStateNormal];
+                    [(UIButton*)[cell.contentView viewWithTag:33333] setImage:[UIImage imageNamed:@"requested.png"] forState:UIControlStateNormal];
                 }
                 
                 else
                 {
                     //[(UIButton*)[cell.contentView viewWithTag:33333] setEnabled:true];
                     //((UIButton*)[cell.contentView viewWithTag:33333]).hidden=false;
-                    [(UIButton*)[cell.contentView viewWithTag:33333] setBackgroundImage:[UIImage imageNamed:@"follow.png"] forState:UIControlStateNormal];
+                    [(UIButton*)[cell.contentView viewWithTag:33333] setImage:[UIImage imageNamed:@"follow.png"] forState:UIControlStateNormal];
                 }
             }
         }
     }
-    
-    
     
     cell.backgroundColor=[UIColor clearColor];
     
@@ -1489,9 +1491,9 @@ AppDelegate *appDelegate;
 
 -(void)followBtnPressed:(id)sender
 {
-    UIImage *img=[(UIButton *) sender currentBackgroundImage];
+    UIImage *img=[(UIButton *) sender imageForState:UIControlStateNormal];
     
-    if(img == [UIImage imageNamed:@"follow.png"])
+    if([img  isEqual:[UIImage imageNamed:@"follow.png"] ])
     {
         //If do something
     }

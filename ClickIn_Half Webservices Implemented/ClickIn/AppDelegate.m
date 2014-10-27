@@ -68,22 +68,22 @@
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     [prefs setObject:@"no" forKey:@"is_typing"];
     
-    [QBSettings setApplicationID:6768];
-    [QBSettings setAuthorizationKey:@"QVr4uK5tt6cu6dN"];
-    [QBSettings setAuthorizationSecret:@"4thHbq-eyLVJrhe"];
-    [QBSettings setAccountKey:@"gBv3BjZnFzkVPUZEqEXm"];
+//    [QBSettings setApplicationID:6768];
+//    [QBSettings setAuthorizationKey:@"QVr4uK5tt6cu6dN"];
+//    [QBSettings setAuthorizationSecret:@"4thHbq-eyLVJrhe"];
+//    [QBSettings setAccountKey:@"gBv3BjZnFzkVPUZEqEXm"];
 
     
     
-//    // Live QuickBlox
-//    [QBSettings setApplicationID:5];
-//    [QBSettings setAuthorizationKey:@"6QQJq2FSKKzHK2-"];
-//    [QBSettings setAuthorizationSecret:@"k9cTQAeFWrkEAWv"];
-//   
-//    [QBSettings setServerChatDomain:@"chatclickin.quickblox.com"];
-//    [QBSettings setServerApiDomain:@"https://apiclickin.quickblox.com"];
-//    [QBSettings setContentBucket:@"qb-clickin"];
-//    [QBSettings setAccountKey:@"pFfuTqT7DxQiGUiqFABc"];
+    // Live QuickBlox
+    [QBSettings setApplicationID:5];
+    [QBSettings setAuthorizationKey:@"6QQJq2FSKKzHK2-"];
+    [QBSettings setAuthorizationSecret:@"k9cTQAeFWrkEAWv"];
+   
+    [QBSettings setServerChatDomain:@"chatclickin.quickblox.com"];
+    [QBSettings setServerApiDomain:@"https://apiclickin.quickblox.com"];
+    [QBSettings setContentBucket:@"qb-clickin"];
+    [QBSettings setAccountKey:@"pFfuTqT7DxQiGUiqFABc"];
     
     
     [Crashlytics startWithAPIKey:@"b1409c5492785c7335d721bdcd1bb08ca9248515"];

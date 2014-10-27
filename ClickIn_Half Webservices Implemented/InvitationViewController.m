@@ -241,8 +241,6 @@ AppDelegate *appDelegate;
 //    
     
 //
-    
-    
 }
 
 -(void)customViewDidLoad
@@ -688,13 +686,12 @@ AppDelegate *appDelegate;
         }
         alertView = nil;
     }
+    
     [activity hide];
-
 }
 
 -(void)callInviteAndFollowusersWebService
 {
-
     [invitedContacts addObjectsFromArray:selectedContacts];
     appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
     [appDelegate performSelector:@selector(CheckInternetConnection)];
@@ -1025,7 +1022,7 @@ AppDelegate *appDelegate;
 
 - (float) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 42;
+    return 60;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -1104,7 +1101,7 @@ AppDelegate *appDelegate;
             
             
             UILabel *contactName = [[UILabel alloc] init];
-            [contactName setFrame:CGRectMake(50, 8, 130, 25)];
+            [contactName setFrame:CGRectMake(50, 8, 130, 20)];
             [contactName setFont:[UIFont systemFontOfSize:14.0]];
             [contactName setTextColor:[UIColor blackColor]];
             contactName.textAlignment=NSTextAlignmentLeft;
@@ -1116,7 +1113,7 @@ AppDelegate *appDelegate;
             [cell addSubview:contactName];
             
             UIImageView *photoImageView = [[UIImageView alloc] init];
-            [photoImageView setFrame:CGRectMake(2, 1, 40, 40)];
+            [photoImageView setFrame:CGRectMake(2, 8, 40, 40)];
             photoImageView.tag=22222;
             [cell addSubview:photoImageView];
 
@@ -1140,7 +1137,7 @@ AppDelegate *appDelegate;
         else
         {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier2];
-            
+            //cell.contentView.backgroundColor=[UIColor yellowColor];
             UILabel *contactName = [[UILabel alloc] init];
             [contactName setFrame:CGRectMake(50, 8, 130, 25)];
             [contactName setFont:[UIFont systemFontOfSize:14.0]];
@@ -1153,7 +1150,7 @@ AppDelegate *appDelegate;
             [cell addSubview:contactName];
             
             UIImageView *photoImageView = [[UIImageView alloc] init];
-            [photoImageView setFrame:CGRectMake(2, 1, 40, 40)];
+            [photoImageView setFrame:CGRectMake(2, 8, 40, 40)];
             photoImageView.tag=22222;
             [cell addSubview:photoImageView];
             
@@ -1162,6 +1159,19 @@ AppDelegate *appDelegate;
             checkBtn.tag=44444;
             [checkBtn addTarget:self action:@selector(checkBtnPressed:)
                forControlEvents:UIControlEventTouchUpInside];
+            
+            
+            UILabel *lblPhoneNum=[[UILabel alloc] initWithFrame:CGRectMake(50,35 ,100 , 20)];
+            [lblPhoneNum setFont:[UIFont systemFontOfSize:14.0]];
+            [lblPhoneNum setBackgroundColor:[UIColor clearColor]];
+            [lblPhoneNum setTextColor:[UIColor blackColor]];
+            lblPhoneNum.textAlignment=NSTextAlignmentLeft;
+            lblPhoneNum.numberOfLines=1;
+            lblPhoneNum.adjustsFontSizeToFitWidth=YES;
+            lblPhoneNum.minimumScaleFactor=0.25f;
+            lblPhoneNum.tag=5555;
+            [cell.contentView addSubview:lblPhoneNum];
+            
 //            if([invitedContacts containsObject:[nonExisitingContacts objectAtIndex:indexPath.row]])
 //            {
 //                [checkBtn setImage:[UIImage imageNamed:@"strip-unselect.png"] forState:UIControlStateNormal];
@@ -1280,6 +1290,7 @@ AppDelegate *appDelegate;
             [(UIButton*)[cell.contentView viewWithTag:44444] setImage:[UIImage imageNamed:@"strip-unselect.png"] forState:UIControlStateNormal];
             [(UIButton*)[cell.contentView viewWithTag:44444] setEnabled:false];
             ((UIButton*)[cell.contentView viewWithTag:44444]).hidden=true;
+           
         }
         else
         {
@@ -1290,6 +1301,8 @@ AppDelegate *appDelegate;
             
             [(UIButton*)[cell.contentView viewWithTag:44444] setEnabled:true];
             ((UIButton*)[cell.contentView viewWithTag:44444]).hidden=false;
+            UILabel *lblNum= (UILabel *)[cell.contentView viewWithTag:5555];
+            lblNum.text=[nonExisitingContacts objectAtIndex:indexPath.row];
         }
         
         
@@ -1524,13 +1537,14 @@ AppDelegate *appDelegate;
 // returns an array of dictionaries
 // each dictionary has values: Name, phoneNumbers, photo
 
-- (NSArray *)collectAddressBookContacts {
-    
+- (NSArray *)collectAddressBookContacts
+{
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
     
     __block BOOL accessGranted = NO;
     
-    if (ABAddressBookRequestAccessWithCompletion != NULL) { // we're on iOS 6
+    if (ABAddressBookRequestAccessWithCompletion != NULL)
+    { // we're on iOS 6
         dispatch_semaphore_t sema = dispatch_semaphore_create(0);
         
         ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
@@ -1541,18 +1555,21 @@ AppDelegate *appDelegate;
         dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
         //dispatch_release(sema);
     }
-    else { // we're on iOS 5 or older
+    else
+    { // we're on iOS 5 or older
         accessGranted = YES;
     }
     NSArray *arrayOfAllPeople;
     NSMutableArray *mutableData = [NSMutableArray new];
     
-    if (accessGranted) {
+    if (accessGranted)
+    {
         
         arrayOfAllPeople = (__bridge_transfer NSArray*)ABAddressBookCopyArrayOfAllPeople(addressBook);
         // Do whatever you need with thePeople...
         NSUInteger peopleCounter = 0;
-        for (peopleCounter = 0;peopleCounter < [arrayOfAllPeople count]; peopleCounter++){
+        for (peopleCounter = 0;peopleCounter < [arrayOfAllPeople count]; peopleCounter++)
+        {
             ABRecordRef thisPerson = (__bridge ABRecordRef) [arrayOfAllPeople objectAtIndex:peopleCounter];
             NSString *name = (__bridge_transfer NSString *) ABRecordCopyCompositeName(thisPerson);
             NSData  *imgData = (__bridge NSData *)ABPersonCopyImageData(thisPerson);

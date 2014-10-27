@@ -123,10 +123,11 @@
             SearchPhoneBookTextfield.frame=CGRectMake(36+5,150, 203-5, 35) ;
         
         else
-            SearchPhoneBookTextfield.frame=CGRectMake(36+5,167-7, 203-5, 35) ;
+            SearchPhoneBookTextfield.frame=CGRectMake(36+5,167-7-10, 203-5, 35) ;
     }
     SearchPhoneBookTextfield.placeholder=@"SEARCH PHONEBOOK";
     SearchPhoneBookTextfield.backgroundColor = [UIColor clearColor];
+//    SearchPhoneBookTextfield.alpha=0.5;
     SearchPhoneBookTextfield.textColor=[UIColor colorWithRed:(61.0/255.0) green:(71.0/255.0) blue:(101.0/255.0) alpha:1.0];
     SearchPhoneBookTextfield.font = [UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:16];
     [SearchPhoneBookTextfield setDelegate:self];

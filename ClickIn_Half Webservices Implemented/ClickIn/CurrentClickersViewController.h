@@ -50,4 +50,6 @@
 }
 @property(strong)NSArray *arrContacts;
 @property (nonatomic, retain) NSString *isFromMenu;
+
+-(void)followBtnPressed:(id)sender;
 @end

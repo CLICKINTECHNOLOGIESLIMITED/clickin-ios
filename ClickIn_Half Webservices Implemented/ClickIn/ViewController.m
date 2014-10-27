@@ -521,6 +521,18 @@
     //    UIViewController *addyourdetails = [story instantiateViewControllerWithIdentifier:@"AddYourDetails"];
     //    [self.navigationController pushViewController:addyourdetails animated:YES];
     
+//    SendInvite *ObjSendInvite = [story instantiateViewControllerWithIdentifier:@"SendInvite"];
+//    ObjSendInvite.ProfileImg =[UIImage imageNamed:@"bluebtn.png"];
+//    
+//    NSDictionary *dict=[[NSDictionary alloc] initWithObjectsAndKeys:
+//                        @"Nitin",@"name",
+//                        @"sharma",@"lastName",
+//                        nil];
+//    ObjSendInvite.dict=dict;
+//    ObjSendInvite.ProfileImg =[UIImage imageNamed:@"bluebtn.png"];
+//    
+//    [self.navigationController pushViewController:ObjSendInvite animated:YES];
+    
 }
 
 
