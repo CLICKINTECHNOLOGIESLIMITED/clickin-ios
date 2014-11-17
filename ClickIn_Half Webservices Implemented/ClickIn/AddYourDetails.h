@@ -13,6 +13,7 @@
 //#import "XWPhotoEditorViewController.h"
 //#import "AGSimpleImageEditorView.h"
 #import "TKTintedKeyboardViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface AddYourDetails : TKTintedKeyboardViewController<UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,FBLoginViewDelegate,FBViewControllerDelegate,ASIHTTPRequestDelegate,UITextFieldDelegate,MODropAlertViewDelegate>
 {
@@ -42,6 +43,7 @@
     UITextField *CityNameTxtField;
     UITextField *CountryNameTxtField;
     UITextField *EmailTxtField;
+    
 }
 
 @property (strong, nonatomic) FBProfilePictureView *profilePictureView;

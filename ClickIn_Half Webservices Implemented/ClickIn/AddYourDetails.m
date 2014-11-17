@@ -20,7 +20,9 @@
 
 
 @interface AddYourDetails ()
-
+{
+    NSString *strUserId;
+}
 //@property(nonatomic,retain) DemoImageEditor *imageEditor;
 //@property(nonatomic,retain) ALAssetsLibrary *library;
 @property (strong, nonatomic) UIImagePickerController *imgPicker;
@@ -1621,9 +1623,11 @@ AppDelegate *appDelegate;
 {
     //clear old tokens
     [FBSession.activeSession closeAndClearTokenInformation];
-    
+    // Changed 10 Nov Gurkaran
+//    NSArray *permissions =
+//    [NSArray arrayWithObjects:@"user_photos",@"user_about_me",@"user_birthday",@"user_hometown",@"user_location",@"basic_info",@"email",@"user_videos",@"user_checkins",@"friends_checkins",@"user_status",@"read_friendlists",@"friends_photos", nil];
     NSArray *permissions =
-    [NSArray arrayWithObjects:@"user_photos",@"user_about_me",@"user_birthday",@"user_hometown",@"user_location",@"basic_info",@"email",@"user_videos",@"user_checkins",@"friends_checkins",@"user_status",@"read_friendlists",@"friends_photos", nil];
+    [NSArray arrayWithObjects:@"user_photos",@"user_about_me",@"user_birthday",@"user_hometown",@"user_location",@"public_profile",@"user_friends",@"email",@"user_videos",@"user_checkins",@"friends_checkins",@"user_status",@"read_friendlists",@"friends_photos", nil];
     [FBSession openActiveSessionWithReadPermissions:permissions
                                        allowLoginUI:YES
                                   completionHandler:
@@ -1734,6 +1738,7 @@ AppDelegate *appDelegate;
             // NSLog(@"Gender is : %@",user.gender);
              NSLog(@"Gender is : %@",user.username);
              
+             strUserId=[[NSString alloc ]initWithString:[user objectID]];
              
              NSDateFormatter* myFormatter = [[NSDateFormatter alloc] init];
              [myFormatter setDateFormat:@"MM/dd/yyyy"];//@"yyyy-MM-dd HH:mm:ss Z" //@"MM/dd/yyyy"
@@ -1793,8 +1798,10 @@ AppDelegate *appDelegate;
                  str_Gender=@"guy";
              }
              
+             
+           
              // Initialize the profile picture
-             self.profilePictureView = [[FBProfilePictureView alloc] init];
+             self.profilePictureView = [[FBProfilePictureView alloc] initWithProfileID:[user objectID] pictureCropping:FBProfilePictureCroppingOriginal];
              self.profilePictureView.tag = 564;
              // Set the size
              
@@ -1819,7 +1826,7 @@ AppDelegate *appDelegate;
 //             }
              self.profilePictureView.frame =  CGRectZero;
              // Show the profile picture for a user
-             self.profilePictureView.profileID = user.id;
+            // self.profilePictureView.profileID = [user objectID];
              //Add the profile picture view to the main view
 //             [scroll addSubview:self.profilePictureView];
              
@@ -1864,15 +1871,17 @@ AppDelegate *appDelegate;
 
 - (void)getUserImageFromFBView
 {
-    UIImage *img = nil;
+    __block UIImage *img;
     
-    for (NSObject *obj in [self.profilePictureView subviews]) {
-        if ([obj isMemberOfClass:[UIImageView class]]) {
-            UIImageView *objImg = (UIImageView *)obj;
-            img = objImg.image;
-            break;
-        }
-    }
+    
+    
+//    for (NSObject *obj in [self.profilePictureView subviews]) {
+//        if ([obj isMemberOfClass:[UIImageView class]]) {
+//            UIImageView *objImg = (UIImageView *)obj;
+//            img = objImg.image;
+//            break;
+//        }
+//    }
 
     UIButton *ProfileBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 
@@ -1908,7 +1917,23 @@ AppDelegate *appDelegate;
     [ProfileBtn addTarget:self action:@selector(AlertForSeLectionTheImageCapturing) forControlEvents:UIControlEventTouchDown];
   //  [scroll addSubview:ProfileBtn];
     
-    [Gallerybutton setBackgroundImage:img forState:UIControlStateNormal];
+    NSString *userImageURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large", strUserId];
+    NSURL *urlRequest=[NSURL URLWithString:userImageURL];
+    NSMutableURLRequest *request=[[NSMutableURLRequest alloc] initWithURL:urlRequest];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:
+     ^(NSURLResponse *response, NSData *data, NSError *connectionError)
+     {
+         if ([(NSHTTPURLResponse *)response statusCode]==200)
+         {
+             img=[[UIImage alloc] initWithData:data];
+              [Gallerybutton setBackgroundImage:img forState:UIControlStateNormal];
+         }
+     }
+     ];
+    
+   
     
     
     NSData *data = UIImageJPEGRepresentation(img, 1.0f);

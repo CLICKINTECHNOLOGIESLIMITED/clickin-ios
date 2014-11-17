@@ -18,6 +18,7 @@
 #import "ShareViewController.h"
 #import "CSAnimationView.h"
 #import "PreviewAttachment_View.h"
+#import "FXBlurView.h"
 
 
 @interface CenterViewController : TKTintedKeyboardViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UIScrollViewDelegate,AVAudioPlayerDelegate,AVAudioRecorderDelegate,FBLoginViewDelegate,FBViewControllerDelegate,HPGrowingTextViewDelegate,SharedMessageDelegate,CenterchatReceiveProtocol,CenterCustomObjectProtocol,MODropAlertViewDelegate,AttachmentProtocol>

@@ -39,7 +39,38 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+//    
+//    NSLog(@"[message customParameters]%@" ,[message customParameters]);
+//    NSLog(@"[message customObjectsAdditionalParameters]%@" ,[message customObjectsAdditionalParameters]);
+//    
+//    NSMutableDictionary *dict=[message customParameters];
+//    if ([[dict valueForKey:@"videoURL"] length]>0)
+//    {
+//        
+//        NSString *str=[dict valueForKey:@"videoURL"];
+//        NSURL *videoUrl=[NSURL URLWithString:str];
+        /*
+        AVPlayerItem *playerItem = [AVPlayerItem playerItemWithURL:videoUrl];
+        
+        CMTime duration = playerItem.duration;
+        float seconds = CMTimeGetSeconds(duration);
+        NSLog(@"duration: %.2f", seconds);
+         */
+//        AVURLAsset *sourceAsset = [AVURLAsset URLAssetWithURL:videoUrl options:nil];
+//        CMTime duration = sourceAsset.duration;
+//        float seconds = CMTimeGetSeconds(duration);
+//        NSLog(@"duration: %.2f", seconds);
     
+//        AVAsset *testAsset = [AVAsset assetWithURL:videoUrl];
+//        CMTime duration = testAsset.duration;
+//        float seconds = CMTimeGetSeconds(duration);
+//        NSLog(@"duration: %.2f", seconds);
+//    }
+//    else if ([[dict valueForKey:@"videoURL"] length]>0)
+//    {
+//        
+//    }
+
     activity=[[LabeledActivityIndicatorView alloc]initWithController:self andText:@"Loading..."];
     
     
@@ -336,7 +367,7 @@
                             forState:UIControlStateNormal];
         
         activity=[[LabeledActivityIndicatorView alloc]initWithController:self andText:@"Loading..."];
-        [activity show];
+        //[activity show];
         NSArray *permissions = [NSArray arrayWithObjects:@"publish_stream",@"publish_actions",nil];
         [FBSession openActiveSessionWithPublishPermissions:permissions defaultAudience:FBSessionDefaultAudienceEveryone allowLoginUI:YES  completionHandler:
          ^(FBSession *session,
@@ -395,8 +426,13 @@
 }
 -(void)postImageToFacebook
 {
+    NSString *strText=txtView.text;
+    if ([strText isEqualToString:@"Write your caption here..."])
+    {
+        strText=@"";
+    }
     NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                   txtView.text, @"caption",
+                                   strText, @"caption",
                                    ImageData, @"picture",
                                    nil];
     [FBRequestConnection startWithGraphPath:@"me/photos"
@@ -462,6 +498,7 @@
 
 -(IBAction)ShareButtonAction:(id)sender
 {
+     [self postImageToFacebook];
     //[activity show];
     //[self performSelector:@selector(callShareWebservice) withObject:nil afterDelay:0.1];
     QBChatMessage * updatedMessage = [[QBChatMessage alloc] init];
@@ -676,9 +713,9 @@
 //            {
 //                [(UIButton*)[shareScrollView viewWithTag:555555] setBackgroundImage:[UIImage imageNamed:@"share_btnS.png"] forState:UIControlStateNormal];
 //            }
-            [activity show];
+            //[activity show];
             [self getuserID];  // get user email
-            [self postImageToFacebook];
+           
             
             
         }

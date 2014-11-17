@@ -73,8 +73,6 @@
 //    [QBSettings setAuthorizationSecret:@"4thHbq-eyLVJrhe"];
 //    [QBSettings setAccountKey:@"gBv3BjZnFzkVPUZEqEXm"];
 
-    
-    
     // Live QuickBlox
     [QBSettings setApplicationID:5];
     [QBSettings setAuthorizationKey:@"6QQJq2FSKKzHK2-"];

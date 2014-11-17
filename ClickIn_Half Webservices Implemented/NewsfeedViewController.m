@@ -1188,7 +1188,7 @@ AppDelegate *appDelegate;
             cell.ThumbnailPhotoView.frame=cell.VideoSentView.frame;
             
             if(messageBody.customParameters[@"videoThumbnail"]!= [NSNull null])
-                [cell.ThumbnailPhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"videoThumbnail"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){ [cell.VideoSentView setImage:[UIImage imageNamed:@"Play_Button.png"] forState:UIControlStateNormal]; cell.VideoSentView.enabled=true; } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
+                [cell.ThumbnailPhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"videoThumbnail"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){ [cell.VideoSentView setImage:[UIImage imageNamed:@"PlayButtonFeed.png"] forState:UIControlStateNormal]; cell.VideoSentView.enabled=true; } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
             
             
             cell.VideoSentView.tag = indexPath.section - index;
@@ -1223,7 +1223,7 @@ AppDelegate *appDelegate;
             cell.sound_iconView.image = [UIImage imageNamed:@"Sound-icon.png"];
             
             cell.play_btn.tag = indexPath.section - index;
-            [cell.play_btn setImage:[UIImage imageNamed:@"Play_Button.png"] forState:UIControlStateNormal];
+            [cell.play_btn setImage:[UIImage imageNamed:@"PlayButtonFeed.png"] forState:UIControlStateNormal];
             [cell.play_btn addTarget:self action:@selector(playAudio:)
                     forControlEvents:UIControlEventTouchUpInside];
             

@@ -320,6 +320,7 @@ AppDelegate *appDelegate;
     
     if(![partner_pic isEqual: [NSNull null]])
     [self.PartnerImgView setImageWithURL:[NSURL URLWithString:partner_pic] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+   
     UIView *OverLayView=[[UIView alloc]initWithFrame:CGRectMake(0, 86, 320, 399)];
     if(IS_IOS_7)
     {
@@ -341,7 +342,8 @@ AppDelegate *appDelegate;
     }
     
 //  [OverLayView setBackgroundColor:[UIColor colorWithRed:(61.0/255.0) green:(71.0/255.0) blue:(101.0/255.0) alpha:1.0]];
-    [OverLayView setBackgroundColor:[UIColor blackColor]];
+    //[OverLayView setBackgroundColor:[UIColor blackColor]];
+   // OverLayView.blurRadius=10.0f;
     OverLayView.alpha = 0;
     OverLayView.tag = 111111;
    
@@ -1756,7 +1758,7 @@ AppDelegate *appDelegate;
     
     if (IS_IPHONE_5)
     {
-        rectTableView.size.height = 188-35;
+        rectTableView.size.height = 130;
     }
     else
     {
@@ -1800,7 +1802,8 @@ AppDelegate *appDelegate;
 	[UIView commitAnimations];
 }
 
--(void) keyboardWillHide:(NSNotification *)note{
+-(void) keyboardWillHide:(NSNotification *)note
+{
     NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
 	
@@ -1830,7 +1833,7 @@ AppDelegate *appDelegate;
     CGRect rectTableView = self.tableView.frame;
     if (IS_IPHONE_5)
     {
-        rectTableView.size.height = 382+20;
+        rectTableView.size.height = 400;
     }
     else
     {
@@ -1879,7 +1882,10 @@ AppDelegate *appDelegate;
     CGRect TableViewRect = tableView.frame;
     if(diff < 0)
     {
+        if([messages count]>=1)
         TableViewRect.size.height = tableView.frame.size.height - 18;
+        CGFloat height=tableView.contentSize.height;
+        [self.tableView setContentOffset:CGPointMake(0,  height)];
     }
     else
     {
@@ -2938,9 +2944,21 @@ AppDelegate *appDelegate;
     
     UIImageView *imgView=(UIImageView *)[Overlay viewWithTag:13];
     
+   
+    
     if(SliderVal <= 0)
     {
+        
+        
+        //[Overlay setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"blackBGClicks.png"]]];
+        UISlider *slider=(UISlider *)sender;
+        NSLog(@"Value is %i",slider.value);
+        //CGFloat value=slider.value;
+        //CGFloat posValue=abs(value);
         [Overlay setBackgroundColor:[UIColor blackColor]];
+//        [Overlay setBlurRadius:posValue];
+        
+        
 
         if(SliderVal >= -9)
         {
@@ -3122,7 +3140,13 @@ AppDelegate *appDelegate;
     }
     else
     {
-         [Overlay setBackgroundColor:[UIColor whiteColor]];
+        UISlider *slider=(UISlider *)sender;
+        NSLog(@"Value is %i",slider.value);
+        //CGFloat value=slider.value;
+         Overlay.backgroundColor=[[UIColor whiteColor]colorWithAlphaComponent:1.0f];
+      //  [Overlay setBlurRadius:value];
+       // [Overlay setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"whiteBGClicks.png"]]];
+       // Overlay.opaque=NO;
          if(SliderVal <= 9)
          {
              textClicks.text = [NSString stringWithFormat:@"+0%d      ",SliderVal];
@@ -3295,7 +3319,6 @@ AppDelegate *appDelegate;
             imgView.animationRepeatCount = 1;
             [imgView startAnimating];
         }
-
     }
     
     ContentButton.hidden = YES;
@@ -3318,8 +3341,10 @@ AppDelegate *appDelegate;
         ContentButton.hidden = YES;
         sendMessageButton.hidden = NO;
         //Overlay.hidden = NO;
-        [UIView animateWithDuration:0.5 animations:^() {
-            Overlay.alpha = 0.9;
+        [UIView animateWithDuration:0.5 animations:^()
+        {
+            // Changes Gurkaran 13/11/14
+            Overlay.alpha = 1.0;
         }];
         [ImgViewBGOfSlider setImage:[UIImage imageNamed:@"slider_bgrailapink.png"]];
         [self.SliderBar setThumbImage: [UIImage imageNamed:@"knobpink.png"] forState:UIControlStateNormal];
@@ -7919,7 +7944,16 @@ AppDelegate *appDelegate;
 {
     NSLog(@"%d",messages.count);
     UIButton* img_btn = (UIButton*)sender;
-    UITableViewCell *cell = (UITableViewCell *)[[[[img_btn superview] superview] superview] superview];
+    UITableViewCell *cell ;
+    //= (UITableViewCell *)[[[[img_btn superview] superview] superview] superview];
+    if (IS_IOS_7)
+    {
+        cell=(UITableViewCell *)[[[img_btn superview] superview] superview];
+    }
+    else
+    {
+        cell=(UITableViewCell *)[[[img_btn superview] superview] superview];
+    }
     NSIndexPath *indexPath = [tableView indexPathForCell:cell];
     NSLog(@"%d",indexPath.row);
     
@@ -8153,7 +8187,8 @@ static CGFloat padding = 20.0;
 
     // Create cell
 	ChatMessageTableViewCell *cell = (ChatMessageTableViewCell *)[_tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	if (cell == nil) {
+	if (cell == nil)
+    {
 		cell = [[ChatMessageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                reuseIdentifier:CellIdentifier];
 	}
@@ -8487,6 +8522,7 @@ static CGFloat padding = 20.0;
                     }
                     else
                     {
+                        NSLog(@"Came into this ");
                         cell.VideoSentView.enabled=false;
                         
                         cell.ThumbnailPhotoView.frame=cell.VideoSentView.frame;
@@ -9807,6 +9843,7 @@ static CGFloat padding = 20.0;
                     }
                     if([messageBody.customParameters[@"videoID"]  length]>0 || [messageBody.customParameters[@"isVideoUploading"] integerValue]==1 )
                     {
+                        [cell.VideoSentView setImage:[UIImage imageNamed:@"Play_Button_45.png"] forState:UIControlStateNormal];
                         cell.ThumbnailPhotoView.frame = CGRectMake(cell.message.frame.origin.x  , 42.5f, 100, 100);
                         cell.ThumbnailPhotoView.layer.borderWidth = 0;
                         cell.VideoSentView.frame = cell.ThumbnailPhotoView.frame;
@@ -9981,6 +10018,7 @@ static CGFloat padding = 20.0;
                     }
                     if([messageBody.customParameters[@"videoID"]  length]>0 || [messageBody.customParameters[@"isVideoUploading"] integerValue]==1 )
                     {
+                        [cell.VideoSentView setImage:[UIImage imageNamed:@"Play_Button_45.png"] forState:UIControlStateNormal];
                         cell.ThumbnailPhotoView.frame = CGRectMake(cell.message.frame.origin.x + 7.5f, 42.5f, 100, 100);
                         cell.ThumbnailPhotoView.layer.borderWidth = 0;
                         cell.VideoSentView.frame = cell.ThumbnailPhotoView.frame;
