@@ -68,20 +68,20 @@
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     [prefs setObject:@"no" forKey:@"is_typing"];
     
-//    [QBSettings setApplicationID:6768];
-//    [QBSettings setAuthorizationKey:@"QVr4uK5tt6cu6dN"];
-//    [QBSettings setAuthorizationSecret:@"4thHbq-eyLVJrhe"];
-//    [QBSettings setAccountKey:@"gBv3BjZnFzkVPUZEqEXm"];
+    [QBSettings setApplicationID:6768];
+    [QBSettings setAuthorizationKey:@"QVr4uK5tt6cu6dN"];
+    [QBSettings setAuthorizationSecret:@"4thHbq-eyLVJrhe"];
+    [QBSettings setAccountKey:@"gBv3BjZnFzkVPUZEqEXm"];
 
     // Live QuickBlox
-    [QBSettings setApplicationID:5];
-    [QBSettings setAuthorizationKey:@"6QQJq2FSKKzHK2-"];
-    [QBSettings setAuthorizationSecret:@"k9cTQAeFWrkEAWv"];
-   
-    [QBSettings setServerChatDomain:@"chatclickin.quickblox.com"];
-    [QBSettings setServerApiDomain:@"https://apiclickin.quickblox.com"];
-    [QBSettings setContentBucket:@"qb-clickin"];
-    [QBSettings setAccountKey:@"pFfuTqT7DxQiGUiqFABc"];
+//    [QBSettings setApplicationID:5];
+//    [QBSettings setAuthorizationKey:@"6QQJq2FSKKzHK2-"];
+//    [QBSettings setAuthorizationSecret:@"k9cTQAeFWrkEAWv"];
+//   
+//    [QBSettings setServerChatDomain:@"chatclickin.quickblox.com"];
+//    [QBSettings setServerApiDomain:@"https://apiclickin.quickblox.com"];
+//    [QBSettings setContentBucket:@"qb-clickin"];
+//    [QBSettings setAccountKey:@"pFfuTqT7DxQiGUiqFABc"];
     
     
     [Crashlytics startWithAPIKey:@"b1409c5492785c7335d721bdcd1bb08ca9248515"];
@@ -102,6 +102,7 @@
     //AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     //[audioSession setCategory:AVAudioSessionCategoryAmbient error:NULL];
     
+    /*
     bool isPlayingAudio=false;
     
     if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying)
@@ -120,9 +121,7 @@
     
     UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
     AudioSessionSetProperty (kAudioSessionProperty_OverrideAudioRoute,sizeof (audioRouteOverride),&audioRouteOverride);
-
-    
-    
+    */
 //    ABAddressBookRef addressBook = ABAddressBookCreate();
 //    CFArrayRef addressBookData = ABAddressBookCopyArrayOfAllPeople(addressBook);
 //    
@@ -516,9 +515,10 @@
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
          (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
     }
-    
-    
+
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    
+    [self iniAudio];
     
     return YES;
 }
@@ -992,7 +992,7 @@
         }
     }
     
-    
+    /*
     //set audio session
     AVAudioSession *session = [AVAudioSession sharedInstance];
     NSError *sessionCategoryError = nil;
@@ -1010,7 +1010,7 @@
     }
     
     [session setActive:YES error:nil];
-    
+    */
     [[NSNotificationCenter defaultCenter] postNotificationName:Notification_ChatLoginStatusChanged object:nil userInfo:Nil];
 
 }
@@ -1063,7 +1063,8 @@
 //    if([[NSUserDefaults standardUserDefaults] stringForKey:@"AppVersion"]==nil)
 //        [self fetchCurrentVersionOfApp];
 //    else
-        [self compareCurrentVersionOfApp];
+    [self compareCurrentVersionOfApp];
+    
     
 }
 
@@ -1099,7 +1100,31 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
+#pragma mark audio 
+-(void)iniAudio
+{ // set up Audio so that user can play own music
+    
+    // Initialize audio session
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    
+    // Active your audio session
+    [audioSession setActive: NO error: nil];
+    
+    // Set audio session category
+    [audioSession setCategory:AVAudioSessionCategoryAmbient error:nil];
+    
+    // Modifying Playback Mixing Behavior, allow playing music in other apps
+    OSStatus propertySetError = 0;
+    UInt32 allowMixing = true;
+    
+    propertySetError = AudioSessionSetProperty (
+                                                kAudioSessionProperty_OverrideCategoryMixWithOthers,
+                                                sizeof (allowMixing),
+                                                &allowMixing);
+    
+    // Active your audio session
+    [audioSession setActive: YES error: nil];
+}
 #pragma mark -FaceBook
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation

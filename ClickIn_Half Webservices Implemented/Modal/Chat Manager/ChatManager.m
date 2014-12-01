@@ -33,7 +33,7 @@
         }
         else
         {
-            inComingMsgSound.volume = 1;
+            inComingMsgSound.volume = 2;
         }
         [inComingMsgSound prepareToPlay];
         

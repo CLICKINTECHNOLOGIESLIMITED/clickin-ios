@@ -346,6 +346,7 @@
      [self.view bringSubviewToFront:self.tintView];
     
     UIButton *btnFB=(UIButton *)[self.view viewWithTag:100];
+    [btnFB setSelected:NO];
     [btnFB setBackgroundImage:[UIImage imageNamed:@"fb_grey.png"]
                       forState:UIControlStateNormal];
 }
@@ -361,8 +362,9 @@
     UIImage *img=[(UIButton *) sender backgroundImageForState:UIControlStateNormal];
     UIButton *button = (UIButton*)sender;
     
-    if( [img isEqual:[UIImage imageNamed:@"fb_grey.png"] ])
+    if([img isEqual:[UIImage imageNamed:@"fb_grey.png"] ])
     {
+        [button setSelected:YES];
         [button setBackgroundImage:[UIImage imageNamed:@"facebook_blue.png"]
                             forState:UIControlStateNormal];
         
@@ -378,12 +380,14 @@
     }
     else
     {
+        
         [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"fb_login"];
         
         [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"fb_accesstoken"];
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"fbUserName"];
         [FBSession.activeSession closeAndClearTokenInformation];
         
+        [button setSelected:NO];
         [button setBackgroundImage:[UIImage imageNamed:@"fb_grey.png"]
                           forState:UIControlStateNormal];
     }
@@ -466,6 +470,7 @@
              [alertView show];
              
              UIButton *btnFB=(UIButton *)[self.view viewWithTag:100];
+             [btnFB setSelected:NO];
              [btnFB setBackgroundImage:[UIImage imageNamed:@"fb_grey.png"]
                               forState:UIControlStateNormal];
          }
@@ -498,7 +503,14 @@
 
 -(IBAction)ShareButtonAction:(id)sender
 {
-     [self postImageToFacebook];
+    UIButton *btnFB=(UIButton *)[self.view viewWithTag:100];
+//    UIImage *img=[btnFB backgroundImageForState:UIControlStateNormal];
+    
+    if ([btnFB isSelected])
+    {
+        NSLog(@"Posted");
+        [self postImageToFacebook];
+    }
     //[activity show];
     //[self performSelector:@selector(callShareWebservice) withObject:nil afterDelay:0.1];
     QBChatMessage * updatedMessage = [[QBChatMessage alloc] init];

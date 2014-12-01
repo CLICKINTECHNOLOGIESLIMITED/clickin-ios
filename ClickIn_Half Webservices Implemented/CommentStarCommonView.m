@@ -567,20 +567,12 @@
             
             int index=0;
             
-            
-            
-            
             [cell.LeftsideUIImageView setFrame:CGRectMake(2 , 12, 50, 50)];
-            
-            
             [cell.LblLeftSideName setFrame:CGRectMake(56 , 9, 95, 28)];
             cell.LblLeftSideName.numberOfLines=1;
             cell.LblLeftSideName.textAlignment=NSTextAlignmentLeft;
             [cell.LblLeftSideName setFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:17]];
             [cell.LblLeftSideName setTextColor:[UIColor colorWithRed:79/255.0 green:194/255.0 blue:210/255.0 alpha:1]];
-            
-            
-            
             [cell.LblRightSideName setFrame:CGRectMake(174 , 9, 100, 28)];
             cell.LblRightSideName.numberOfLines=1;
             cell.LblRightSideName.textAlignment=NSTextAlignmentLeft;
@@ -613,10 +605,7 @@
                 
                 cell.LblLeftSideName.text = selectedNewsfeed.senderName;
                 cell.LblRightSideName.text = selectedNewsfeed.receiverName;
-                
-                
                 cell.LblRightSideTime.text = selectedNewsfeed.receiverTime;
-                
                 cell.NextIconArrowImage.image = [UIImage imageNamed:@"nextIcon.png"];
             }
             else if([selectedNewsfeed.isSenderFollower isEqualToString:@"false"] && [selectedNewsfeed.isReceiverFollower isEqualToString:@"true"])
@@ -626,10 +615,7 @@
                 
                 cell.LblLeftSideName.text = selectedNewsfeed.receiverName;
                 cell.LblRightSideName.text = selectedNewsfeed.senderName;
-                
-                
                 cell.LblRightSideTime.text = selectedNewsfeed.senderTime;
-                
                 cell.NextIconArrowImage.image = [UIImage imageNamed:@"preIcon.png"];
             }
             else if([selectedNewsfeed.isSenderFollower isEqualToString:@"true"] && [selectedNewsfeed.isReceiverFollower isEqualToString:@"true"])
@@ -695,10 +681,8 @@
                 
                 cell.LblLeftSideName.text = selectedNewsfeed.senderName;
                 cell.LblRightSideName.text = selectedNewsfeed.receiverName;
-                
-                
                 cell.LblRightSideTime.text = selectedNewsfeed.receiverTime;
-                
+
                 cell.NextIconArrowImage.image = [UIImage imageNamed:@"nextIcon.png"];
             }
             
@@ -987,22 +971,22 @@
                 
                 if([messageBody.customParameters[@"fileID"] length]>1)
                 {
-                    cell.message.frame=CGRectMake(padding, padding + cell.imageSentView.frame.origin.y + cell.imageSentView.frame.size.height, 316, size.height+padding*10);
+                    cell.message.frame=CGRectMake(padding, padding + cell.imageSentView.frame.origin.y + cell.imageSentView.frame.size.height, 316, size.height+padding*15);
                 }
                 else if([messageBody.customParameters[@"locationID"] length]>1)
                 {
-                    cell.message.frame=CGRectMake(padding, padding + cell.LocationSentView.frame.origin.y + cell.LocationSentView.frame.size.height, 316, size.height+padding*10);
+                    cell.message.frame=CGRectMake(padding, padding + cell.LocationSentView.frame.origin.y + cell.LocationSentView.frame.size.height, 316, size.height+padding*15);
                 }
                 else if([messageBody.customParameters[@"videoID"] length]>1)
                 {
-                    cell.message.frame=CGRectMake(padding, padding + cell.ThumbnailPhotoView.frame.origin.y + cell.ThumbnailPhotoView.frame.size.height, 316, size.height+padding*10);
+                    cell.message.frame=CGRectMake(padding, padding + cell.ThumbnailPhotoView.frame.origin.y + cell.ThumbnailPhotoView.frame.size.height, 316, size.height+padding*15);
                 }
                 else if([messageBody.customParameters[@"audioID"] length]>1)
                 {
-                    cell.message.frame=CGRectMake(padding, padding + cell.sound_bgView.frame.origin.y + cell.sound_bgView.frame.size.height, 316, size.height+padding*10);
+                    cell.message.frame=CGRectMake(padding, padding + cell.sound_bgView.frame.origin.y + cell.sound_bgView.frame.size.height, 316, size.height+padding*15);
                 }
                 else
-                    [cell.message setFrame:CGRectMake(padding, padding + cell.LeftsideUIImageView.frame.origin.y  + cell.LeftsideUIImageView.frame.size.height, 316 , size.height+padding*10)];
+                    [cell.message setFrame:CGRectMake(padding, padding + cell.LeftsideUIImageView.frame.origin.y  + cell.LeftsideUIImageView.frame.size.height, 316 , size.height+padding*15)];
                 
                 
                 

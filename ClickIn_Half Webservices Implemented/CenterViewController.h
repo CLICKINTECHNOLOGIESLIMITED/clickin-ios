@@ -69,7 +69,7 @@
     NSMutableArray *card_status_webHistory; // for checking whether card accepted in chat history
     
     NSString *strChatIdOfFirstRecord;
-    BOOL isChatHistoryOrNot;
+    BOOL isChatHistoryOrNot; // In Case of chat history this bool will be true.
     NSString *strRelationShipId;
     
     bool headerOptionsScrolled;
@@ -121,6 +121,10 @@
     PreviewAttachment_View *viewAttachment;
     UIImage *imgAttachment;
     
+    BOOL isKeyBoardVisible;
+   
+    // If the keyboard suggestions are open then this BOOL will be True else False.
+     BOOL isKeyboardSuggestionEnabled;
 }
 @property (retain, nonatomic) IBOutlet UIImageView *LeftSmallClickImageView;
 @property (retain, nonatomic) IBOutlet UILabel *PartnerNameLbl;

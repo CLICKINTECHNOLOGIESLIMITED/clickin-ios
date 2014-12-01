@@ -395,9 +395,9 @@
     
     UIImage *CurrentImage = button.currentBackgroundImage;
     
-    if(CurrentImage == [UIImage imageNamed:@"requested.png"])
+    if([CurrentImage isEqual:[UIImage imageNamed:@"requested.png"] ])
         btn_state = 1;
-    else if(CurrentImage == [UIImage imageNamed:@"follow-profile-slctd.png"])
+    else if([CurrentImage isEqual:[UIImage imageNamed:@"follow-profile-slctd.png"]])
         btn_state = 2;
     else
         btn_state = 3;
@@ -766,7 +766,8 @@
     return 1;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     //static NSString *CellIdentifiersection1 = @"Cellforsection1";
     static NSString *CellIdentifiersection2 = @"Cellforsection2";
     static NSString *CellIdentifiersection3 = @"Cellforsection3";
@@ -787,7 +788,8 @@
     if(indexPath.section==1)  //section 2
     {
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifiersection3];
-        if (cell == nil) {
+        if (cell == nil)
+        {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifiersection3];
             cell.accessoryType = UITableViewCellAccessoryNone;
             cell.selectionStyle=UITableViewCellSelectionStyleNone;

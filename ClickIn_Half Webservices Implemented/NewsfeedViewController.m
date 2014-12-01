@@ -1330,22 +1330,22 @@ AppDelegate *appDelegate;
             
             if([messageBody.customParameters[@"fileID"] length]>1)
             {
-                cell.message.frame=CGRectMake(padding, padding + cell.imageSentView.frame.origin.y + cell.imageSentView.frame.size.height, 316, size.height+padding*10);
+                cell.message.frame=CGRectMake(padding, padding + cell.imageSentView.frame.origin.y + cell.imageSentView.frame.size.height, 316, size.height+padding*15);
             }
             else if([messageBody.customParameters[@"locationID"] length]>1)
             {
-                 cell.message.frame=CGRectMake(padding, padding + cell.LocationSentView.frame.origin.y + cell.LocationSentView.frame.size.height, 316, size.height+padding*10);
+                 cell.message.frame=CGRectMake(padding, padding + cell.LocationSentView.frame.origin.y + cell.LocationSentView.frame.size.height, 316, size.height+padding*15);
             }
             else if([messageBody.customParameters[@"videoID"] length]>1)
             {
-                cell.message.frame=CGRectMake(padding, padding + cell.ThumbnailPhotoView.frame.origin.y + cell.ThumbnailPhotoView.frame.size.height, 316, size.height+padding*10);
+                cell.message.frame=CGRectMake(padding, padding + cell.ThumbnailPhotoView.frame.origin.y + cell.ThumbnailPhotoView.frame.size.height, 316, size.height+padding*15);
             }
             else if([messageBody.customParameters[@"audioID"] length]>1)
             {
-                cell.message.frame=CGRectMake(padding, padding + cell.sound_bgView.frame.origin.y + cell.sound_bgView.frame.size.height, 316, size.height+padding*10);
+                cell.message.frame=CGRectMake(padding, padding + cell.sound_bgView.frame.origin.y + cell.sound_bgView.frame.size.height, 316, size.height+padding*15);
             }
             else
-                [cell.message setFrame:CGRectMake(padding, padding + cell.LeftsideUIImageView.frame.origin.y  + cell.LeftsideUIImageView.frame.size.height, 316 , size.height+padding*10)];
+                [cell.message setFrame:CGRectMake(padding, padding + cell.LeftsideUIImageView.frame.origin.y  + cell.LeftsideUIImageView.frame.size.height, 316 , size.height+padding*15)];
             
             
             

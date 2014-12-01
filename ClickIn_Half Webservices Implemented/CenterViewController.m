@@ -27,6 +27,7 @@
 #import <CoreText/CoreText.h>
 #import "GAIDictionaryBuilder.h"
 #import "GAI.h"
+#import "LeftViewController.h"
 
 #define CC_SHA1_DIGEST_LENGTH 20
 
@@ -298,11 +299,11 @@ AppDelegate *appDelegate;
     }
     else
     {
-        click.volume = 1;
-        attachmentSound.volume = 1;
-        ClicksChangedSound.volume = 1;
-        outgoingMsgSound.volume = 1;
-        outgoingMsgSound.volume = 1;
+        click.volume = 2;
+        attachmentSound.volume = 2;
+        ClicksChangedSound.volume = 2;
+        outgoingMsgSound.volume = 2;
+        
     }
 
     
@@ -744,7 +745,6 @@ AppDelegate *appDelegate;
     self.sendMessageButton.frame = CGRectMake(282,439,33,35);
     self.ContentButton.frame = CGRectMake(282,439,33,35);
     self.mediaAttachButton.frame = CGRectMake(5,439,33,34);
-    self.tableView.frame = CGRectMake(0,84,320,315);
     self.tableView.userInteractionEnabled=YES;
     self.tableView.allowsSelection=NO;
     
@@ -758,12 +758,12 @@ AppDelegate *appDelegate;
             self.sendMessageButton.frame = CGRectMake(282,527,33,35);
             self.ContentButton.frame = CGRectMake(282,527,33,35);
             self.mediaAttachButton.frame = CGRectMake(5,527,33,34);
-            self.tableView.frame = CGRectMake(0,84,320,404);
+            self.tableView.frame = CGRectMake(0,84,320,405);
         }
     }
     else
     {
-        if(IS_IPHONE_5)
+         if(IS_IPHONE_5)
         {
             self.ChatBgWhiteView.frame = CGRectMake(0,488,320,31);
             self.ChatBgImgView.frame = CGRectMake(0,520,320,50);
@@ -771,7 +771,7 @@ AppDelegate *appDelegate;
             self.ContentButton.frame = CGRectMake(45,527,233,34);
             self.sendMessageButton.frame = CGRectMake(282,527,33,35);
             self.mediaAttachButton.frame = CGRectMake(5,527,33,34);
-            self.tableView.frame = CGRectMake(0,84,320,402);
+            self.tableView.frame = CGRectMake(0,84,320,405);
         }
         else
         {
@@ -819,6 +819,9 @@ AppDelegate *appDelegate;
                                              selector:@selector(keyboardWillHide:) 
                                                  name:UIKeyboardWillHideNotification 
                                                object:nil];
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(keyboardFrameDidChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
     containerView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, 320, 50)];
     
@@ -894,12 +897,7 @@ AppDelegate *appDelegate;
     sendMessageButton.hidden = YES;
     
     [self.view bringSubviewToFront:ChatBgWhiteView];
-    
     [self getprofileinfo];
-    
-    
-    
-    
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
     [self.tableView addGestureRecognizer:tap];
@@ -907,7 +905,6 @@ AppDelegate *appDelegate;
 //    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     if(![[prefs stringForKey:@"ShowChatOverlay"] isEqualToString:@"no"])
     {
-        
         if (IS_IPHONE_5)
         {
             overLayImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 568)];
@@ -1021,6 +1018,7 @@ AppDelegate *appDelegate;
         [self.tableView reloadData];
         if([messages count]>=1)
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//        [self.tableView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
     }
     else
     {
@@ -1329,7 +1327,10 @@ AppDelegate *appDelegate;
     
     if(isChatHistoryOrNot == TRUE)
     {
+        if([messages count]>=1)
+        {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
     }
     else
     {
@@ -1609,7 +1610,10 @@ AppDelegate *appDelegate;
     {
         if(isChatHistoryOrNot == TRUE)
         {
+            if([messages count]>=1)
+            {
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count]-[ArrTemp count]  inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
         }
             else
             {
@@ -1626,11 +1630,17 @@ AppDelegate *appDelegate;
     {
         if(isFromEariler == FALSE)
         {
+            if([messages count]>=1)
+            {
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
         }
         else
         {
+            if([messages count]>=1)
+            {
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count]-[ArrTemp count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
         }
     }
     
@@ -1718,9 +1728,11 @@ AppDelegate *appDelegate;
      
     [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_InAppSoundsFlag object:nil];
 }
-
+#pragma mark keyboard notifications
 //Keyboard up and down
--(void) keyboardWillShow:(NSNotification *)note{
+-(void) keyboardWillShow:(NSNotification *)note
+{
+    isKeyBoardVisible=YES;
     // get keyboard size and loctaion
 	CGRect keyboardBounds;
     [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
@@ -1741,6 +1753,66 @@ AppDelegate *appDelegate;
     CGRect rectAttachementScrollView = attachmentAnimationView.frame;
     rectAttachementScrollView.origin.y = self.view.bounds.size.height - (keyboardBounds.size.height + containerFrame.size.height)-31;
     
+    CGRect keyboardEndFrame = [[[note userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGRect keyboardBeginFrame = [[[note userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    
+    CGRect rectTableView = self.tableView.frame;
+    int diff =keyboardEndFrame.size.height-keyboardBeginFrame.size.height;
+    CGFloat height=textView.frame.size.height;
+    // In case of keyboard shown or hidden the diff comes out to be 0.
+    if (diff==-29)
+    {
+        isKeyboardSuggestionEnabled=FALSE;
+        if (IS_IPHONE_5)
+        {
+            rectTableView.size.height = 214-height;
+        }
+        else
+        {
+            rectTableView.size.height=188-20-height;
+        }
+        
+        NSLog(@"In this case keyboard hides the suggestion view");
+    }
+    else if(diff==29)
+    {
+        isKeyboardSuggestionEnabled=TRUE;
+        if (IS_IPHONE_5)
+        {
+            rectTableView.size.height=185-height;
+        }
+        else
+        {
+            rectTableView.size.height=188-20-88;
+        }
+        NSLog(@"In this case keyboard shows the suggestion view");
+    }
+    else
+    {
+         CGFloat txtViewheight=textView.frame.size.height;
+        if (IS_IPHONE_5)
+        {
+            int height = MIN(keyboardBeginFrame.size.height,keyboardBeginFrame.size.width);
+            // IN CASE THE SUGGESTIONS ARE OPEN HEIGHT OF KEYBOARD IS 253 ELSE 224
+            if (height>224)
+            {
+                isKeyboardSuggestionEnabled=TRUE;
+                rectTableView.size.height = 186-txtViewheight;
+            }
+            else
+            {
+                isKeyboardSuggestionEnabled=FALSE;
+                rectTableView.size.height = 214-txtViewheight;
+            }
+            
+        }
+        else
+        {
+            rectTableView.size.height = 188-60-txtViewheight;
+        }
+    }
+    
+    
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationDuration:[duration doubleValue]];
@@ -1752,18 +1824,6 @@ AppDelegate *appDelegate;
     ChatBgWhiteView.frame = ChatBgWhiteViewRect;
     
     [attachmentAnimationView setFrame:rectAttachementScrollView];
-
-    
-    CGRect rectTableView = self.tableView.frame;
-    
-    if (IS_IPHONE_5)
-    {
-        rectTableView.size.height = 130;
-    }
-    else
-    {
-        rectTableView.size.height = 188-88-35;
-    }
    
    [self.tableView setFrame:rectTableView];
     
@@ -1792,18 +1852,24 @@ AppDelegate *appDelegate;
     
     if(isChatHistoryOrNot == TRUE)
     {
+        if([messages count]>=1)
+        {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
     }
     else
     {
         if([messages count]>=1)
+        {
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
     }	// commit animations
 	[UIView commitAnimations];
 }
 
 -(void) keyboardWillHide:(NSNotification *)note
 {
+    isKeyBoardVisible=NO;
     NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
 	
@@ -1829,15 +1895,15 @@ AppDelegate *appDelegate;
     ChatBgWhiteView.frame = ChatBgWhiteViewRect;
     [attachmentAnimationView setFrame:rectAttachementScrollView];
     
-    
+    CGFloat height=textView.frame.size.height;
     CGRect rectTableView = self.tableView.frame;
     if (IS_IPHONE_5)
     {
-        rectTableView.size.height = 400;
+        rectTableView.size.height = 439-height;
     }
     else
     {
-        rectTableView.size.height = 315;
+        rectTableView.size.height = 349-height;
     }
     [self.tableView setFrame:rectTableView];
     
@@ -1862,11 +1928,24 @@ AppDelegate *appDelegate;
     [ImgViewClicks setFrame:rectChatOverlayImgView];
     [textClicks setFrame:rectChatOverlayText];
     
-	
+    if(isChatHistoryOrNot == TRUE)
+    {
+        // In Case of isChatHistoryOrNot == TRUE , set the -1 in case of
+        if([messages count]>=1)
+        {
+            NSIndexPath *idxPath=[NSIndexPath indexPathForRow:[messages count] inSection:0];
+            [self.tableView scrollToRowAtIndexPath:idxPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
+    }
+    else
+    {
+        if([messages count]>=1)
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
 	// commit animations
 	[UIView commitAnimations];
 }
-
+#pragma mark -
 - (void)growingTextView:(HPGrowingTextView *)growingTextView willChangeHeight:(float)height
 {
     float diff = (growingTextView.frame.size.height - height);
@@ -2957,8 +3036,7 @@ AppDelegate *appDelegate;
         //CGFloat posValue=abs(value);
         [Overlay setBackgroundColor:[UIColor blackColor]];
 //        [Overlay setBlurRadius:posValue];
-        
-        
+    
 
         if(SliderVal >= -9)
         {
@@ -3369,7 +3447,6 @@ AppDelegate *appDelegate;
     [message1 setCustomParameters:[@{@"isComposing" : @"NO"} mutableCopy]];
     [chatmanager sendMessage:message1 dict:nil];
 
-    
     appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
     [appDelegate performSelector:@selector(CheckInternetConnection)];
     if(appDelegate.internetWorking != 0)//0: internet working
@@ -3671,15 +3748,7 @@ AppDelegate *appDelegate;
     
     [self.tableView reloadData];
     
-    if(isChatHistoryOrNot == TRUE)
-    {
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    }
-    else
-    {
-        if([messages count]>=1)
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    }
+    
     
     custom_Data=nil;
     tempMediaData = nil;
@@ -3687,10 +3756,55 @@ AppDelegate *appDelegate;
     tempImageRatio = 1;
     mediaAttachButton.tag = 1;
     [mediaAttachButton setImage:[UIImage imageNamed:@"footer_attachment.png"] forState:UIControlStateNormal];
-//    [self.sendMessageField resignFirstResponder];
     [textView setText:nil];
+//    [self.sendMessageField resignFirstResponder];
     
-    [self performSelector:@selector(playoutgoingMsgSound) withObject:nil afterDelay:0.2];
+    
+     CGRect rectTableView = self.tableView.frame;
+    
+    if (IS_IPHONE_5)
+    {
+        if (isKeyBoardVisible)
+        {
+            if (isKeyboardSuggestionEnabled)
+            {
+                 rectTableView.size.height = 152;
+            }
+            else
+            {
+                 rectTableView.size.height = 180;
+            }
+        }
+    }
+    else
+    {
+        if (isKeyBoardVisible)
+        {
+            if (isKeyboardSuggestionEnabled)
+            {
+                rectTableView.size.height = 62;
+            }
+            else
+            {
+                rectTableView.size.height = 90;
+            }
+        }
+    }
+   self.tableView.frame=rectTableView;
+    
+    if(isChatHistoryOrNot == TRUE)
+    {
+        if([messages count]>=1)
+        {
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
+    }
+    else
+    {
+        if([messages count]>=1)
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+   [self performSelector:@selector(playoutgoingMsgSound) withObject:nil afterDelay:0.2];
 }
 
 -(void)playoutgoingMsgSound
@@ -4596,6 +4710,7 @@ AppDelegate *appDelegate;
     [self.menuContainerViewController toggleLeftSideMenuCompletion:^{
         
     }];
+    
 }
 
 - (IBAction)rightSideMenuButtonPressed:(id)sender
@@ -5869,11 +5984,16 @@ AppDelegate *appDelegate;
         [self.tableView reloadData];
         if(isChatHistoryOrNot == TRUE)
         {
+            if([messages count]>=1)
+            {
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
         }
-        else
-        {
+        else            {
+            if([messages count]>=1)
+            {
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
         }
         
         if([message.customParameters[@"card_heading"] length]>0)
@@ -7013,11 +7133,17 @@ AppDelegate *appDelegate;
         [self.tableView reloadData];
         if(isChatHistoryOrNot == TRUE)
         {
-            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            if([messages count]>=1)
+            {
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count]inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
         }
         else
         {
+            if([messages count]>=1)
+            {
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
         }
     }
     
@@ -7082,7 +7208,10 @@ AppDelegate *appDelegate;
         
         if(isChatHistoryOrNot == TRUE)
         {
+            if([messages count]>=1)
+            {
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
         }
         else
         {
@@ -7473,7 +7602,10 @@ AppDelegate *appDelegate;
             [self.tableView reloadData];
             if(isChatHistoryOrNot == TRUE)
             {
+                if([messages count]>=1)
+                {
                 [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                }
             }
             else
             {
@@ -7866,7 +7998,6 @@ AppDelegate *appDelegate;
 
 -(void)keyboardHide
 {
-    
     UIView *Overlay=(UIView *)[self.view viewWithTag:111111];
     UILabel *textClicks=(UILabel *)[Overlay viewWithTag:12];
     UIImageView *ImgViewClicks=(UIImageView *)[Overlay viewWithTag:13];
@@ -7898,6 +8029,7 @@ AppDelegate *appDelegate;
     rectAudioRecordView.origin.y += 215;
     
     CGRect rectTableView = self.tableView.frame;
+  
     if (IS_IPHONE_5)
     {
         rectChatOverlayImgView.origin.y -= 100;
@@ -9294,6 +9426,8 @@ static CGFloat padding = 20.0;
                     }
                     
                     
+//                    cell.cardBarView.frame = CGRectMake(cell.cardImageView.frame.origin.x + cell.cardImageView.frame.size.width + 15, cell.cardImageView.frame.origin.y + 48 - 5, 195/2, 2);
+                    // Changed 18 Nov gurkaran
                     cell.cardBarView.frame = CGRectMake(cell.cardImageView.frame.origin.x + cell.cardImageView.frame.size.width + 15, cell.cardImageView.frame.origin.y + 48 - 5, 195/2, 2);
                     cell.cardBarView.image = [UIImage imageNamed:@"bar.png"];
                     
@@ -9357,8 +9491,13 @@ static CGFloat padding = 20.0;
                                 constrainedToSize:textSize
                                     lineBreakMode:NSLineBreakByWordWrapping];
                         
+                        
+                        
                         cell.cardSender.frame = CGRectMake(cell.cardImageView.frame.origin.x + 15, cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height - 2 , size.width + 15, 40);
                         cell.cardPlayed_Countered.frame = CGRectMake(cell.cardImageView.frame.origin.x + cell.cardSender.frame.size.width + 5 , cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height - 2, 120, 40);
+                        
+//                        cell.cardSender.frame = CGRectMake(cell.cardImageView.frame.origin.x + 15, cell.cardImageView.frame.origin.y , size.width + 15, 40);
+//                         cell.cardPlayed_Countered.frame = CGRectMake(cell.cardImageView.frame.origin.x + cell.cardSender.frame.size.width + 5 , cell.cardImageView.frame.origin.y, 120, 40);
                         cell.cardBarView.frame = CGRectMake(cell.cardImageView.frame.origin.x + 12 - 10, cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height + 28 , 224, 2);
                         
                         [cell.date setFrame:CGRectMake(-20.5f,404, 70, 10)];
@@ -12535,7 +12674,6 @@ static CGFloat padding = 20.0;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
     if(isChatHistoryOrNot == TRUE)
     {
         NSLog(@"Check 1 %d",[self.messages count]+1);
@@ -13029,12 +13167,17 @@ static CGFloat padding = 20.0;
     
     if(isChatHistoryOrNot == TRUE)
     {
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        if([messages count]>=1)
+        {
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
     }
     else
     {
         if([messages count]>=1)
+        {
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
     }
 
 }
@@ -13258,7 +13401,10 @@ static CGFloat padding = 20.0;
     
     if(isChatHistoryOrNot == TRUE)
     {
+        if([messages count]>=1)
+        {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
     }
     else
     {
@@ -13505,11 +13651,17 @@ static CGFloat padding = 20.0;
     [self.tableView reloadData];
     if(isChatHistoryOrNot == TRUE)
     {
+        if([messages count]>=1)
+        {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
     }
     else
     {
+        if([messages count]>=1)
+        {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
     }
     
     
@@ -13640,11 +13792,17 @@ static CGFloat padding = 20.0;
     [self.tableView reloadData];
     if(isChatHistoryOrNot == TRUE)
     {
+        if([messages count]>=1)
+        {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count] inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
     }
     else
     {
+        if([messages count]>=1)
+        {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
     }
     
     // update card status for localstorage

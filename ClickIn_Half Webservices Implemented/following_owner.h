@@ -35,7 +35,6 @@
     UserInfo *otherUser;
     LabeledActivityIndicatorView *activity;
     UILabel *headertext;
-
 }
 
 @property(strong,nonatomic)NSString *is_Owner;

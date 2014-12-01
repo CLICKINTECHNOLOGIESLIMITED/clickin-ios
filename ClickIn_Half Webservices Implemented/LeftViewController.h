@@ -19,7 +19,7 @@
 @interface LeftViewController : TKTintedKeyboardViewController<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,UITextFieldDelegate,leftchatReceiveProtocol>
 {
     UITableView *table;
-    NSMutableArray *relationArray;
+    //NSMutableArray *relationArray;
     
     // models references
     ModelManager *modelmanager;
@@ -38,4 +38,6 @@
     UIImageView *SearchBGimgView;
 }
 @property(strong,nonatomic) NSString *PartnerQBId;
+@property(strong,nonatomic) NSMutableArray *relationArray;
+@property(strong,nonatomic) NSString *ownersClick;
 @end

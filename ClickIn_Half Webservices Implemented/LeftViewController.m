@@ -27,7 +27,7 @@
 @end
 
 @implementation LeftViewController
-@synthesize PartnerQBId;
+@synthesize PartnerQBId,relationArray;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -50,7 +50,7 @@
      //[self getuserrelations];
     [profilemanager getRelations:YES];
     
-    self.PartnerQBId = [[NSUserDefaults standardUserDefaults] objectForKey:@"LeftMenuPartnerQBId"];
+    PartnerQBId = [[NSUserDefaults standardUserDefaults] objectForKey:@"LeftMenuPartnerQBId"];
     
     if(table)
         [table reloadData];
@@ -110,7 +110,7 @@
     profilemanager=modelmanager.profileManager;
 
     
-     self.PartnerQBId= @"";
+     PartnerQBId= @"";
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     if(appDelegate.isAppLaunching == true)
         appDelegate.isAppLaunching = false;
@@ -448,6 +448,51 @@
                 ((RelationInfo*)[relationArray objectAtIndex:i]).unreadMessagesCount++;
                 
                 NSLog(@"%@",((RelationInfo*)[relationArray objectAtIndex:i]).relationship_ID);
+                
+                
+                //update clicks score if message contains clicks
+                NSString *StrClicks = message.customParameters[@"clicks"];
+                if(StrClicks.length>0 && [StrClicks intValue])
+                {
+                    if([message.customParameters[@"shareStatus"] length]>0 && [message.customParameters[@"shareStatus"] isEqualToString:@"shared"])
+                    {
+                        
+                    }
+                    else
+                    {
+                        int ownersClicks = [((RelationInfo*)[relationArray objectAtIndex:i]).ownerClicks integerValue];
+                        ((RelationInfo*)[relationArray objectAtIndex:i]).ownerClicks =[NSString stringWithFormat:@"%i",ownersClicks+[StrClicks intValue]];
+                    }
+                }
+
+                //update clicks score when card is accpeted
+                if([message.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"accepted"] && [message.customParameters[@"shareStatus"] length]==0)
+                {
+                    
+                    if([message.customParameters[@"card_owner"] isEqualToString:[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]])
+                    {
+                        int addMyClicks = [((RelationInfo*)[relationArray objectAtIndex:i]).ownerClicks integerValue];
+                        addMyClicks += [message.customParameters[@"card_clicks"] intValue];
+                        ((RelationInfo*)[relationArray objectAtIndex:i]).ownerClicks = [NSString stringWithFormat:@"%d",addMyClicks];
+                        
+                        int addMyFriendClicks = [((RelationInfo*)[relationArray objectAtIndex:i]).partnerClicks integerValue];
+                        addMyFriendClicks -= [message.customParameters[@"card_clicks"] intValue];
+                        ((RelationInfo*)[relationArray objectAtIndex:i]).partnerClicks = [NSString stringWithFormat:@"%d",addMyFriendClicks];
+                        
+                    }
+                    else
+                    {
+                        int addMyClicks = [((RelationInfo*)[relationArray objectAtIndex:i]).ownerClicks integerValue];
+                        addMyClicks -= [message.customParameters[@"card_clicks"] intValue];
+                        ((RelationInfo*)[relationArray objectAtIndex:i]).ownerClicks = [NSString stringWithFormat:@"%d",addMyClicks];
+                        
+                        int addMyFriendClicks = [((RelationInfo*)[relationArray objectAtIndex:i]).partnerClicks integerValue];
+                        addMyFriendClicks += [message.customParameters[@"card_clicks"] intValue];
+                        ((RelationInfo*)[relationArray objectAtIndex:i]).partnerClicks = [NSString stringWithFormat:@"%d",addMyFriendClicks];
+                    }
+                }
+
+                
                 
                 //////////////////////////////////////////// add unread messages in local storage/////////////////////////////////////////////////////////////////////
                 
@@ -1384,6 +1429,13 @@
             return;
         }
         
+        // CHANGE 20 Nov
+        if (PartnerQBId)
+        {
+            PartnerQBId= @"";
+            [[NSUserDefaults standardUserDefaults] setObject:PartnerQBId forKey:@"LeftMenuPartnerQBId"];
+        }
+        
         
         profile_otheruser *profile_other = [[profile_otheruser alloc] initWithNibName:nil bundle:nil];
         profile_other.isFromSearchByName = true;
@@ -1468,7 +1520,7 @@
                 center.int_leftmenuIndex = indexPath.row;
                 center.relationObject = ((RelationInfo*)[relationArray objectAtIndex:indexPath.row]);
 
-                self.PartnerQBId = [NSString stringWithFormat:@"%@",((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerQB_ID];
+                PartnerQBId = [NSString stringWithFormat:@"%@",((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerQB_ID];
                 
                 [[NSUserDefaults standardUserDefaults] setObject:self.PartnerQBId forKey:@"LeftMenuPartnerQBId"];
                 

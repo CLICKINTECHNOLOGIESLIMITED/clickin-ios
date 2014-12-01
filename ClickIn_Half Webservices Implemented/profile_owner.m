@@ -336,7 +336,15 @@
 {
     Name.text = [profilemanager.ownerDetails.name capitalizedString];
     
+    NSLog(@"profilemanager.ownerDetails.profilePicUrl %@",profilemanager.ownerDetails.profilePicUrl);
+    SDImageCache *imageCache = [SDImageCache sharedImageCache];
+    [imageCache clearMemory];
+    [imageCache clearDisk];
+    [imageCache cleanDisk];
+    
     //set the profile pic
+    
+  
     [owner_profilepic setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
     
     //set age and gender

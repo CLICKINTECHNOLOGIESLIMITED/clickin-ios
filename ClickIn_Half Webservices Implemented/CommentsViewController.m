@@ -1762,8 +1762,6 @@
                         cell.viewAllCommentsBtn.frame = CGRectZero;
                     }
                 }
-                
-                
             }
             else
             {
