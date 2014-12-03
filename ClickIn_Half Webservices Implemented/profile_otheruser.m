@@ -424,7 +424,7 @@
 {
     //[activity hide];
     //set the profile pic
-    [owner_profilepic setImageWithURL:[NSURL URLWithString:relationObject.userDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+    [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:relationObject.userDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
     
     //set age and gender
    // userinfo1.text=[NSString stringWithFormat:@"%@, %@",relationObject.userDetails.gender,relationObject.userDetails.age];
@@ -1052,7 +1052,7 @@
             
             //profile pic
             if(((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl.length>0)
-                [profile_pic setImageWithURL:[NSURL URLWithString:((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+                [profile_pic sd_setImageWithURL:[NSURL URLWithString:((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
             //name text
             if(((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerName.length>0)
                 name.text=[((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerName capitalizedString];

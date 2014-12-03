@@ -11,6 +11,8 @@
 #import "HPGrowingTextView.h"
 #import "Newsfeed.h"
 #import "TKTintedKeyboardViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/UIImageView+UIActivityIndicatorForSDWebImage.h>
 
 
 @interface CommentsViewController : TKTintedKeyboardViewController<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,UITextFieldDelegate,HPGrowingTextViewDelegate>

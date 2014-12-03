@@ -63,14 +63,14 @@
 
 #define alertNetRechMessage NSLocalizedString(@"Please check your internet connection.",@"")
 
-#define DomainNameUrl @"https://dev.clickinapp.com/"
+//#define DomainNameUrl @"https://dev.clickinapp.com/"
 
 //#define DomainNameUrl @"http://23.21.65.97/"
 
 // Latest Staging
 //#define DomainNameUrl @"https://staging.clickinapp.com/"
 
-//#define DomainNameUrl @"https://api.clickinapp.com/"
+#define DomainNameUrl @"https://api.clickinapp.com/"
 
 #define QBchatTable @"chats"
 

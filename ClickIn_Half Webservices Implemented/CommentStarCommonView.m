@@ -795,14 +795,15 @@
                 
                 cell.PhotoView.frame=cell.imageSentView.frame;
                 
-                [cell.PhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"fileID"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
-                    [cell.imageSentView setImage:cell.PhotoView.image forState:UIControlStateNormal]; cell.imageSentView.enabled=true; cell.PhotoView.alpha = 0; } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
+                [cell.PhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"fileID"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+                {
+                    [cell.imageSentView setImage:cell.PhotoView.image forState:UIControlStateNormal]; cell.imageSentView.enabled=true; cell.PhotoView.alpha = 0;
+                    
+                } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
                 
                 
                 [cell.imageSentView addTarget:self action:@selector(showFullScreenPicture:)
                              forControlEvents:UIControlEventTouchUpInside];
-                
-                
             }
             else
             {
@@ -833,9 +834,11 @@
                 cell.ThumbnailPhotoView.frame=cell.VideoSentView.frame;
                 
                 if(messageBody.customParameters[@"videoThumbnail"]!= [NSNull null])
-                    [cell.ThumbnailPhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"videoThumbnail"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){ [cell.VideoSentView setImage:[UIImage imageNamed:@"Play_Button.png"] forState:UIControlStateNormal]; cell.VideoSentView.enabled=true; } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
-                
-                
+                    [cell.ThumbnailPhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"videoThumbnail"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+                {
+                        [cell.VideoSentView setImage:[UIImage imageNamed:@"Play_Button.png"] forState:UIControlStateNormal]; cell.VideoSentView.enabled=true;
+                } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
+                     
                 cell.VideoSentView.tag = indexPath.row - index;
                 [cell.VideoSentView addTarget:self action:@selector(showFullScreenVideo:)
                              forControlEvents:UIControlEventTouchUpInside];
@@ -906,9 +909,17 @@
                 
                 cell.LocationView.frame=cell.LocationSentView.frame;
                 
-                [cell.LocationView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"locationID"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
-                    [cell.LocationSentView setImage:cell.LocationView.image forState:UIControlStateNormal]; cell.LocationSentView.enabled=true; cell.LocationView.alpha = 0; if(error){NSLog(@"Fass gya");}} usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
-                
+                [cell.LocationView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"locationID"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+                {
+                    [cell.LocationSentView setImage:cell.LocationView.image forState:UIControlStateNormal];
+                    cell.LocationSentView.enabled=true;
+                    cell.LocationView.alpha = 0;
+                }
+                       usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                 
+                 
+                 
+                 
                 
                 //                [cell.LocationSentView addTarget:self action:@selector(showMapView:)
                 //                                forControlEvents:UIControlEventTouchUpInside];

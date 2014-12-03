@@ -19,6 +19,8 @@
 #import "CSAnimationView.h"
 #import "PreviewAttachment_View.h"
 #import "FXBlurView.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/UIImageView+UIActivityIndicatorForSDWebImage.h>
 
 
 @interface CenterViewController : TKTintedKeyboardViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UIScrollViewDelegate,AVAudioPlayerDelegate,AVAudioRecorderDelegate,FBLoginViewDelegate,FBViewControllerDelegate,HPGrowingTextViewDelegate,SharedMessageDelegate,CenterchatReceiveProtocol,CenterCustomObjectProtocol,MODropAlertViewDelegate,AttachmentProtocol>

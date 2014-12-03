@@ -215,8 +215,9 @@
                 {
                     receiverUrl = @"";
                 }
-                
-                
+                ///HERE
+                NSLog(@"Created is %@",[[[jsonResponse objectForKey:@"newsfeedArray"] objectAtIndex:i] objectForKey:@"created"] );
+                // HERE CHECK THE
                 NSString *Time = [[[[NSArray arrayWithArray:[jsonResponse objectForKey:@"newsfeedArray"]] objectAtIndex:i] objectForKey:@"created"] substringWithRange:NSMakeRange(11, 5)] ;
                 if([NSNull null] == [[[NSArray arrayWithArray:[jsonResponse objectForKey:@"newsfeedArray"]] objectAtIndex:i] objectForKey:@"created"] || [[[NSArray arrayWithArray:[jsonResponse objectForKey:@"newsfeedArray"]] objectAtIndex:i] objectForKey:@"created"] == nil)
                 {
@@ -229,8 +230,6 @@
                     [formatter setDateFormat:@"HH:mm"];
                     NSDate *sourceDate = [formatter dateFromString:Time];
                     
-                    
-                    
                     NSDateFormatter* df_local = [[NSDateFormatter alloc] init];
                     [df_local setTimeZone:[NSTimeZone systemTimeZone]];
                     [df_local setDateFormat:@"HH:mm"];
@@ -238,6 +237,12 @@
                     
                     
                     NSArray *time_components = [date componentsSeparatedByString:@":"];
+                    
+                    
+                    if (time_components.count==0)
+                    {
+                        NSAssert(nil, @"Time Components count is zero");
+                    }
                     
                     if([[time_components objectAtIndex:0] integerValue]>=12)
                         Time = [NSString stringWithFormat:@"%@:%@ PM",[time_components objectAtIndex:0],[time_components objectAtIndex:1]];
@@ -254,9 +259,7 @@
                 newsfeed.starredArrayNewsfeedPage = [[[[NSArray arrayWithArray:[jsonResponse objectForKey:@"newsfeedArray"]] objectAtIndex:i] objectForKey:@"starredArray"] mutableCopy];
                 
                 newsfeed.senderTime = Time;
-                
                 newsfeed.receiverTime = Time;
-                
                 newsfeed.senderImageUrl = senderUrl;
                 newsfeed.receiverImageUrl = receiverUrl;
                 newsfeed.senderName = sender_Name;
@@ -287,8 +290,6 @@
                  break;
                  }
                  }*/
-                
-                
                 
                 message.ID = chatId;
                 if(![MessageClicks isEqual:[NSNull null]])
@@ -487,7 +488,6 @@
         [self postNewsfeedsUpdated];
         isFetchingEarlier = false;
         isHistoryAvailable = false;
-        
     }
 }
 

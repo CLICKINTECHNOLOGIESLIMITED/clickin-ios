@@ -1257,10 +1257,10 @@ AppDelegate *appDelegate;
             {
                 if([[FBusersOnCLickin objectAtIndex:indexPath.row]objectForKey:@"fb_user_pic_url"] == nil)
                 {
-                    [(UIImageView*)[cell viewWithTag:22222] setImageWithURL:[NSURL URLWithString:[[FBusersOnCLickin objectAtIndex:indexPath.row]objectForKey:@"fb_user_pic_url"]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+                    [(UIImageView*)[cell viewWithTag:22222] sd_setImageWithURL:[NSURL URLWithString:[[FBusersOnCLickin objectAtIndex:indexPath.row]objectForKey:@"fb_user_pic_url"]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
                 }
                 else
-                    [(UIImageView*)[cell viewWithTag:22222] setImageWithURL:[NSURL URLWithString:[[FBusersOnCLickin objectAtIndex:indexPath.row]objectForKey:@"fb_user_pic_url"]]];
+                    [(UIImageView*)[cell viewWithTag:22222] sd_setImageWithURL:[NSURL URLWithString:[[FBusersOnCLickin objectAtIndex:indexPath.row]objectForKey:@"fb_user_pic_url"]]];
                 
                 ((UILabel*)[cell viewWithTag:11111]).text = [[FBusersOnCLickin objectAtIndex:indexPath.row]objectForKey:@"fb_name"];
                 
@@ -1292,7 +1292,7 @@ AppDelegate *appDelegate;
             {
                 //((UIImageView*)[cell viewWithTag:22222]).image = [UIImage imageWithData:[existingPhotos objectAtIndex:indexPath.row]];
                 if(![[existingPhotosUrl objectAtIndex:indexPath.row] isEqualToString:@"-"])
-                    [(UIImageView*)[cell viewWithTag:22222] setImageWithURL:[NSURL URLWithString:[existingPhotosUrl objectAtIndex:indexPath.row]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+                    [(UIImageView*)[cell viewWithTag:22222] sd_setImageWithURL:[NSURL URLWithString:[existingPhotosUrl objectAtIndex:indexPath.row]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
                 else
                     ((UIImageView*)[cell viewWithTag:22222]).image = [UIImage imageWithData:[existingPhotos objectAtIndex:indexPath.row]];
                 

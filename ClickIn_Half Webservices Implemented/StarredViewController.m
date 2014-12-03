@@ -7,7 +7,7 @@
 //
 
 #import "StarredViewController.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "AppDelegate.h"
 #import "MFSideMenu.h"
 
@@ -439,7 +439,7 @@
         
         //profile pic
         if([[usersArray objectAtIndex:indexPath.row] objectForKey:@"user_pic"] != [NSNull null])//followee_pic
-            [profile_pic setImageWithURL:[NSURL URLWithString:[[usersArray objectAtIndex:indexPath.row] objectForKey:@"user_pic"]] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+            [profile_pic sd_setImageWithURL:[NSURL URLWithString:[[usersArray objectAtIndex:indexPath.row] objectForKey:@"user_pic"] ] placeholderImage:nil ];
         //name text
         if([[usersArray objectAtIndex:indexPath.row] objectForKey:@"user_name"] != [NSNull null])//followee_name
             name.text=[[[usersArray objectAtIndex:indexPath.row] objectForKey:@"user_name"] capitalizedString];

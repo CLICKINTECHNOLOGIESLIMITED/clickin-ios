@@ -877,7 +877,7 @@
         
             //profile pic
             if([[followingArray objectAtIndex:indexPath.row] objectForKey:@"followee_pic"] != [NSNull null])//followee_pic
-                [profile_pic setImageWithURL:[NSURL URLWithString:[[followingArray objectAtIndex:indexPath.row] objectForKey:@"followee_pic"]]];
+                [profile_pic sd_setImageWithURL:[NSURL URLWithString:[[followingArray objectAtIndex:indexPath.row] objectForKey:@"followee_pic"]]];
             //name text
             if([[followingArray objectAtIndex:indexPath.row] objectForKey:@"followee_name"] != [NSNull null])//followee_name
                 name.text=[[[followingArray objectAtIndex:indexPath.row] objectForKey:@"followee_name"] capitalizedString];

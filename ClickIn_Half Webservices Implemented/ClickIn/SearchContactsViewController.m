@@ -972,7 +972,7 @@
                 cityCountry.hidden=NO;
                 if([[arrUsers objectAtIndex:indexPath.row] valueForKey:@"user_pic"] != Nil)
                 {
-                    [profile_pic setImageWithURL:[NSURL URLWithString:[[arrUsers objectAtIndex:indexPath.row] valueForKey:@"user_pic"]] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+                    [profile_pic sd_setImageWithURL:[NSURL URLWithString:[[arrUsers objectAtIndex:indexPath.row] valueForKey:@"user_pic"]] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
                 }
                 else
                 {

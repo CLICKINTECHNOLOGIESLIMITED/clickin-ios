@@ -956,7 +956,7 @@
                 cityCountry.hidden=NO;
                 if([[arrUsers objectAtIndex:indexPath.row] valueForKey:@"user_pic"] != Nil)
                 {
-                    [profile_pic setImageWithURL:[NSURL URLWithString:[[arrUsers objectAtIndex:indexPath.row] valueForKey:@"user_pic"]] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+                    [profile_pic sd_setImageWithURL:[NSURL URLWithString:[[arrUsers objectAtIndex:indexPath.row] valueForKey:@"user_pic"]] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
                 }
                 else
                 {
@@ -1049,7 +1049,7 @@
         
         //[profile_pic setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]]];
         if([[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"] != [NSNull null] || profilemanager.ownerDetails.profilePicUrl != nil)
-            [profile_pic setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+            [profile_pic sd_setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
         
         UILabel *name=(UILabel*)[cell.contentView viewWithTag:2];
         //name.text=[(NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"user_name"] uppercaseString];
@@ -1181,7 +1181,7 @@
             //profile pic
             if(((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl.length>0)
             {
-                [profile_pic setImageWithURL:[NSURL URLWithString:((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+                [profile_pic sd_setImageWithURL:[NSURL URLWithString:((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
             }
             else
             {

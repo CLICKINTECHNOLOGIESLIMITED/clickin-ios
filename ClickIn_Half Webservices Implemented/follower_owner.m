@@ -1111,7 +1111,7 @@
         
         //profile pic
         if([[followerSection1Array objectAtIndex:adjustIndex] objectForKey:@"follower_pic"] != [NSNull null])//followee_pic
-            [profile_pic setImageWithURL:[NSURL URLWithString:[[followerSection1Array objectAtIndex:adjustIndex] objectForKey:@"follower_pic"]]];
+            [profile_pic sd_setImageWithURL:[NSURL URLWithString:[[followerSection1Array objectAtIndex:adjustIndex] objectForKey:@"follower_pic"]]];
         //name text
         if([[followerSection1Array objectAtIndex:adjustIndex] objectForKey:@"follower_name"] != [NSNull null])//followee_name
             name.text=[[[followerSection1Array objectAtIndex:adjustIndex] objectForKey:@"follower_name"] capitalizedString];
@@ -1257,7 +1257,7 @@
         
             //profile pic
             if([[followerSection2Array objectAtIndex:adjustIndex] objectForKey:@"follower_pic"] != [NSNull null])//followee_pic
-                [profile_pic setImageWithURL:[NSURL URLWithString:[[followerSection2Array objectAtIndex:adjustIndex] objectForKey:@"follower_pic"]]];
+                [profile_pic sd_setImageWithURL:[NSURL URLWithString:[[followerSection2Array objectAtIndex:adjustIndex] objectForKey:@"follower_pic"]]];
             //name text
             if([[followerSection2Array objectAtIndex:adjustIndex] objectForKey:@"follower_name"] != [NSNull null])//followee_name
                 name.text=[[[followerSection2Array objectAtIndex:adjustIndex] objectForKey:@"follower_name"] capitalizedString];

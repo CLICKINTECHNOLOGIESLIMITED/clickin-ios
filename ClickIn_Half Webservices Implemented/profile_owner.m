@@ -48,8 +48,9 @@
         profileLoadedFirstTime = false;
         isFromNotification = false;
     }
-    // update pic
-    [owner_profilepic setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]]];
+    NSLog(@"user pic %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]);
+//    // update pic
+    [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]]];
 }
 
 - (void)viewDidLoad
@@ -320,6 +321,7 @@
     //get relations service
     //[self getuserrelations];
     
+    
 }
 
 - (void)rightMenuToggled:(NSNotification *)notification //use notification method and logic
@@ -337,15 +339,9 @@
     Name.text = [profilemanager.ownerDetails.name capitalizedString];
     
     NSLog(@"profilemanager.ownerDetails.profilePicUrl %@",profilemanager.ownerDetails.profilePicUrl);
-    SDImageCache *imageCache = [SDImageCache sharedImageCache];
-    [imageCache clearMemory];
-    [imageCache clearDisk];
-    [imageCache cleanDisk];
-    
     //set the profile pic
-    
-  
-    [owner_profilepic setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+
+//    [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
     
     //set age and gender
     
@@ -604,7 +600,7 @@
             if([userinfo objectForKey:@"user_pic"]!= [NSNull null])
                 [[NSUserDefaults standardUserDefaults] setObject:[userinfo objectForKey:@"user_pic"] forKey:@"user_pic"];
             NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]);
-            [owner_profilepic setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]] ]; //set the profile pic
+            [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]]]; //set the profile pic
             
             
             if([gender isEqualToString:@"guy"])
@@ -723,7 +719,7 @@
                     if([jsonResponse objectForKey:@"user_pic"]!= [NSNull null])
                         [[NSUserDefaults standardUserDefaults] setObject:[jsonResponse objectForKey:@"user_pic"] forKey:@"user_pic"];
                     NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]);
-                    [owner_profilepic setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]] ]; //set the profile pic
+                    [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]] ]; //set the profile pic
                     
                     NSMutableArray *tempArray = [[NSMutableArray alloc] init];
                     tempArray=[jsonResponse objectForKey:@"relationships"];
@@ -1036,7 +1032,7 @@
             //profile pic
             if(((RelationInfo*)[nonAcceptedUsersArray objectAtIndex:indexPath.row]).partnerPicUrl.length>0)
             {
-                [profile_pic setImageWithURL:[NSURL URLWithString:((RelationInfo*)[nonAcceptedUsersArray objectAtIndex:indexPath.row]).partnerPicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+                [profile_pic sd_setImageWithURL:[NSURL URLWithString:((RelationInfo*)[nonAcceptedUsersArray objectAtIndex:indexPath.row]).partnerPicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
             }
             else
             {
@@ -1229,7 +1225,7 @@
             //profile pic
             if(((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl.length>0)
             {
-                [profile_pic setImageWithURL:[NSURL URLWithString:((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+                [profile_pic sd_setImageWithURL:[NSURL URLWithString:((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
                 PendingTxt.text= @"";
             }
             else

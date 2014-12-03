@@ -16,7 +16,6 @@
 #import "PhotoViewController.h"
 #import "TradePostCards.h"
 #import "PlayCardView.h"
-#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 #include <CommonCrypto/CommonHMAC.h>
  #import <MobileCoreServices/UTCoreTypes.h>
 #import <MediaPlayer/MediaPlayer.h>
@@ -315,12 +314,12 @@ AppDelegate *appDelegate;
  //   if([NSNull null] != [[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"] || [[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"] != nil)
 //    [self.UserImgView setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]]];
     
-    [self.UserImgView setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+    [self.UserImgView sd_setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil];
 
     
     
     if(![partner_pic isEqual: [NSNull null]])
-    [self.PartnerImgView setImageWithURL:[NSURL URLWithString:partner_pic] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+    [self.PartnerImgView sd_setImageWithURL:[NSURL URLWithString:partner_pic] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
    
     UIView *OverLayView=[[UIView alloc]initWithFrame:CGRectMake(0, 86, 320, 399)];
     if(IS_IOS_7)
@@ -1170,7 +1169,7 @@ AppDelegate *appDelegate;
     //set notification count set
     notification_text.text=profilemanager.ownerDetails.notificationCount;
     
-    [self.UserImgView setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+    [self.UserImgView sd_setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
     
     if([notification_text.text isEqualToString:@"0"])
         notification_text.textColor = [UIColor colorWithRed:(52.0/255.0) green:(63.0/255.0) blue:(96.0/255.0) alpha:1.0];
@@ -3928,7 +3927,7 @@ AppDelegate *appDelegate;
                 }
                 else
                 {
-                    [self.UserImgView setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]]];
+                    [self.UserImgView sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]]];
                 }
                 
                 if([NSNull null] == (NSNull *)[[NSUserDefaults standardUserDefaults] objectForKey:@"partner_pic"] || [[NSUserDefaults standardUserDefaults] objectForKey:@"partner_pic"] == nil)
@@ -3937,7 +3936,7 @@ AppDelegate *appDelegate;
                 }
                 else
                 {
-                    [self.PartnerImgView setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"partner_pic"]]];
+                    [self.PartnerImgView sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"partner_pic"]]];
                 }
                 
                 [prefs setObject:[[[TempArray objectAtIndex:0] objectForKey:@"id"] objectForKey:@"$id"] forKey:@"relationShipId"];
@@ -8469,9 +8468,33 @@ static CGFloat padding = 20.0;
                 cell.imageSentView.enabled=false;
                 
                 cell.PhotoView.frame=cell.imageSentView.frame;
-                
-                [cell.PhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"fileID"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
-                    [cell.imageSentView setImage:cell.PhotoView.image forState:UIControlStateNormal]; cell.imageSentView.enabled=true; cell.PhotoView.alpha = 0; if(error){NSLog(@"Fass gya");}} usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
+            
+                [cell.PhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"fileID"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+                {
+                    if (!error)
+                    {
+                        [cell.imageSentView setImage:cell.PhotoView.image forState:UIControlStateNormal];
+                        cell.imageSentView.enabled=true;
+                        cell.PhotoView.alpha = 0;
+                    }
+                    
+                    if(error)
+                    {
+                        NSLog(@"Error %@",error.description);
+                    }}
+                 usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray
+                 ];
+         
+          // Commented 3 Dec
+//                [cell.PhotoView sd_setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"fileID"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType)
+//                {
+//                    [cell.imageSentView setImage:cell.PhotoView.image forState:UIControlStateNormal];
+//                    cell.imageSentView.enabled=true;
+//                    cell.PhotoView.alpha = 0;
+//                    if(error)
+//                    {
+//                        NSLog(@"Fass gya");
+//                    }} usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                 
                 //[cell.imageSentView setImage:[UIImage imageWithData:[imagesData objectAtIndex:indexPath.row]] forState:UIControlStateNormal];
                 //[cell.imageSentView setImage:cell.PhotoView.image forState:UIControlStateNormal];
@@ -8515,8 +8538,17 @@ static CGFloat padding = 20.0;
                     else
                     {
                         cell.imageSentView.enabled=false;
-                        [cell.PhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"imageURL"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
-                            [cell.imageSentView setImage:cell.PhotoView.image forState:UIControlStateNormal]; cell.imageSentView.enabled=true; cell.PhotoView.alpha = 0; if(error){NSLog(@"Fass gya");}} usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
+                        [cell.PhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"imageURL"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+                        {
+                             [cell.imageSentView setImage:cell.PhotoView.image forState:UIControlStateNormal];
+                            cell.imageSentView.enabled=true;
+                            cell.PhotoView.alpha = 0;
+                            if(error)
+                            {
+                                NSLog(@"Fass gya");
+                            }
+                        }
+                            usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                     }
                 }
                 else
@@ -8624,8 +8656,13 @@ static CGFloat padding = 20.0;
                 cell.ThumbnailPhotoView.frame=cell.VideoSentView.frame;
                 
                 if(messageBody.customParameters[@"videoThumbnail"]!= [NSNull null])
-                    [cell.ThumbnailPhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"videoThumbnail"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){ [cell.VideoSentView setImage:[UIImage imageNamed:@"Play_Button.png"] forState:UIControlStateNormal]; cell.VideoSentView.enabled=true; } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
-                
+                    [cell.ThumbnailPhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"videoThumbnail"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+                {
+                         [cell.VideoSentView setImage:[UIImage imageNamed:@"Play_Button.png"] forState:UIControlStateNormal];
+                    cell.VideoSentView.enabled=true;
+                }
+                     
+                usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                 
                 cell.VideoSentView.tag = indexPath.row-1;
                 [cell.VideoSentView addTarget:self action:@selector(showFullScreenVideo:)
@@ -8660,7 +8697,12 @@ static CGFloat padding = 20.0;
                         cell.ThumbnailPhotoView.frame=cell.VideoSentView.frame;
                         
                         if(messageBody.customParameters[@"videoThumbnail"]!= [NSNull null])
-                            [cell.ThumbnailPhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"imageURL"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){ [cell.VideoSentView setImage:[UIImage imageNamed:@"Play_Button.png"] forState:UIControlStateNormal]; cell.VideoSentView.enabled=true; } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
+                            [cell.ThumbnailPhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"imageURL"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+                        {
+                                [cell.VideoSentView setImage:[UIImage imageNamed:@"Play_Button.png"] forState:UIControlStateNormal];
+                            cell.VideoSentView.enabled=true;
+                        } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray
+                        ];
                     }
                 }
                 else
@@ -8837,8 +8879,16 @@ static CGFloat padding = 20.0;
                 
                 cell.LocationView.frame=cell.LocationSentView.frame;
                 
-                [cell.LocationView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"locationID"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
-                    [cell.LocationSentView setImage:cell.LocationView.image forState:UIControlStateNormal]; cell.LocationSentView.enabled=true; cell.LocationView.alpha = 0; if(error){NSLog(@"Fass gya");}} usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
+                [cell.LocationView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"locationID"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+                {
+                    if (!error)
+                    {
+                        [cell.LocationSentView setImage:cell.LocationView.image forState:UIControlStateNormal];
+                        cell.LocationSentView.enabled=true;
+                        cell.LocationView.alpha = 0;
+                    }
+                }
+            usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                 
                 
                 [cell.LocationSentView addTarget:self action:@selector(showMapView:)
@@ -8877,8 +8927,13 @@ static CGFloat padding = 20.0;
                         
                         cell.LocationView.frame=cell.LocationSentView.frame;
                         
-                        [cell.LocationView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"imageURL"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
-                            [cell.LocationSentView setImage:cell.LocationView.image forState:UIControlStateNormal]; cell.LocationSentView.enabled=true; cell.LocationView.alpha = 0; if(error){NSLog(@"Fass gya");}} usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
+                        [cell.LocationView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"imageURL"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+                        {
+                            [cell.LocationSentView setImage:cell.LocationView.image forState:UIControlStateNormal];
+                            cell.LocationSentView.enabled=true;
+                            cell.LocationView.alpha = 0;
+                        }
+                               usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
                     }
                 }
                 else
@@ -10520,7 +10575,12 @@ static CGFloat padding = 20.0;
             
             cell.PhotoView.frame=cell.imageSentView.frame;
             
-            [cell.PhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"fileID"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){ [cell.imageSentView setImage:cell.PhotoView.image forState:UIControlStateNormal]; cell.imageSentView.enabled=true; cell.PhotoView.alpha = 0; } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
+            [cell.PhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"fileID"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+             {
+                [cell.imageSentView setImage:cell.PhotoView.image forState:UIControlStateNormal];
+                 cell.imageSentView.enabled=true;
+                 cell.PhotoView.alpha = 0;
+             } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
             
             //[cell.imageSentView setImage:[UIImage imageWithData:[imagesData objectAtIndex:indexPath.row]] forState:UIControlStateNormal];
             //[cell.imageSentView setImage:cell.PhotoView.image forState:UIControlStateNormal];
@@ -10564,8 +10624,12 @@ static CGFloat padding = 20.0;
                 else
                 {
                     cell.imageSentView.enabled=false;
-                    [cell.PhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"imageURL"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
-                        [cell.imageSentView setImage:cell.PhotoView.image forState:UIControlStateNormal]; cell.imageSentView.enabled=true; cell.PhotoView.alpha = 0; if(error){NSLog(@"Fass gya");}} usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
+                    [cell.PhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"imageURL"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+                    {
+                        [cell.imageSentView setImage:cell.PhotoView.image forState:UIControlStateNormal];
+                        cell.imageSentView.enabled=true;
+                        cell.PhotoView.alpha = 0;
+                    } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
                 }
             }
             else
@@ -10667,8 +10731,11 @@ static CGFloat padding = 20.0;
             cell.ThumbnailPhotoView.frame=cell.VideoSentView.frame;
             
             if(messageBody.customParameters[@"videoThumbnail"]!= [NSNull null])
-                [cell.ThumbnailPhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"videoThumbnail"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){ [cell.VideoSentView setImage:[UIImage imageNamed:@"Play_Button.png"] forState:UIControlStateNormal]; cell.VideoSentView.enabled=true; } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
-            
+                [cell.ThumbnailPhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"videoThumbnail"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+            {
+                    [cell.VideoSentView setImage:[UIImage imageNamed:@"Play_Button.png"] forState:UIControlStateNormal];
+                cell.VideoSentView.enabled=true;
+            } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
             cell.VideoSentView.tag = indexPath.row;
             [cell.VideoSentView addTarget:self action:@selector(showFullScreenVideo:)
                          forControlEvents:UIControlEventTouchUpInside];
@@ -10705,7 +10772,12 @@ static CGFloat padding = 20.0;
                     cell.ThumbnailPhotoView.frame=cell.VideoSentView.frame;
                     
                     if(messageBody.customParameters[@"videoThumbnail"]!= [NSNull null])
-                        [cell.ThumbnailPhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"imageURL"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){ [cell.VideoSentView setImage:[UIImage imageNamed:@"Play_Button.png"] forState:UIControlStateNormal]; cell.VideoSentView.enabled=true; } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
+                        [cell.ThumbnailPhotoView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"imageURL"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+                    {
+                            [cell.VideoSentView setImage:[UIImage imageNamed:@"Play_Button.png"] forState:UIControlStateNormal];
+                        cell.VideoSentView.enabled=true;
+                        }
+                                     usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
                 }
 
             }
@@ -10891,8 +10963,11 @@ static CGFloat padding = 20.0;
             
             cell.LocationView.frame=cell.LocationSentView.frame;
             
-            [cell.LocationView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"locationID"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
-                [cell.LocationSentView setImage:cell.LocationView.image forState:UIControlStateNormal]; cell.LocationSentView.enabled=true; cell.LocationView.alpha = 0; if(error){NSLog(@"Fass gya");}} usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
+            [cell.LocationView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"locationID"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                [cell.LocationSentView setImage:cell.LocationView.image forState:UIControlStateNormal];
+                cell.LocationSentView.enabled=true; cell.LocationView.alpha = 0;
+            } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            
             
             [cell.LocationSentView addTarget:self action:@selector(showMapView:)
                             forControlEvents:UIControlEventTouchUpInside];
@@ -10927,8 +11002,10 @@ static CGFloat padding = 20.0;
                     
                     cell.LocationView.frame=cell.LocationSentView.frame;
                     
-                    [cell.LocationView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"imageURL"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
-                        [cell.LocationSentView setImage:cell.LocationView.image forState:UIControlStateNormal]; cell.LocationSentView.enabled=true; cell.LocationView.alpha = 0; if(error){NSLog(@"Fass gya");}} usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
+                    [cell.LocationView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"imageURL"]] placeholderImage:[UIImage imageNamed:@"loadingggggg.png"] options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+                    {
+                           [cell.LocationSentView setImage:cell.LocationView.image forState:UIControlStateNormal]; cell.LocationSentView.enabled=true; cell.LocationView.alpha = 0;
+                    } usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray ];
                 }
 
             }

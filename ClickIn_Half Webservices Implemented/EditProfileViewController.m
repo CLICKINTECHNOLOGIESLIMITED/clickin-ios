@@ -121,8 +121,8 @@
     //[profileImageView setImage:[UIImage imageNamed:@"editPhotoView.png"]];
 //    [profileImageView setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl]];
     
-    [profileImageView setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
-    
+    [profileImageView sd_setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
         NSData *data = UIImageJPEGRepresentation(profileImageView.image, 0.1f);
         [Base64 initialize];
         StrEncoded = [Base64 encode:data];
@@ -135,9 +135,7 @@
         else
             [saveButton setEnabled:YES];
 
-        
     }];
-    
     [scroll addSubview:profileImageView];
     
  
