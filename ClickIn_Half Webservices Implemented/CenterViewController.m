@@ -2760,6 +2760,7 @@ AppDelegate *appDelegate;
     
     if(sender.tag==5)
     {
+        
         //video picking
         [self AlertForSeLectionTheVideoCapturing];
         [UIView animateWithDuration:0.5 animations:^() {
@@ -2853,6 +2854,8 @@ AppDelegate *appDelegate;
     else
         isMusicPlaying = false;
     
+    
+    
     // Setup audio session
     AVAudioSession *session = [AVAudioSession sharedInstance];
     NSError *sessionCategoryError = nil;
@@ -2869,7 +2872,6 @@ AppDelegate *appDelegate;
     alert = [[UIAlertView alloc]  initWithTitle:@"" message:@"Speak while holding the button" delegate:nil cancelButtonTitle:@" " otherButtonTitles:nil, nil];
     
     [alert show];
-    
 
     [self performSelector:@selector(startRecording:) withObject:alert afterDelay:0.5];
     */
@@ -2890,25 +2892,44 @@ AppDelegate *appDelegate;
 {
     [recorder stop];
     
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    NSError *sessionCategoryError = nil;
+//    AVAudioSession *session = [AVAudioSession sharedInstance];
+//    NSError *sessionCategoryError = nil;
     if(isMusicPlaying)
     {
         [[MPMusicPlayerController iPodMusicPlayer] play];
-        [session setCategory:AVAudioSessionCategoryAmbient error:&sessionCategoryError];
+        //[session setCategory:AVAudioSessionCategoryAmbient error:&sessionCategoryError];
     }
     else
     {
-        [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&sessionCategoryError];
-        UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
-        AudioSessionSetProperty (kAudioSessionProperty_OverrideAudioRoute,sizeof (audioRouteOverride),&audioRouteOverride);
+//        [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&sessionCategoryError];
+//       UInt32 audioRouteOverride = kAudioSessionOverrideAudioRoute_Speaker;
+//        AudioSessionSetProperty (kAudioSessionProperty_OverrideAudioRoute,sizeof (audioRouteOverride),&audioRouteOverride);
 
     }
     
-    [session setActive:YES error:nil];
+    //[session setActive:YES error:nil];
     
-//    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-//    [audioSession setActive:NO error:nil];
+    // Initialize audio session
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    
+    // Active your audio session
+    [audioSession setActive: NO error: nil];
+    
+    // Set audio session category
+    [audioSession setCategory:AVAudioSessionCategoryAmbient error:nil];
+    
+    // Modifying Playback Mixing Behavior, allow playing music in other apps
+    OSStatus propertySetError = 0;
+    UInt32 allowMixing = true;
+    
+    propertySetError = AudioSessionSetProperty (
+                                                kAudioSessionProperty_OverrideCategoryMixWithOthers,
+                                                sizeof (allowMixing),
+                                                &allowMixing);
+    
+    // Active your audio session
+    [audioSession setActive: YES error: nil];
+
     
     [UIView animateWithDuration:0.4 animations:^() {
         startRecordingView.alpha = 0;
@@ -4842,6 +4863,17 @@ AppDelegate *appDelegate;
         {
             //[self CaptureFromCamara];
             [self showVideoPicker:UIImagePickerControllerSourceTypeCamera];
+            
+            // pause the music
+            if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying)
+            {
+                isMusicPlaying = true;
+                [[MPMusicPlayerController iPodMusicPlayer] pause];
+            }
+            else
+                isMusicPlaying = false;
+            
+            
         }
         else if (buttonIndex == 2)
         {
@@ -4861,8 +4893,7 @@ AppDelegate *appDelegate;
             audio_picker.allowsPickingMultipleItems  = NO;
             audio_picker.prompt                      = NSLocalizedString(@"AddSongsPrompt", @"Prompt to user to choose some songs to play");
             
-            
-            
+     
             [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleDefault animated:YES];
             
             [self presentViewController:audio_picker animated:YES completion:nil];
@@ -5083,7 +5114,34 @@ AppDelegate *appDelegate;
          }
         
         videoData = nil;
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            if(isMusicPlaying)
+            {
+                [[MPMusicPlayerController iPodMusicPlayer] play];
+                //[session setCategory:AVAudioSessionCategoryAmbient error:&sessionCategoryError];
+            }
+            
+            // Initialize audio session
+            AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+            
+            // Active your audio session
+            [audioSession setActive: NO error: nil];
+            
+            // Set audio session category
+            [audioSession setCategory:AVAudioSessionCategoryAmbient error:nil];
+            
+            // Modifying Playback Mixing Behavior, allow playing music in other apps
+            OSStatus propertySetError = 0;
+            UInt32 allowMixing = true;
+            
+            propertySetError = AudioSessionSetProperty (
+                                                        kAudioSessionProperty_OverrideCategoryMixWithOthers,
+                                                        sizeof (allowMixing),
+                                                        &allowMixing);
+            
+            // Active your audio session
+            [audioSession setActive: YES error: nil];
+        }];
     }
     
     if (CFStringCompare ((__bridge CFStringRef) mediaType, kUTTypeImage, 0)
@@ -5125,11 +5183,9 @@ AppDelegate *appDelegate;
                         completion:nil];
         
         
-        
 //        tempImageRatio = image.size.width/image.size.height;
         /*
         tempImageRatio = 1;
-
         
         //NSURL *imagePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
         
@@ -5276,12 +5332,51 @@ AppDelegate *appDelegate;
     }
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
 
+    if(isMusicPlaying)
+    {
+        [[MPMusicPlayerController iPodMusicPlayer] play];
+        //[session setCategory:AVAudioSessionCategoryAmbient error:&sessionCategoryError];
+    }
+    
    //
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    
+    
+    
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+        if(isMusicPlaying)
+        {
+            [[MPMusicPlayerController iPodMusicPlayer] play];
+            //[session setCategory:AVAudioSessionCategoryAmbient error:&sessionCategoryError];
+        }
+        
+        // Initialize audio session
+        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+        
+        // Active your audio session
+        [audioSession setActive: NO error: nil];
+        
+        // Set audio session category
+        [audioSession setCategory:AVAudioSessionCategoryAmbient error:nil];
+        
+        // Modifying Playback Mixing Behavior, allow playing music in other apps
+        OSStatus propertySetError = 0;
+        UInt32 allowMixing = true;
+        
+        propertySetError = AudioSessionSetProperty (
+                                                    kAudioSessionProperty_OverrideCategoryMixWithOthers,
+                                                    sizeof (allowMixing),
+                                                    &allowMixing);
+        
+        // Active your audio session
+        [audioSession setActive: YES error: nil];
+
+    }];
 }
 
 -(UIImage *)scaleImage:(UIImage *)image toSize:(CGSize)newSize
@@ -8107,6 +8202,16 @@ AppDelegate *appDelegate;
 
 -(void) playAudio:(id)sender
 {
+    
+    if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying)
+    {
+        isMusicPlaying = true;
+        [[MPMusicPlayerController iPodMusicPlayer] pause];
+    }
+    else
+        isMusicPlaying = false;
+    
+    
     UIButton* play_btn = (UIButton*)sender;
     
     QBChatMessage *messageBody;
@@ -8129,16 +8234,12 @@ AppDelegate *appDelegate;
                 else
                     _audioData = [NSData dataWithContentsOfURL:[NSURL URLWithString:messageBody.customParameters[@"audioStreamURL"]]];
                 
-                
-            
             dispatch_async(dispatch_get_main_queue(), ^{
-               
-                [audioData replaceObjectAtIndex:play_btn.tag withObject:_audioData];
-
+            [audioData replaceObjectAtIndex:play_btn.tag withObject:_audioData];
             });
+    
         });
         }
-        
         else
         {
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -8162,7 +8263,6 @@ AppDelegate *appDelegate;
         [[audioData objectAtIndex:play_btn.tag] writeToFile:path atomically:YES];
         NSURL *audioUrl = [NSURL fileURLWithPath:path];
         
-        
         mpvc = [[MPMoviePlayerViewController alloc] initWithContentURL:audioUrl];
         mpvc.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
     }
@@ -8174,14 +8274,9 @@ AppDelegate *appDelegate;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(videoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:mpvc.moviePlayer];
     
-    
     [self presentMoviePlayerViewControllerAnimated:mpvc] ;
     mpvc = nil;
 
-    
-    
-    
-    
     /*
     
     if(player!=nil)
@@ -8236,6 +8331,18 @@ AppDelegate *appDelegate;
 }*/
 
 -(void)showFullScreenVideo:(id)sender{
+    
+    
+    if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying)
+    {
+        isMusicPlaying = true;
+        [[MPMusicPlayerController iPodMusicPlayer] pause];
+    }
+    else
+        isMusicPlaying = false;
+    
+    
+    
     UIButton* play_btn = (UIButton*)sender;
     
     
@@ -8275,14 +8382,36 @@ AppDelegate *appDelegate;
     
     [self presentMoviePlayerViewControllerAnimated:mpvc] ;
     mpvc = nil;
+    
 }
 
--(void)videoFinished:(NSNotification*)aNotification{
+-(void)videoFinished:(NSNotification*)aNotification
+{
+    
     int value = [[aNotification.userInfo valueForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey] intValue];
+    
+    NSLog(@"error :%@",[aNotification.userInfo valueForKey:@"error"]);
+    
     if (value == MPMovieFinishReasonUserExited) {
+        
+        if(isMusicPlaying)
+        {
+            [[MPMusicPlayerController iPodMusicPlayer] play];
+            //[session setCategory:AVAudioSessionCategoryAmbient error:&sessionCategoryError];
+        }
+        
         [self dismissMoviePlayerViewControllerAnimated];
     }
+    
+    if (value == MPMovieFinishReasonPlaybackError) {
+        NSLog(@"error");
+    }
+    
+    if (value == MPMovieFinishReasonPlaybackEnded) {
+        NSLog(@"Ended");
+    }
 }
+
 
 -(void)showMapView:(UIButton*)sender
 {

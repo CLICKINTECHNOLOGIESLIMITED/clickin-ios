@@ -1738,7 +1738,7 @@ AppDelegate *appDelegate;
             // NSLog(@"Gender is : %@",user.gender);
              NSLog(@"Gender is : %@",user.username);
              
-             strUserId=[[NSString alloc ]initWithString:[user objectID]];
+             strUserId=[[NSString alloc ]initWithString:[user objectForKey:@"id"]];
              
              NSDateFormatter* myFormatter = [[NSDateFormatter alloc] init];
              [myFormatter setDateFormat:@"MM/dd/yyyy"];//@"yyyy-MM-dd HH:mm:ss Z" //@"MM/dd/yyyy"
@@ -1797,11 +1797,9 @@ AppDelegate *appDelegate;
                  [btn_Girl setBackgroundImage:[UIImage imageNamed:@"girl-button.png"] forState:UIControlStateNormal];
                  str_Gender=@"guy";
              }
-             
-             
            
              // Initialize the profile picture
-             self.profilePictureView = [[FBProfilePictureView alloc] initWithProfileID:[user objectID] pictureCropping:FBProfilePictureCroppingOriginal];
+             self.profilePictureView = [[FBProfilePictureView alloc] initWithProfileID:[user objectForKey:@"id"] pictureCropping:FBProfilePictureCroppingOriginal];
              self.profilePictureView.tag = 564;
              // Set the size
              
