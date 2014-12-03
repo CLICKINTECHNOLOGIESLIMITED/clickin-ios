@@ -6,7 +6,7 @@
  * You may obtain a copy of the License at
  *
  *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,21 +26,20 @@
  * It start pop-ups prompting for credentials and permissions.
  */
 
-@interface FBLoginDialog : FBDialog
+@interface FBLoginDialog : FBDialog {
+    id<FBLoginDialogDelegate> _loginDelegate;
+}
 
-- (instancetype)initWithURL:(NSString *)loginURL
-                loginParams:(NSMutableDictionary *)params
-                   delegate:(id<FBLoginDialogDelegate>)loginDelegate;
-
-@property (nonatomic, assign) id<FBLoginDialogDelegate> loginDelegate;
-
+-(id) initWithURL:(NSString *) loginURL
+      loginParams:(NSMutableDictionary *) params
+         delegate:(id <FBLoginDialogDelegate>) delegate;
 @end
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 @protocol FBLoginDialogDelegate <NSObject>
 
-- (void)fbDialogLogin:(NSString *)token expirationDate:(NSDate *)expirationDate params:(NSDictionary *)params;
+- (void)fbDialogLogin:(NSString*)token expirationDate:(NSDate*)expirationDate;
 
 - (void)fbDialogNotLogin:(BOOL)cancelled;
 
