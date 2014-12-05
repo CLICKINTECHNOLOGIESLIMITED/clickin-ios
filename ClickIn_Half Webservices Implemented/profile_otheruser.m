@@ -410,6 +410,7 @@
     [relationArray removeAllObjects];
     [relationArray addObjectsFromArray:profilemanager.othersRelationshipArray];
     [table reloadData];
+    [self performSelector:@selector(reloadTableView) withObject:nil afterDelay:3];
 }
 
 - (void)RelationRequestNotificationReceived:(NSNotification *)notification //use notification method and logic
@@ -418,7 +419,10 @@
     clickInStatus = 1;
     [table reloadData];
 }
-
+-(void)reloadTableView
+{
+    [table reloadData];
+}
 #pragma mark Notifications received
 - (void)ProfileInfoNotificationReceived:(NSNotification *)notification //use notification method and logic
 {
@@ -1052,7 +1056,21 @@
             
             //profile pic
             if(((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl.length>0)
-                [profile_pic sd_setImageWithURL:[NSURL URLWithString:((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+            {
+//                [profile_pic sd_setImageWithURL:[NSURL URLWithString:((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+            NSURL *url= [NSURL URLWithString:((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl];
+            [profile_pic sd_setImageWithURL:url placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+             {
+                 if (image)
+                 {
+                     NSLog(@"Done Successfully %d",indexPath.row);
+                     // [table reloadData];
+                 }
+             } ];
+            
+            }
+            
+            
             //name text
             if(((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerName.length>0)
                 name.text=[((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerName capitalizedString];

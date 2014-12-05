@@ -4194,7 +4194,7 @@
 				1B267D6819DC31C400E960DC /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		00898C24180BCD5B00FDECC7 /* Build configuration list for PBXNativeTarget "ClickIn" */ = {
 			isa = XCConfigurationList;
@@ -4204,7 +4204,7 @@
 				1B267D6919DC31C400E960DC /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		00898C27180BCD5B00FDECC7 /* Build configuration list for PBXNativeTarget "ClickInTests" */ = {
 			isa = XCConfigurationList;
@@ -4214,7 +4214,7 @@
 				1B267D6A19DC31C400E960DC /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

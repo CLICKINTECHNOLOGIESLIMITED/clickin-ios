@@ -50,9 +50,17 @@
     }
     NSLog(@"user pic %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]);
 //    // update pic
-    [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]]];
+    [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]] placeholderImage:owner_profilepic.image options:SDWebImageRefreshCached | SDWebImageRetryFailed];
 }
 
+-(void)imageUpdated:(NSData*)imageData
+{
+    
+    UIImage *image=[UIImage imageWithData:imageData];
+    
+    [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]] placeholderImage:image options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -413,8 +421,12 @@
     [relationArray addObjectsFromArray:profilemanager.relationshipArray];
     [nonAcceptedUsersArray addObjectsFromArray:profilemanager.nonAcceptedRelationArray];
     [table reloadData];
+    [self performSelector:@selector(reloadTableView) withObject:nil afterDelay:3];
 }
-
+-(void)reloadTableView
+{
+    [table reloadData];
+}
 - (void)RelationVisibiltyChanged:(NSNotification *)notification //use notification method and logic
 {
     // reload table data
@@ -514,6 +526,7 @@
 -(void)editbuttonpressed
 {
     EditProfileViewController *editProfile = [[EditProfileViewController alloc] initWithNibName:nil bundle:nil];
+    editProfile.delegate_imageupdated=self;
     [self.navigationController pushViewController:editProfile animated:YES];
     editProfile = nil;
 }
@@ -1217,15 +1230,25 @@
             //            settingsicon.hidden=NO;
             UIImageView *line=(UIImageView*)[cell.contentView viewWithTag:7];
             line.hidden=NO;
-            
-            
+
             UILabel *PendingTxt=(UILabel*)[cell.contentView viewWithTag:13];
             PendingTxt.hidden=NO;
             
             //profile pic
             if(((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl.length>0)
             {
-                [profile_pic sd_setImageWithURL:[NSURL URLWithString:((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+                
+                NSLog(@"URL IS %@",((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl);
+               NSURL *url= [NSURL URLWithString:((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl];
+                [profile_pic sd_setImageWithURL:url placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
+                {
+                    if (image)
+                    {
+                        NSLog(@"Done Successfully %d",indexPath.row);
+                       // [table reloadData];
+                    }
+                } ];
+               
                 PendingTxt.text= @"";
             }
             else

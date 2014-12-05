@@ -19,6 +19,7 @@
 
 @implementation EditProfileViewController
 @synthesize imgPicker = _imgPicker;
+@synthesize delegate_imageupdated;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -499,6 +500,9 @@
 //                    NSLog(@"%i",cacheType);
 //                }];
                 [[SDImageCache sharedImageCache] removeImageForKey:profilemanager.ownerDetails.profilePicUrl fromDisk:YES];
+                
+                NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:StrEncoded options:0];
+                [delegate_imageupdated imageUpdated:decodedData];
                 [self.navigationController popViewControllerAnimated:YES];
             }
             else if([[jsonResponse objectForKey:@"message"] isEqualToString:@"Email already exists"])

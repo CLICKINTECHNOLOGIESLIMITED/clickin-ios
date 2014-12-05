@@ -360,14 +360,10 @@
 -(IBAction)FBButtonAction:(id)sender
 {
     UIImage *img=[(UIButton *) sender backgroundImageForState:UIControlStateNormal];
-    UIButton *button = (UIButton*)sender;
+    UIButton *buttonFB=(UIButton *)sender;
     
     if([img isEqual:[UIImage imageNamed:@"fb_grey.png"] ])
     {
-        [button setSelected:YES];
-        [button setBackgroundImage:[UIImage imageNamed:@"facebook_blue.png"]
-                            forState:UIControlStateNormal];
-        
         activity=[[LabeledActivityIndicatorView alloc]initWithController:self andText:@"Loading..."];
         //[activity show];
         NSArray *permissions = [NSArray arrayWithObjects:@"publish_stream",@"publish_actions",nil];
@@ -376,7 +372,7 @@
            FBSessionState state, NSError *error)
         {
              [self sessionStateChanged:session state:state error:error];
-         }];
+        }];
     }
     else
     {
@@ -387,8 +383,8 @@
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"fbUserName"];
         [FBSession.activeSession closeAndClearTokenInformation];
         
-        [button setSelected:NO];
-        [button setBackgroundImage:[UIImage imageNamed:@"fb_grey.png"]
+        [buttonFB setSelected:NO];
+        [buttonFB setBackgroundImage:[UIImage imageNamed:@"fb_grey.png"]
                           forState:UIControlStateNormal];
     }
 }
@@ -503,19 +499,22 @@
 
 -(IBAction)ShareButtonAction:(id)sender
 {
-    UIButton *btnFB=(UIButton *)[self.view viewWithTag:100];
+ //   UIButton *btnFB=(UIButton *)[self.view viewWithTag:100];
 //    UIImage *img=[btnFB backgroundImageForState:UIControlStateNormal];
     
-    if ([btnFB isSelected])
-    {
-        NSLog(@"Posted");
-        [self postImageToFacebook];
-    }
-    //[activity show];
-    //[self performSelector:@selector(callShareWebservice) withObject:nil afterDelay:0.1];
+//    if ([btnFB isSelected])
+//    {
+//        NSLog(@"Posted");
+//        [self postImageToFacebook];
+//    }
+    
+//    [activity show];
+//    [self performSelector:@selector(callShareWebservice) withObject:nil afterDelay:0.1];
     QBChatMessage * updatedMessage = [[QBChatMessage alloc] init];
     updatedMessage.text = message.text;
+    
     //updatedMessage.customParameters = message.customParameters;
+    
     updatedMessage.senderID = [[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]] intValue];
     
     updatedMessage.recipientID = [[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"LeftMenuPartnerQBId"]] intValue];
@@ -705,7 +704,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
+#pragma mark
 - (void)sessionStateChanged:(FBSession *)session
                       state:(FBSessionState) state
                       error:(NSError *)error
@@ -714,12 +713,14 @@
     {
         case FBSessionStateOpen:
         {
-            
+            UIButton *btnFB=(UIButton*)[self.view viewWithTag:100];
+            [btnFB setSelected:YES];
+            [btnFB setBackgroundImage:[UIImage imageNamed:@"facebook_blue.png"]
+                              forState:UIControlStateNormal];
             [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"fb_login"];
             
             [[NSUserDefaults standardUserDefaults] setValue:session.accessTokenData.accessToken forKey:@"fb_accesstoken"];
-            
-            FBSession.activeSession = session;
+            [FBSession setActiveSession:session];
             
 //            if(shareScrollView.alpha==1)
 //            {

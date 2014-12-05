@@ -10,6 +10,12 @@
 #import "ModelManager.h"
 #import "TKTintedKeyboardViewController.h"
 
+@protocol imageUpdated <NSObject>
+
+-(void)imageUpdated:(NSData*)imageData;
+
+@end
+
 @interface EditProfileViewController : TKTintedKeyboardViewController<UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIScrollViewDelegate>
 {
     // models references
@@ -43,6 +49,8 @@
 @property (nonatomic, retain) IBOutlet UIImageView *topBarImageView;
 
 @property (strong, nonatomic) UIImagePickerController *imgPicker;
+
+@property (weak,nonatomic) id<imageUpdated> delegate_imageupdated;
 
 - (IBAction)leftSideMenuButtonPressed:(id)sender;
 @end

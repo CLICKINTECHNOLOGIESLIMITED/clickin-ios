@@ -16,8 +16,9 @@
 #import "follower_owner.h"
 #import "following_owner.h"
 #import "ModelManager.h"
+#import "EditProfileViewController.h"
 
-@interface profile_owner : UIViewController<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,UIGestureRecognizerDelegate,UIAlertViewDelegate,MODropAlertViewDelegate>
+@interface profile_owner : UIViewController<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,UIGestureRecognizerDelegate,UIAlertViewDelegate,MODropAlertViewDelegate,imageUpdated>
 {
     // models references
     ModelManager *modelmanager;
@@ -46,4 +47,5 @@
 
 @property BOOL isFromNotification;
 
+-(void)imageUpdated:(NSData*)imageData;
 @end

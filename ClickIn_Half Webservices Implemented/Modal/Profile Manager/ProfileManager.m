@@ -283,10 +283,7 @@
             alertView.delegate = nil;
             [alertView show];
             alertView = nil;
-
-            
         }
-        
     }
     else if(request.tag==16)
     {

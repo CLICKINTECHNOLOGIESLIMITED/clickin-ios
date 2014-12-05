@@ -420,17 +420,22 @@
     }
     
     [relationArray removeAllObjects];
-    
     [relationArray addObjectsFromArray:profilemanager.relationshipArray];
-    
+    [table reloadData];
+    [self performSelector:@selector(reloadTableView) withObject:nil afterDelay:3];
+}
+
+-(void)reloadTableView
+{
     [table reloadData];
 }
 
-- (void)LeftchatDidReceiveMessageNotification:(NSDictionary *)dictMessage
+-(void)LeftchatDidReceiveMessageNotification:(NSDictionary *)dictMessage
 {
 //    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"leftchatDidReceiveMess" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 //    [alert show];
 //    alert = nil;
+    
     QBChatMessage *message = [dictMessage objectForKey:kMessage];
     NSLog(@"msg rec : %@",message.text);
    // notification.userInfo[kMessage];
@@ -462,6 +467,7 @@
                     {
                         int ownersClicks = [((RelationInfo*)[relationArray objectAtIndex:i]).ownerClicks integerValue];
                         ((RelationInfo*)[relationArray objectAtIndex:i]).ownerClicks =[NSString stringWithFormat:@"%i",ownersClicks+[StrClicks intValue]];
+                        NSLog(@"Clicks value change.....%@",[NSString stringWithFormat:@"%i",ownersClicks+[StrClicks intValue]]);
                     }
                 }
 

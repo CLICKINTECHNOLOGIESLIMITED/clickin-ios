@@ -314,10 +314,8 @@ AppDelegate *appDelegate;
  //   if([NSNull null] != [[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"] || [[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"] != nil)
 //    [self.UserImgView setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]]];
     
-    [self.UserImgView sd_setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil];
+    [self.UserImgView sd_setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
 
-    
-    
     if(![partner_pic isEqual: [NSNull null]])
     [self.PartnerImgView sd_setImageWithURL:[NSURL URLWithString:partner_pic] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
    
@@ -4724,6 +4722,12 @@ AppDelegate *appDelegate;
 #pragma mark - UIBarButtonItem Callbacks
 - (IBAction)leftSideMenuButtonPressed:(id)sender
 {
+    
+    [self.UserImgView sd_setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+    
+    if(![partner_pic isEqual: [NSNull null]])
+        [self.PartnerImgView sd_setImageWithURL:[NSURL URLWithString:partner_pic] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+    
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"resignKeyboardLeftMenu"
      object:nil];
