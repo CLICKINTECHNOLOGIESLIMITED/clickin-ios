@@ -1669,7 +1669,7 @@ AppDelegate *appDelegate;
                 starredList = [starredList stringByAppendingString:[[[((Newsfeed*)[newsfeedmanager.array_model_feeds objectAtIndex:indexPath.section]).starredArrayNewsfeedPage objectAtIndex:k] objectForKey:@"user_name"] capitalizedString]];
                 
                 if(k!=((Newsfeed*)[newsfeedmanager.array_model_feeds objectAtIndex:indexPath.section]).starredArrayNewsfeedPage.count-1)
-                    starredList = [starredList stringByAppendingString:@","];
+                    starredList = [starredList stringByAppendingString:@", "];
                 
             }
             

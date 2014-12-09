@@ -119,7 +119,7 @@
     else
     {
         if (IS_IPHONE_5)
-            SearchPhoneBookTextfield.frame=CGRectMake(36+5,150, 203-5, 35) ;
+            SearchPhoneBookTextfield.frame=CGRectMake(36+5,155, 203-5, 35) ;
         
         else
             SearchPhoneBookTextfield.frame=CGRectMake(36+5,167-7-10, 203-5, 35) ;

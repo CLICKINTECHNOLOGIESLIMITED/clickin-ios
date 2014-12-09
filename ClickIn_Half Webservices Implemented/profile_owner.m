@@ -50,15 +50,16 @@
     }
     NSLog(@"user pic %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]);
 //    // update pic
-    [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]] placeholderImage:owner_profilepic.image options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+    [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]] placeholderImage:owner_profilepic.image options:SDWebImageRefreshCached ];
 }
 
 -(void)imageUpdated:(NSData*)imageData
 {
     
     UIImage *image=[UIImage imageWithData:imageData];
+    NSLog(@"userPic %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]);
     
-    [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]] placeholderImage:image options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+    [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]] placeholderImage:image options:SDWebImageRefreshCached];
     
 }
 - (void)viewDidLoad

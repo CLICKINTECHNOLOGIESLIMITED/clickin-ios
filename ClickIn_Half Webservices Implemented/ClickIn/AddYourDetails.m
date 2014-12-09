@@ -1645,16 +1645,11 @@ AppDelegate *appDelegate;
     switch (state) {
         case FBSessionStateOpen:
         {
-            
             [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"fb_login"];
             NSLog(@"accessToken= %@",session.accessTokenData.accessToken);
             [[NSUserDefaults standardUserDefaults] setValue:session.accessTokenData.accessToken forKey:@"fb_accesstoken"];
-            
             FBSession.activeSession = session;
-            
             [self getuserID];  // get user email
-            
-            
         }
             break;
         case FBSessionStateClosed:
@@ -1849,7 +1844,7 @@ AppDelegate *appDelegate;
              StrEncoded = [Base64 encode:data];
              data=nil;
              
-             [self performSelector:@selector(getUserImageFromFBView) withObject:nil afterDelay:3.0];
+             [self performSelector:@selector(getUserImageFromFBView) withObject:nil afterDelay:1.0];
          }
          else
          {
@@ -1870,9 +1865,6 @@ AppDelegate *appDelegate;
 - (void)getUserImageFromFBView
 {
     __block UIImage *img;
-    
-    
-    
 //    for (NSObject *obj in [self.profilePictureView subviews]) {
 //        if ([obj isMemberOfClass:[UIImageView class]]) {
 //            UIImageView *objImg = (UIImageView *)obj;
@@ -1913,9 +1905,10 @@ AppDelegate *appDelegate;
     [ProfileBtn setBackgroundImage:img forState:UIControlStateNormal];
     ProfileBtn.clipsToBounds = YES;
     [ProfileBtn addTarget:self action:@selector(AlertForSeLectionTheImageCapturing) forControlEvents:UIControlEventTouchDown];
+    Gallerybutton.frame=ProfileBtn.frame;
   //  [scroll addSubview:ProfileBtn];
     
-    NSString *userImageURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large", strUserId];
+    NSString *userImageURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=normal", strUserId];
     NSURL *urlRequest=[NSURL URLWithString:userImageURL];
     NSMutableURLRequest *request=[[NSMutableURLRequest alloc] initWithURL:urlRequest];
     [NSURLConnection sendAsynchronousRequest:request
@@ -1927,17 +1920,16 @@ AppDelegate *appDelegate;
          {
              img=[[UIImage alloc] initWithData:data];
               [Gallerybutton setBackgroundImage:img forState:UIControlStateNormal];
+             NSData *data = UIImageJPEGRepresentation(img, 1.0f);
+             [Base64 initialize];
+             StrEncoded = [Base64 encode:data];
+              data=nil;
          }
      }
      ];
     
+    
    
-    
-    
-    NSData *data = UIImageJPEGRepresentation(img, 1.0f);
-    [Base64 initialize];
-    StrEncoded = [Base64 encode:data];
-    data=nil;
     
 //    [EditCamerabutton setBackgroundImage:[UIImage imageNamed:@"dragicon.png"] forState:UIControlStateNormal];
 //    EditCamerabutton.clipsToBounds = YES;
