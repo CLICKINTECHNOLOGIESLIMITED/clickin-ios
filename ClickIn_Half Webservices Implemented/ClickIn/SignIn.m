@@ -123,11 +123,11 @@ AppDelegate *appDelegate;
         
         //---UIimage View
         UIImageView *compScreen=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-        compScreen.image=[UIImage imageNamed:@"640x1136Signin.png"];
+        compScreen.image=[UIImage imageNamed:@"640x1136Signin-1.png"];
         
         if (!IS_IPHONE_5)
         {
-            compScreen.image=[UIImage imageNamed:@"640x960Signin.png"];
+            compScreen.image=[UIImage imageNamed:@"640x960Signin-1.png"];
         }
         
         [scroll addSubview:compScreen];
@@ -262,56 +262,55 @@ AppDelegate *appDelegate;
         
         //---Btn get clickin code
         btn_ClickIn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn_ClickIn addTarget:self
-                        action:@selector(clk_btn_ClickIn:)
-              forControlEvents:UIControlEventTouchDown];
-        [btn_ClickIn setBackgroundImage:[UIImage imageNamed:@"get-click.png"] forState:UIControlStateNormal];
-        btn_ClickIn.frame = CGRectMake(25, 229, 270, 45.0);
-        
         if (IS_IOS_7)
         {
             if (IS_IPHONE_5)
-                btn_ClickIn.frame=CGRectMake(25,229, 270, 45) ;
+                btn_ClickIn.frame=CGRectMake(25,229-10, 270, 45) ;
         }
         else
         {
             if (IS_IPHONE_5)
-                btn_ClickIn.frame=CGRectMake(25,340, 270, 45) ;
-            
+                btn_ClickIn.frame=CGRectMake(25,260, 270, 45) ;
             else
-                btn_ClickIn.frame=CGRectMake(25,300, 270, 45) ;
+                btn_ClickIn.frame=CGRectMake(25,260, 270, 45) ;
         }
+        [btn_ClickIn addTarget:self
+                        action:@selector(clk_btn_ClickIn:)
+              forControlEvents:UIControlEventTouchDown];
+        [btn_ClickIn setBackgroundImage:[UIImage imageNamed:@"get-click.png"] forState:UIControlStateNormal];
         [btn_ClickIn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [scroll addSubview:btn_ClickIn];
         
         //---Btn Forgot Password---
         btn_ForgotPass = [UIButton buttonWithType:UIButtonTypeCustom];
-        
         [btn_ForgotPass addTarget:self
                            action:@selector(clk_btn_ForgotPass:)
-                 forControlEvents:UIControlEventTouchDown];
+                 forControlEvents:UIControlEventTouchUpInside];
+        //[btn_ForgotPass setBackgroundColor:[UIColor redColor]];
+        NSLog(@"scroll.frame.size.height %f",scroll.frame.size.height);
         
         if (IS_IPHONE_5)
         {
-            btn_ForgotPass.frame = CGRectMake(25, self.view.frame.size.height-288, 105, 35);
+            btn_ForgotPass.frame = CGRectMake(25, 222, 105, 35);
         }
         else
         {
-            btn_ForgotPass.frame = CGRectMake(25, self.view.frame.size.height-200, 105, 35);
+            btn_ForgotPass.frame = CGRectMake(22, 222, 105, 35);
         }
+        
         [scroll addSubview:btn_ForgotPass];
         
         //---Btn SignUp---
         btn_SignUp = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn_SignUp addTarget:self
                        action:@selector(clk_btn_SignUp:)
-             forControlEvents:UIControlEventTouchDown];
-        
+             forControlEvents:UIControlEventTouchUpInside];
+       // [btn_SignUp setBackgroundColor:[UIColor yellowColor]];
         
         if (IS_IPHONE_5)
-            btn_SignUp.frame = CGRectMake(240, self.view.frame.size.height-288, 55, 35.0);
+            btn_SignUp.frame = CGRectMake(240, 222, 55, 35.0);
         else
-            btn_SignUp.frame = CGRectMake(240, self.view.frame.size.height-200, 55, 35.0);
+            btn_SignUp.frame = CGRectMake(240, 222, 55, 35.0);
         
         [scroll addSubview:btn_SignUp];
     }

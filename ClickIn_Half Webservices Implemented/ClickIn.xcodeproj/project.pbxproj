@@ -362,6 +362,8 @@
 		1BA178741A2737FE00573C9C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA178731A2737FE00573C9C /* AVFoundation.framework */; };
 		1BA178761A27383300573C9C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA178751A27383300573C9C /* AudioToolbox.framework */; };
 		1BA5436C1A14E4D500478A36 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BA5436B1A14E4D500478A36 /* FXBlurView.m */; };
+		1BA637BD1A387A28009EA21E /* 640x960Signin-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BA637BB1A387A28009EA21E /* 640x960Signin-1.png */; };
+		1BA637BE1A387A28009EA21E /* 640x1136Signin-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BA637BC1A387A28009EA21E /* 640x1136Signin-1.png */; };
 		1BB1B8F519DAB7EB0053D12F /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB1B8F419DAB7EB0053D12F /* Quickblox.framework */; };
 		1BE683431A1641A3001E5695 /* Play_Button_45.png in Resources */ = {isa = PBXBuildFile; fileRef = 1BE683421A1641A3001E5695 /* Play_Button_45.png */; };
 		7906946818E99BBE000792F4 /* 640X960Search.png in Resources */ = {isa = PBXBuildFile; fileRef = 7906946618E99BBE000792F4 /* 640X960Search.png */; };
@@ -1164,6 +1166,8 @@
 		1BA178751A27383300573C9C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		1BA5436A1A14E4D500478A36 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		1BA5436B1A14E4D500478A36 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
+		1BA637BB1A387A28009EA21E /* 640x960Signin-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "640x960Signin-1.png"; sourceTree = "<group>"; };
+		1BA637BC1A387A28009EA21E /* 640x1136Signin-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "640x1136Signin-1.png"; sourceTree = "<group>"; };
 		1BB1B8F419DAB7EB0053D12F /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Quickblox.framework; sourceTree = "<group>"; };
 		1BE683421A1641A3001E5695 /* Play_Button_45.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Play_Button_45.png; sourceTree = "<group>"; };
 		7906946618E99BBE000792F4 /* 640X960Search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 640X960Search.png; sourceTree = "<group>"; };
@@ -2055,6 +2059,8 @@
 		008B038E180D4A7E008CFC7E /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
+				1BA637BB1A387A28009EA21E /* 640x960Signin-1.png */,
+				1BA637BC1A387A28009EA21E /* 640x1136Signin-1.png */,
 				79E990D518FD3979003BBD6B /* click'in.png */,
 				79E990D118FD2AF8003BBD6B /* 640x1136Signin.png */,
 				79E990D218FD2AF8003BBD6B /* 640x960Signin.png */,
@@ -3180,6 +3186,7 @@
 				009CB3E5194AE8480026D63B /* SliderAnimationPositive_29.png in Resources */,
 				00150D0C1906A740008F7D62 /* top_newsfeed.png in Resources */,
 				000FEB871859A3D400BA5972 /* bullet_selected.png in Resources */,
+				1BA637BE1A387A28009EA21E /* 640x1136Signin-1.png in Resources */,
 				009CB3B4194AE8480026D63B /* SliderAnimationNegative_35.png in Resources */,
 				7994353218E157D4003BD640 /* 640X960invt.png in Resources */,
 				7953557718B224920014EEB5 /* notification-settingN.png in Resources */,
@@ -3321,6 +3328,7 @@
 				799331F2187ABD8800D538F1 /* icon2.png in Resources */,
 				79A7B22A19221E7A00E750AE /* boxAlreadyClickin.png in Resources */,
 				00150D071906A740008F7D62 /* star_pink_btn.png in Resources */,
+				1BA637BD1A387A28009EA21E /* 640x960Signin-1.png in Resources */,
 				79AE553319CC075400F5C6DC /* bluebtn.png in Resources */,
 				7981E9601858834D008EC436 /* sliderBar-grey320.png in Resources */,
 				7991450419640A1500BDCE3E /* searchBGImg_new.png in Resources */,
