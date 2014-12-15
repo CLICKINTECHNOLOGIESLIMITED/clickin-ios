@@ -135,7 +135,15 @@
 
 - (void)sendMessage:(QBChatMessage *)message dict:(NSDictionary *)dictData
 {
+    //add message ID in custom parameter for cross platform support
+    NSMutableDictionary *custom_Data = [[NSMutableDictionary alloc] init] ;
+    [custom_Data addEntriesFromDictionary:message.customParameters];
+    [custom_Data setObject:[NSString stringWithFormat:@"%@",message.ID] forKey:@"commom_platform_id"];
+    [message setCustomParameters:custom_Data];
+    
     [[QBChat instance] sendMessage:message];
+    
+    custom_Data = nil;
 
     if([message.customParameters[@"isDelivered"] length]==0 && [message.customParameters[@"isComposing"] length]==0 && dictData != nil)
     {
@@ -769,6 +777,10 @@
 }
 
 - (void)chatDidReceiveMessage:(QBChatMessage *)message{
+    
+    //add message ID from custom parameter for cross platform support
+    if([message.customParameters[@"commom_platform_id"] length]!=0)
+        message.ID = message.customParameters[@"commom_platform_id"];
     
     if([message.text isEqualToString:@" "])
         message.text = @"";
