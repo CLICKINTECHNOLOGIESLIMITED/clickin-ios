@@ -105,12 +105,14 @@
     CGSize textSize = { 300.0, 11535.0};
     if(message.text.length > 0)
     {
-        CGSize size = [message.text sizeWithFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:18.0]
-                               constrainedToSize:textSize
-                                   lineBreakMode:NSLineBreakByWordWrapping];
-        NSLog(@"%f",size.height);
+        CGSize size;
+//        size= [message.text sizeWithFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:18.0]
+//                               constrainedToSize:textSize
+//                                   lineBreakMode:NSLineBreakByWordWrapping];
+//        NSLog(@"%f",size.height);
         
-        
+        lblText.text=message.text;
+        size = [lblText sizeThatFits:CGSizeMake(300, 9999)];
         /*if (IS_IPHONE_5)
             lblText.frame =  CGRectMake(10,101-80, 300, size.height+25);
         else*/
@@ -126,9 +128,9 @@
             ClicksImage = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 14, 15)];
             
             if([[message.customParameters[@"clicks"] substringToIndex:1] isEqualToString:@"-"])
-                [ClicksImage setFrame:CGRectMake(35,18,13,14)];
+                [ClicksImage setFrame:CGRectMake(35,15,13,14)];
             else
-                [ClicksImage setFrame:CGRectMake(40,18,13,14)];
+                [ClicksImage setFrame:CGRectMake(40,15,13,14)];
             ClicksImage.image=[UIImage imageNamed:@"headerIconRedWhiteColor.png"];
             [lblText addSubview:ClicksImage];
         }
@@ -137,9 +139,9 @@
             ClicksImage = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 14, 15)];
             
             if([[message.customParameters[@"clicks"] substringToIndex:1] isEqualToString:@"-"])
-                [ClicksImage setFrame:CGRectMake(35,17,13,14)];
+                [ClicksImage setFrame:CGRectMake(35,15,13,14)];
             else
-                [ClicksImage setFrame:CGRectMake(40,17,13,14)];
+                [ClicksImage setFrame:CGRectMake(40,15,13,14)];
             ClicksImage.image=[UIImage imageNamed:@"headerIconRedWhiteColor.png"];
             [lblText addSubview:ClicksImage];
         }
@@ -378,11 +380,9 @@
     {
         
         [[NSUserDefaults standardUserDefaults] setBool:false forKey:@"fb_login"];
-        
         [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"fb_accesstoken"];
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"fbUserName"];
         [FBSession.activeSession closeAndClearTokenInformation];
-        
         [buttonFB setSelected:NO];
         [buttonFB setBackgroundImage:[UIImage imageNamed:@"fb_grey.png"]
                           forState:UIControlStateNormal];
