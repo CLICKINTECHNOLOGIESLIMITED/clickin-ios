@@ -79,7 +79,6 @@
 //#define QBAppSecret @"4thHbq-eyLVJrhe"
 
 #import "LabeledActivityIndicatorView.h"
-
-#import "MODropAlert/MODropAlertView.h"
+	#import "MODropAlert/MODropAlertView.h"
 
 #endif

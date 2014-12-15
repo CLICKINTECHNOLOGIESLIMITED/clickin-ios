@@ -1716,8 +1716,6 @@ AppDelegate *appDelegate;
             }
         }
         
-        
-        
         cell.starButton.frame = CGRectMake(5, cell.message.frame.origin.y + cell.message.frame.size.height + padding*4, 125, 42);
         [cell.starButton addTarget:self action:@selector(starBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -2249,7 +2247,7 @@ AppDelegate *appDelegate;
         size = [text sizeWithFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:16.0]
                 constrainedToSize:textSize
                     lineBreakMode:NSLineBreakByWordWrapping];
-        size.height += padding;
+        size.height += padding+10;
     }
     
     if([chatMessage.customParameters[@"fileID"] length]>1 || [chatMessage.customParameters[@"locationID"] length]>1)
@@ -2261,22 +2259,22 @@ AppDelegate *appDelegate;
         if(chatMessage.customParameters[@"imageRatio"] == [NSNull null] || chatMessage.customParameters[@"imageRatio"]==nil)
             size.height += 125;
         else
-            size.height += imageHeight;
+            size.height += imageHeight+20;
     }
     
     if([chatMessage.customParameters[@"videoID"]  length]>0)
     {
-        size.height += 259;
+        size.height += 259+20;
     }
     
     if([chatMessage.customParameters[@"audioID"]  length]>0)
     {
-        size.height += 155;
+        size.height += 155+20;
     }
     
     if([chatMessage.customParameters[@"card_heading"] length]>0)
     {
-        size.height += 115;
+        size.height += 115-5;
     }
         
         

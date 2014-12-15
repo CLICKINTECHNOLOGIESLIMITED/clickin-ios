@@ -703,9 +703,7 @@
                 cell.LblLeftSideName.textAlignment = NSTextAlignmentLeft;
                 cell.LblRightSideName.textAlignment = NSTextAlignmentLeft;
             }
-            
-            
-            
+        
             cell.NextIconArrowImage.frame =  CGRectMake(cell.LblLeftSideName.frame.origin.x + leftNameSize.width + 4,17 ,33/2.0,31/2.0);
             
             float remainingWidth = 212 - leftNameSize.width - 22;
@@ -1369,8 +1367,6 @@
             cell.reportInapproriateBtn.frame = CGRectMake(315-432/2.0, cell.message.frame.origin.y + cell.message.frame.size.height + padding*63 - 53 - comments_offsetY, 432/2.0, 87/2.0);
             [cell.reportInapproriateBtn setImage:[UIImage imageNamed:@"reportInappropriate.png"] forState:UIControlStateNormal];
             [cell.reportInapproriateBtn addTarget:self action:@selector(reportInappBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
-            
-            
             
             if (!selectedNewsfeed.showReportBtns)
             {

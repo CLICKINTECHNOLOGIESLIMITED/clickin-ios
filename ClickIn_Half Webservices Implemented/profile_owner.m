@@ -55,7 +55,6 @@
 
 -(void)imageUpdated:(NSData*)imageData
 {
-    
     UIImage *image=[UIImage imageWithData:imageData];
     NSLog(@"userPic %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]);
     
