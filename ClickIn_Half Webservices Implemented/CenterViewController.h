@@ -127,6 +127,8 @@
    
     // If the keyboard suggestions are open then this BOOL will be True else False.
      BOOL isKeyboardSuggestionEnabled;
+    
+    NSMutableArray *uploadingObjects;
 }
 @property (retain, nonatomic) IBOutlet UIImageView *LeftSmallClickImageView;
 @property (retain, nonatomic) IBOutlet UILabel *PartnerNameLbl;

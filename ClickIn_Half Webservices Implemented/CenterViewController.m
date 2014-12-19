@@ -17,7 +17,7 @@
 #import "TradePostCards.h"
 #import "PlayCardView.h"
 #include <CommonCrypto/CommonHMAC.h>
- #import <MobileCoreServices/UTCoreTypes.h>
+#import <MobileCoreServices/UTCoreTypes.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import "MapWebView.h"
 #import "NotificationsViewController.h"
@@ -29,6 +29,8 @@
 #import "LeftViewController.h"
 
 #define CC_SHA1_DIGEST_LENGTH 20
+
+#define MediaAlertTag 4001
 
 @interface CenterViewController ()
 
@@ -83,13 +85,20 @@ AppDelegate *appDelegate;
      [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_ProfileInfoUpdated object:nil];
      [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_InAppSoundsFlag object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_ChatLoginStatusChanged object:nil];
-    
+    // cancel all upload operations
+  
+    for (NSObject<Cancelable> *obj in uploadingObjects )
+    {
+        [obj cancel];
+    }
 
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+     uploadingObjects = [[NSMutableArray alloc] init];
     
     ((AppDelegate*)[[UIApplication sharedApplication] delegate]).tracker = [[GAI sharedInstance] defaultTracker];
     [((AppDelegate*)[[UIApplication sharedApplication] delegate]).tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"R-Page"
@@ -386,7 +395,6 @@ AppDelegate *appDelegate;
     imgView.contentMode = UIViewContentModeScaleAspectFit;
     imgView.frame = CGRectMake(0, lblClicks.frame.origin.y+15, 320, 106);
     lblClicks.hidden = YES;
-    
     
     //imgView.image = [UIImage imageNamed:@"heart.png"];
     imgView.tag = 13;
@@ -1034,6 +1042,8 @@ AppDelegate *appDelegate;
     
     
      [self.view bringSubviewToFront:self.tintView];
+    
+    
 }
 
 
@@ -1757,6 +1767,8 @@ AppDelegate *appDelegate;
     int diff =keyboardEndFrame.size.height-keyboardBeginFrame.size.height;
     CGFloat height=textView.frame.size.height;
     // In case of keyboard shown or hidden the diff comes out to be 0.
+    // IN case of difference is negative the suggestions are hidden.
+    // In case of positive the suggestions are shown.
     if (diff==-29)
     {
         isKeyboardSuggestionEnabled=FALSE;
@@ -3568,7 +3580,8 @@ AppDelegate *appDelegate;
         NSString *dateString = [dateFormatter stringFromDate:currDate];
         NSLog(@"dateString: %@",dateString);
 
-        [QBContent TUploadFile:tempMediaData fileName:[NSString stringWithFormat:@"Image%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"image/jpeg" isPublic:YES delegate:chatmanager];
+        NSObject<Cancelable> *obj=[QBContent TUploadFile:tempMediaData fileName:[NSString stringWithFormat:@"Image%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"image/jpeg" isPublic:YES delegate:chatmanager];
+        [uploadingObjects addObject:obj];
         
                 [imagesData addObject:tempMediaData];
                 [audioData addObject:[[NSData alloc] init]];
@@ -3607,7 +3620,8 @@ AppDelegate *appDelegate;
         NSLog(@"dateString: %@",dateString);
         
         
-        [QBContent TUploadFile:tempMediaData fileName:[NSString stringWithFormat:@"Audio%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"audio/mpeg" isPublic:YES delegate:chatmanager];
+       NSObject<Cancelable> *obj= [QBContent TUploadFile:tempMediaData fileName:[NSString stringWithFormat:@"Audio%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"audio/mpeg" isPublic:YES delegate:chatmanager];
+        [uploadingObjects addObject:obj];
         
         [audioData addObject:tempMediaData];
         //displaying file sent message in the chat
@@ -3648,7 +3662,9 @@ AppDelegate *appDelegate;
         NSLog(@"dateString: %@",dateString);
         
         
-        [QBContent TUploadFile:tempMediaData fileName:[NSString stringWithFormat:@"Video%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"image/jpeg" isPublic:YES delegate:chatmanager];
+       NSObject<Cancelable> *obj= [QBContent TUploadFile:tempMediaData fileName:[NSString stringWithFormat:@"Video%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"image/jpeg" isPublic:YES delegate:chatmanager];
+        [uploadingObjects addObject:obj];
+        
         
         
         //displaying file sent message in the chat
@@ -4623,6 +4639,7 @@ AppDelegate *appDelegate;
 {
     AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
     [appDelegate performSelector:@selector(CheckInternetConnection)];
+    
     if(appDelegate.internetWorking == 0)//0: internet working
     {
         NSString *str = [NSString stringWithFormat:DomainNameUrl@"/chats/share"];
@@ -4719,21 +4736,63 @@ AppDelegate *appDelegate;
     
 }
 
+- (void)alertViewPressButton:(MODropAlertView *)alertView buttonType:(DropAlertButtonType)buttonType
+{
+    if(alertView.tag==4774)// send clickIn request
+    {
+        if(buttonType==0)
+        {
+            [self.UserImgView sd_setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+            
+            if(![partner_pic isEqual: [NSNull null]])
+                [self.PartnerImgView sd_setImageWithURL:[NSURL URLWithString:partner_pic] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+            
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:@"resignKeyboardLeftMenu"
+             object:nil];
+            [self.menuContainerViewController toggleLeftSideMenuCompletion:^{
+                
+            }];
+
+        }
+    }
+}
+
 #pragma mark - UIBarButtonItem Callbacks
 - (IBAction)leftSideMenuButtonPressed:(id)sender
 {
-    
-    [self.UserImgView sd_setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
-    
-    if(![partner_pic isEqual: [NSNull null]])
-        [self.PartnerImgView sd_setImageWithURL:[NSURL URLWithString:partner_pic] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
-    
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"resignKeyboardLeftMenu"
-     object:nil];
-    [self.menuContainerViewController toggleLeftSideMenuCompletion:^{
+    if (imagesUploading_indexes.count>0||videoUploading_indexes.count>0||audioUploading_indexes.count>0)
+    {
+//        MODropAlertView *alertView = [[MODropAlertView alloc]initDropAlertWithTitle:@"Media is uploading."
+//                                                                        description:@"Do you want to cancel and continue?"
+//                                                                      okButtonTitle:@"Yes"
+//                                                                  cancelButtonTitle:@"No"];
+//        alertView.delegate = self;
+//        alertView.tag = 4774;
+//        [alertView show];
+//        alertView = nil;
         
-    }];
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Alert" message:@"All media upload will be cancelled. Do you want to proceed?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+        alert.tag=MediaAlertTag;
+        [alert show];
+        alert=Nil;
+        
+    }
+    else
+    {
+        
+        [self.UserImgView sd_setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+        
+        if(![partner_pic isEqual: [NSNull null]])
+            [self.PartnerImgView sd_setImageWithURL:[NSURL URLWithString:partner_pic] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+        
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"resignKeyboardLeftMenu"
+         object:nil];
+        [self.menuContainerViewController toggleLeftSideMenuCompletion:^{
+            
+        }];
+    }
     
 }
 
@@ -4883,6 +4942,25 @@ AppDelegate *appDelegate;
             //[self CaptureFromGallery];
             [self showVideoPicker:UIImagePickerControllerSourceTypePhotoLibrary];
         }
+    }
+    
+    if(alertView.tag==MediaAlertTag)
+    {
+        if(buttonIndex==1)
+        {
+            [self.UserImgView sd_setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+            
+            if(![partner_pic isEqual: [NSNull null]])
+                [self.PartnerImgView sd_setImageWithURL:[NSURL URLWithString:partner_pic] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+            
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:@"resignKeyboardLeftMenu"
+             object:nil];
+            [self.menuContainerViewController toggleLeftSideMenuCompletion:^{
+                
+            }];
+        }
+
     }
     
     /*if(alertView.tag==6)  // for audio selection
@@ -5654,7 +5732,8 @@ AppDelegate *appDelegate;
                                          NSData *videoData = [NSData dataWithContentsOfURL:[[NSURL alloc]initFileURLWithPath:newName]];
                                          
                                          NSLog(@"video data after compression.......%i",videoData.length);
-                                         [QBContent TUploadFile:videoData fileName:@"MyVideo" contentType:@"video/mp4" isPublic:YES delegate:chatmanager];
+                                        NSObject<Cancelable> *obj= [QBContent TUploadFile:videoData fileName:@"MyVideo" contentType:@"video/mp4" isPublic:YES delegate:chatmanager];
+                                         [uploadingObjects addObject:obj];
                                          break;
                                  }
                              }
@@ -5739,6 +5818,7 @@ AppDelegate *appDelegate;
     
     //call chat manager send msg
     [chatmanager sendMessage:message dict:dictData];
+    
 }
 
 - (void)CenterchatDidReceiveMessageNotification:(NSDictionary *)dictMessage
@@ -6777,7 +6857,8 @@ AppDelegate *appDelegate;
                     }
                     else*/
                     
-                        [QBContent TUploadFile:videoData fileName:[NSString stringWithFormat:@"%@",[[videoUploading_indexes objectAtIndex:selected_index] objectForKey:@"blobName"]]contentType:@"video/mp4" isPublic:YES delegate:chatmanager];
+                     NSObject<Cancelable> *obj=   [QBContent TUploadFile:videoData fileName:[NSString stringWithFormat:@"%@",[[videoUploading_indexes objectAtIndex:selected_index] objectForKey:@"blobName"]]contentType:@"video/mp4" isPublic:YES delegate:chatmanager];
+                    [uploadingObjects addObject:obj];
                     
                 }
                 @catch (NSException *exception) {
@@ -7268,7 +7349,8 @@ AppDelegate *appDelegate;
         NSString *dateString = [dateFormatter stringFromDate:currDate];
         NSLog(@"dateString: %@",dateString);
         
-        [QBContent TUploadFile:locationImageData fileName:[NSString stringWithFormat:@"Image%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"image/jpeg" isPublic:YES delegate:chatmanager];
+        NSObject<Cancelable> *obj=[QBContent TUploadFile:locationImageData fileName:[NSString stringWithFormat:@"Image%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"image/jpeg" isPublic:YES delegate:chatmanager];
+        [uploadingObjects addObject:obj];
         
         [imagesData addObject:locationImageData];
         [audioData addObject:[[NSData alloc] init]];
@@ -7512,7 +7594,8 @@ AppDelegate *appDelegate;
                 NSString *dateString = [dateFormatter stringFromDate:currDate];
                 NSLog(@"dateString: %@",dateString);
                 
-                [QBContent TUploadFile:tempMediaData fileName:[NSString stringWithFormat:@"Image%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"image/jpeg" isPublic:YES delegate:chatmanager];
+                NSObject<Cancelable> *obj=[QBContent TUploadFile:tempMediaData fileName:[NSString stringWithFormat:@"Image%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"image/jpeg" isPublic:YES delegate:chatmanager];
+                [uploadingObjects addObject:obj];
                 
                 [imagesData addObject:tempMediaData];
                 [audioData addObject:[[NSData alloc] init]];
@@ -7556,8 +7639,8 @@ AppDelegate *appDelegate;
                 NSLog(@"dateString: %@",dateString);
                 
                 
-                [QBContent TUploadFile:tempMediaData fileName:[NSString stringWithFormat:@"Audio%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"audio/mpeg" isPublic:YES delegate:chatmanager];
-                
+                NSObject<Cancelable> *obj=[QBContent TUploadFile:tempMediaData fileName:[NSString stringWithFormat:@"Audio%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"audio/mpeg" isPublic:YES delegate:chatmanager];
+                [uploadingObjects addObject:obj];
                 [audioData addObject:tempMediaData];
                 //displaying file sent message in the chat
                 //QBChatMessage *message = [QBChatMessage message];
@@ -7597,9 +7680,9 @@ AppDelegate *appDelegate;
                 NSLog(@"dateString: %@",dateString);
                 
                 
-                [QBContent TUploadFile:tempMediaData fileName:[NSString stringWithFormat:@"Video%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"image/jpeg" isPublic:YES delegate:chatmanager];
+               NSObject<Cancelable> *obj= [QBContent TUploadFile:tempMediaData fileName:[NSString stringWithFormat:@"Video%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"image/jpeg" isPublic:YES delegate:chatmanager];
                 
-                
+                [uploadingObjects addObject:obj];
                 //displaying file sent message in the chat
                 //QBChatMessage *message = [QBChatMessage message];
                 NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -10660,7 +10743,6 @@ static CGFloat padding = 20.0;
                 imageHeight = 125;
             else
                 imageHeight = 225/[messageBody.customParameters[@"imageRatio"] floatValue];
-
             
             if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]] )
             {
