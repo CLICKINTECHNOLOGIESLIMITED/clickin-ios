@@ -202,6 +202,12 @@
     [locationManager startUpdatingLocation];
     [locationManager stopUpdatingLocation];
     CLLocation *location = [locationManager location];
+    if (IS_IOS_8)
+    {
+        //[locationManager requestAlwaysAuthorization];
+        [locationManager requestWhenInUseAuthorization];
+    }
+    
     // Configure the new event with information from the location
     
     float longitude=location.coordinate.longitude;

@@ -351,6 +351,12 @@
     [btnFB setSelected:NO];
     [btnFB setBackgroundImage:[UIImage imageNamed:@"fb_grey.png"]
                       forState:UIControlStateNormal];
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(chatLoginStatusChanged:)
+     name:Notification_ChatLoginStatusChanged
+     object:nil];
 }
 
 
@@ -499,6 +505,11 @@
 
 -(IBAction)ShareButtonAction:(id)sender
 {
+    AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if(!appDelegate.isChatLoggedIn)
+        return;
+    
+    appDelegate = nil;
  //   UIButton *btnFB=(UIButton *)[self.view viewWithTag:100];
 //    UIImage *img=[btnFB backgroundImageForState:UIControlStateNormal];
     
@@ -834,6 +845,26 @@
      }];
 }
 
+- (void)chatLoginStatusChanged:(NSNotification *)notification //use notification method and logic
+{
+    AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    UIButton *btnShare=(UIButton *)[self.view viewWithTag:4747];
+
+    if(appDelegate.isChatLoggedIn)
+        [btnShare setEnabled:true];
+    else
+        [btnShare setEnabled:false];
+    
+    appDelegate = nil;
+    
+}
+
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_ChatLoginStatusChanged object:nil];
+}
 
 - (void)didReceiveMemoryWarning
 {

@@ -1586,8 +1586,9 @@ AppDelegate *appDelegate;
 
 
 
-- (NSArray *)collectAddressBookContacts {
-    
+- (NSArray *)collectAddressBookContacts
+{
+  
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
     
     __block BOOL accessGranted = NO;

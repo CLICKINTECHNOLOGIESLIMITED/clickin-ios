@@ -253,6 +253,7 @@ static NSString* kAlertCancelButtonHighlightColor = @"#d47671";
     backgroundView = [[UIImageView alloc]initWithFrame:[self mainScreenFrame]];
     
     UIImage *image = [UIImage convertViewToImage];
+    //UIImage *image;
     UIImage *blurSnapshotImage = nil;
     blurSnapshotImage = [image applyBlurWithRadius:5.0
                                          tintColor:[UIColor colorWithWhite:0.2

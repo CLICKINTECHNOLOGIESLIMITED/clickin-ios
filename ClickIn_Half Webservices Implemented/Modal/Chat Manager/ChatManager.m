@@ -110,14 +110,16 @@
 }
 
 
-- (void)playChatSound:(NSNotification *)notification {
+- (void)playChatSound:(NSNotification *)notification
+{
     // play sound notification
     [self playMsgReceivedSound];
     //update profile info
     [[NSNotificationCenter defaultCenter] postNotificationName:Notification_UpdateProfile object:nil userInfo:Nil];
 }
 
-- (void)createChatSession:(NSNotification *)notification {
+- (void)createChatSession:(NSNotification *)notification
+{
     // relogin here
     QBUUser *currentUser = [QBUUser user];
     currentUser.ID = [[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]; // your current user's ID
@@ -126,10 +128,9 @@
     
 }
 
-- (void)loginWithUser:(QBUUser *)user {
-    
+- (void)loginWithUser:(QBUUser *)user
+{
     self.currentUser = user;
-    
     [[QBChat instance] loginWithUser:user];
 }
 
@@ -380,9 +381,17 @@
                     
                     message.recipientID = [ReceiverId longLongValue];
                     
-                    
+                    NSString *contentURL;
                     //check for image data
-                    NSString *contentURL = [[[[[NSArray alloc] initWithArray:[jsonResponse objectForKey:@"chats"]] objectAtIndex:i] objectForKey:@"Chat"] objectForKey:@"content"];
+                    if (![[[[[[NSArray alloc] initWithArray:[jsonResponse objectForKey:@"chats"]] objectAtIndex:i] objectForKey:@"Chat"] objectForKey:@"content"] isEqual:[NSNull null]])
+                    {
+                      contentURL   = [[[[[NSArray alloc] initWithArray:[jsonResponse objectForKey:@"chats"]] objectAtIndex:i] objectForKey:@"Chat"] objectForKey:@"content"];
+                    }
+                    else
+                    {
+                        contentURL = @"";
+                    }
+                    
                     
                     NSNumber *type = [[[[[NSArray alloc] initWithArray:[jsonResponse objectForKey:@"chats"]] objectAtIndex:i] objectForKey:@"Chat"] objectForKey:@"type"];
                     
@@ -776,8 +785,8 @@
     [[QBChat instance] sendMessage:message];
 }
 
-- (void)chatDidReceiveMessage:(QBChatMessage *)message{
-    
+- (void)chatDidReceiveMessage:(QBChatMessage *)message
+{
     //add message ID from custom parameter for cross platform support
     if([message.customParameters[@"common_platform_id"] length]!=0)
         message.ID = message.customParameters[@"common_platform_id"];
@@ -828,7 +837,6 @@
         custom_Data = nil;
         
         new_message.senderID = message.recipientID;
-        
         new_message.recipientID = message.senderID;
         
         //set custom object for message
