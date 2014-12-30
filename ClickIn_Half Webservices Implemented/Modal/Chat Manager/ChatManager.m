@@ -138,7 +138,7 @@
     //add message ID in custom parameter for cross platform support
     NSMutableDictionary *custom_Data = [[NSMutableDictionary alloc] init] ;
     [custom_Data addEntriesFromDictionary:message.customParameters];
-    [custom_Data setObject:[NSString stringWithFormat:@"%@",message.ID] forKey:@"commom_platform_id"];
+    [custom_Data setObject:[NSString stringWithFormat:@"%@",message.ID] forKey:@"common_platform_id"];
     [message setCustomParameters:custom_Data];
     
     [[QBChat instance] sendMessage:message];
@@ -779,8 +779,8 @@
 - (void)chatDidReceiveMessage:(QBChatMessage *)message{
     
     //add message ID from custom parameter for cross platform support
-    if([message.customParameters[@"commom_platform_id"] length]!=0)
-        message.ID = message.customParameters[@"commom_platform_id"];
+    if([message.customParameters[@"common_platform_id"] length]!=0)
+        message.ID = message.customParameters[@"common_platform_id"];
     
     if([message.text isEqualToString:@" "])
         message.text = @"";
