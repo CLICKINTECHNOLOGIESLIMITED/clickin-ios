@@ -369,18 +369,18 @@ AppDelegate *appDelegate;
     {
         if (IS_IPHONE_5)
         {
-            Gallerybutton.frame = CGRectMake(57.0+60+4, 205.0-46, 71.0, 71.0);
+            Gallerybutton.frame = CGRectMake(57.0+60+4, 205.0-40, 71.0, 75);
         }
     }
     else
     {
         if (IS_IPHONE_5)
         {
-            Gallerybutton.frame = CGRectMake(57.0+60+4, 197.0-46, 71.0, 71.0);
+            Gallerybutton.frame = CGRectMake(57.0+60+4, 197.0-40, 71.0, 75);
         }
         else
         {
-            Gallerybutton.frame = CGRectMake(57.0+60+4, 155.0-46, 71.0, 71.0);
+            Gallerybutton.frame = CGRectMake(57.0+60+4, 155.0-40, 71.0, 75);
         }
     }
     

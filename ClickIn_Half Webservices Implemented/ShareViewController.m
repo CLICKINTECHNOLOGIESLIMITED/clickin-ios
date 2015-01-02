@@ -216,9 +216,9 @@
     {
         lightGrayBGView.frame = CGRectMake(0,90-80,320,101);
         ShareButtonsView.frame = CGRectMake(0,190-80,320,265);
-
     }
-    else{
+    else
+    {
         lightGrayBGView.frame = CGRectMake(0,90,320,101);
         ShareButtonsView.frame = CGRectMake(0,190,320,265);
     }

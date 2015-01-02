@@ -188,7 +188,8 @@
 
 - (void)request:(ASIHTTPRequest *)request didReceiveResponseHeaders:(NSDictionary *)responseHeaders
 {
-	if ([self requestDidReceiveResponseHeadersSelector]) {
+	if ([self requestDidReceiveResponseHeadersSelector])
+    {
 		[[self delegate] performSelector:[self requestDidReceiveResponseHeadersSelector] withObject:request withObject:responseHeaders];
 	}
 }

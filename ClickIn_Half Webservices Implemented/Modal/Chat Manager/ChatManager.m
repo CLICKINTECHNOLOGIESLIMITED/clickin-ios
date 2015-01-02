@@ -18,7 +18,8 @@
 
 - (id)init{
     self = [super init];
-    if(self){
+    if(self)
+    {
         [QBChat instance].delegate = self;
         messages = [[NSMutableArray alloc] init];
         TempArrayChatHistory = [[NSMutableArray alloc] init];
@@ -36,7 +37,6 @@
             inComingMsgSound.volume = 2;
         }
         [inComingMsgSound prepareToPlay];
-        
         
         inComingClicksSound = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:[[NSBundle mainBundle]                                                                                          pathForResource:@"ClickReceived"                                                                                           ofType:@"mp3"]] error:nil];
         if([[[NSUserDefaults standardUserDefaults] valueForKey:@"inAppSounds"] isEqualToString:@"no"])

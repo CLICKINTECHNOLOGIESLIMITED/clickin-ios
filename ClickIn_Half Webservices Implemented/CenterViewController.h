@@ -21,6 +21,7 @@
 #import "FXBlurView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <SDWebImage/UIImageView+UIActivityIndicatorForSDWebImage.h>
+#import <AudioToolbox/AudioToolbox.h>
 
 
 @interface CenterViewController : TKTintedKeyboardViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UIScrollViewDelegate,AVAudioPlayerDelegate,AVAudioRecorderDelegate,FBLoginViewDelegate,FBViewControllerDelegate,HPGrowingTextViewDelegate,SharedMessageDelegate,CenterchatReceiveProtocol,CenterCustomObjectProtocol,MODropAlertViewDelegate,AttachmentProtocol>
@@ -129,6 +130,7 @@
      BOOL isKeyboardSuggestionEnabled;
     
     NSMutableArray *uploadingObjects;
+    AVAudioPlayer *player;
 }
 @property (retain, nonatomic) IBOutlet UIImageView *LeftSmallClickImageView;
 @property (retain, nonatomic) IBOutlet UILabel *PartnerNameLbl;

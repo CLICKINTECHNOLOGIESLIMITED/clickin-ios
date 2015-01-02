@@ -1556,7 +1556,7 @@
     
     NSIndexPath *indexPath = [table indexPathForCell:cell];
     
-    NSLog(@"%d",indexPath.row);
+    NSLog(@"%ld",(long)indexPath.row);
     
     activity=[[LabeledActivityIndicatorView alloc]initWithController:self andText:@"Loading..."];
     [activity show];

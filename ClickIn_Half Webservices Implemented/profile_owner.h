@@ -42,7 +42,6 @@
     int selected_row; //for storing row index
     
     bool profileLoadedFirstTime;
-    
 }
 
 @property BOOL isFromNotification;

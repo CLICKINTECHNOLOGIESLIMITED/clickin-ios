@@ -710,33 +710,35 @@ AppDelegate *appDelegate;
     attachmentAnimationView.userInteractionEnabled=YES;
     [self.view addSubview:attachmentAnimationView];
     [self.view bringSubviewToFront:attachmentAnimationView];
-    
-    
-   
+
     [attachmentAnimationView addSubview:mediaScrollview];
-    
-    
     
     // Set the audio file
     NSArray *pathComponents = [NSArray arrayWithObjects:
                                [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject],
-                               @"MyAudio.m4a",
+                               @"MyAudio.mp4",
                                nil];
     NSURL *outputFileURL = [NSURL fileURLWithPathComponents:pathComponents];
-    
-    
     // Define the recorder setting
     NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
-    
     [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
     [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
-    [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
+   [recordSetting setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
+    
+//    NSDictionary *recordSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                    [NSNumber numberWithInt:kAudioFormatMPEG4AAC], AVFormatIDKey,
+//                                    [NSNumber numberWithInt:AVAudioQualityMin], AVEncoderAudioQualityKey,
+//                                    [NSNumber numberWithInt:16], AVEncoderBitRateKey,
+//                                    [NSNumber numberWithInt: 1], AVNumberOfChannelsKey,
+//                                    [NSNumber numberWithFloat:8000.0], AVSampleRateKey,
+//                                    [NSNumber numberWithInt:8], AVLinearPCMBitDepthKey,
+//                                    nil];
     
     // Initiate and prepare the recorder
     recorder = [[AVAudioRecorder alloc] initWithURL:outputFileURL settings:recordSetting error:NULL];
     recorder.delegate = self;
     recorder.meteringEnabled = YES;
-    //[recorder prepareToRecord];
+    [recorder prepareToRecord];
     
     [ImgViewBGOfSlider setImage:[UIImage imageNamed:@"slider_bgraila.png"]];
     [self.SliderBar setThumbImage:[UIImage imageNamed:@"knob.png"] forState:UIControlStateNormal];
@@ -2165,7 +2167,7 @@ AppDelegate *appDelegate;
 //{
 //    self.HistoryButton.enabled = true;
 //}
-#pragma mark - 
+#pragma mark -
 #pragma mark attachment delegates
 -(void)cancelAttachment
 {
@@ -2807,7 +2809,8 @@ AppDelegate *appDelegate;
         [[NSUserDefaults standardUserDefaults] setObject:@""  forKey:@"locationCoordinates"];
         //[self.navigationController pushViewController:[[MapWebView alloc] init] animated:YES];
         [self presentViewController:[[MapWebView alloc] init] animated:YES completion:nil];
-        [UIView animateWithDuration:0.5 animations:^() {
+        [UIView animateWithDuration:0.5 animations:^()
+        {
             mediaScrollview.alpha = 0;
             CardsScrollview.alpha  = 0;
             [self.view sendSubviewToBack:attachmentAnimationView];
@@ -2862,8 +2865,6 @@ AppDelegate *appDelegate;
     }
     else
         isMusicPlaying = false;
-    
-    
     
     // Setup audio session
     AVAudioSession *session = [AVAudioSession sharedInstance];
@@ -2984,12 +2985,16 @@ AppDelegate *appDelegate;
     
 }
 
-
-- (void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
     
 }
+- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error
+{
+    NSLog(@"audio error %@",error.description);
+}
 
+#pragma mark audio 
 //for hiding the Overlay View
 -(void) overlayBtnAction:(UIButton*)sender
 {
@@ -3006,7 +3011,6 @@ AppDelegate *appDelegate;
     [self.SliderBar setMaximumTrackImage:[UIImage imageNamed:@"slider_bgrailline.png"] forState:UIControlStateNormal];
     [self.SliderBar setMinimumTrackImage:[UIImage imageNamed:@"slider_bgrailline.png"] forState:UIControlStateNormal];
 }
-
 
 
 -(IBAction)HistoryHeaderButton:(id)sender
@@ -4854,8 +4858,6 @@ AppDelegate *appDelegate;
     [attachmentSound play];
 }
 
-
-
 -(IBAction)cardsButton:(id)sender
 {
     //[self AlertForSeLectionTheImageCapturing];
@@ -5115,114 +5117,198 @@ AppDelegate *appDelegate;
    // isChatHistoryOrNot = FALSE;
     NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
 
-    
     if (CFStringCompare ((__bridge CFStringRef) mediaType, kUTTypeMovie, 0)
         == kCFCompareEqualTo)
     {
         // video + audio file
-        
+        __block NSURL *videoUrl;
         //NSString *moviePath = (NSString*)[[info objectForKey:UIImagePickerControllerMediaURL] path];
-        NSURL *videoUrl= (NSURL*)[info objectForKey:UIImagePickerControllerMediaURL];
+        videoUrl= [info objectForKey:UIImagePickerControllerMediaURL];
         
-        NSData *videoData = [NSData dataWithContentsOfURL:videoUrl];
-        if(([videoData length]/1048576.0f)>25)
+        NSString *videoPath1;
+        NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
+        if (CFStringCompare ((__bridge_retained CFStringRef) mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo)
         {
-//            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Sorry!" message:@"Video size is too big. Maximum limit allowed is 25 MB." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//            [alert show];
-//            alert = nil;
+            NSString *moviePath = (NSString*)[[info objectForKey:UIImagePickerControllerMediaURL] path];
             
-            MODropAlertView *alertView = [[MODropAlertView alloc]initDropAlertWithTitle:@"Sorry!"
-                                                                            description:@"Video size is too big. Maximum limit allowed is 25 MB."
-                                                                          okButtonTitle:@"OK"];
-            alertView.delegate = nil;
-            [alertView show];
-            alertView = nil;
-
-            
-        }
-        else
-        {
-//            viewAttachment=[[PreviewAttachment_View alloc] initWithFrame:self.view.frame];
-//            viewAttachment.isAttachmentImage=NO;
-//            viewAttachment.videoURL=videoUrl;
-//            viewAttachment.attachmentDelegate=self;
-//            [_imgPicker.view addSubview:viewAttachment];
-          
-            MPMoviePlayerController *player = [[MPMoviePlayerController alloc] initWithContentURL:videoUrl];
-            UIImage *thumbnail = [player thumbnailImageAtTime:1.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
-            [player stop];
-            player=Nil;
-            
-            thumbnail = [self scaleImage:thumbnail toSize:CGSizeMake(175, 175)];
-            
-            NSData *imageData = UIImageJPEGRepresentation(thumbnail, 0.4);
-            
-            tempMediaData  = imageData ;
-            tempVideoUrl = videoUrl;
-            [mediaAttachButton setImage:[UIImage imageNamed:@"video_icon.png"] forState:UIControlStateNormal];
-            mediaAttachButton.tag = 4; //tag 4 for video
-            
-            
-            /*[imagesData addObject:imageData];
-            
-            NSDate *currDate = [NSDate date];
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-            [dateFormatter setDateFormat:@"ddMMYYHHmmss"];
-            NSString *dateString = [dateFormatter stringFromDate:currDate];
-            NSLog(@"dateString: %@",dateString);
-            
-            [QBContent TUploadFile:imageData fileName:[NSString stringWithFormat:@"Video%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"image/jpeg" isPublic:YES delegate:self];
-            
-             [QBContent TUploadFile:imageData fileName:[NSString stringWithFormat:@"Video%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],[[NSUserDefaults standardUserDefaults] stringForKey:@"partner_QB_id"],dateString] contentType:@"image/jpeg" isPublic:YES delegate:self];
-            
-            
-            //displaying file sent message in the chat
-            QBChatMessage *message = [QBChatMessage message];
-            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-            
-            NSString *StrPartner_id = [NSString stringWithFormat:@"%ld",(long)[prefs integerForKey:@"SenderId"]];
-            message.recipientID = [StrPartner_id intValue];
-            message.text=@"Sending File...";
-            
-            NSMutableDictionary *video_Data = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Video%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString], @"fileName",[NSString stringWithFormat:@"%@",videoUrl],@"videoURL",[NSNumber numberWithInt: 1],@"isVideoUploading",nil];
-            
-            [message setCustomParameters:video_Data];
-            [[QBChat instance] sendMessage:message];*/
-            
-            //videoData=nil;
-            //videoUrl=nil;
-        
-         }
-        
-        videoData = nil;
-        [self dismissViewControllerAnimated:YES completion:^{
-            if(isMusicPlaying)
+            if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(moviePath))
             {
-                [[MPMusicPlayerController iPodMusicPlayer] play];
-                //[session setCategory:AVAudioSessionCategoryAmbient error:&sessionCategoryError];
+                NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+                videoPath1 =[NSString stringWithFormat:@"%@/videoClick.mov",docDir];
+                NSURL *videoURL = [info objectForKey:UIImagePickerControllerMediaURL];
+                NSData *videoData = [NSData dataWithContentsOfURL:videoURL];
+                [videoData writeToFile:videoPath1 atomically:NO];
+                //  UISaveVideoAtPathToSavedPhotosAlbum(moviePath, self, nil, nil);
+            }
+        }
+        
+        AVURLAsset *avAsset = [AVURLAsset URLAssetWithURL:[NSURL fileURLWithPath:videoPath1] options:nil];
+        NSArray *compatiblePresets = [AVAssetExportSession exportPresetsCompatibleWithAsset:avAsset];
+        
+        if ([compatiblePresets containsObject:AVAssetExportPresetMediumQuality])
+        {
+            
+            AVAssetExportSession *exportSession = [[AVAssetExportSession alloc]initWithAsset:avAsset presetName:AVAssetExportPresetMediumQuality];
+            
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            videoPath1 = [NSString stringWithFormat:@"%@/videoClick.mp4", [paths objectAtIndex:0]];
+            
+            //check if file exists if yes then delete the file
+            BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:videoPath1];
+            if (fileExists) {
+                [[NSFileManager defaultManager] removeItemAtPath:videoPath1 error:NULL];
             }
             
-            // Initialize audio session
-            AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+            exportSession.outputURL = [NSURL fileURLWithPath:videoPath1];
+            NSLog(@"videopath of your mp4 file = %@",videoPath1);  // PATH OF YOUR .mp4 FILE
+            exportSession.outputFileType = AVFileTypeMPEG4;
             
-            // Active your audio session
-            [audioSession setActive: NO error: nil];
+            //  CMTime start = CMTimeMakeWithSeconds(1.0, 600);
+            //  CMTime duration = CMTimeMakeWithSeconds(3.0, 600);
+            //  CMTimeRange range = CMTimeRangeMake(start, duration);
+            //   exportSession.timeRange = range;
+            //  UNCOMMENT ABOVE LINES FOR CROP VIDEO
             
-            // Set audio session category
-            [audioSession setCategory:AVAudioSessionCategoryAmbient error:nil];
+            [exportSession exportAsynchronouslyWithCompletionHandler:^{
+                
+                switch ([exportSession status]) {
+                        
+                    case AVAssetExportSessionStatusFailed:
+                        NSLog(@"Export failed: %@", [[exportSession error] localizedDescription]);
+                        break;
+                        
+                    case AVAssetExportSessionStatusCancelled:
+                        NSLog(@"Export canceled");
+                        break;
+                        
+                    case AVAssetExportSessionStatusCompleted:
+                    {
+                        
+                        
+                        NSLog(@"URL is  %@", videoUrl.absoluteString);
+                        NSData *videoData = [NSData dataWithContentsOfURL:videoUrl];
+                        if(([videoData length]/1048576.0f)>25)
+                        {
+                            //            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Sorry!" message:@"Video size is too big. Maximum limit allowed is 25 MB." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                            //            [alert show];
+                            //            alert = nil;
+                            
+                            MODropAlertView *alertView = [[MODropAlertView alloc]initDropAlertWithTitle:@"Sorry!"
+                                                                                            description:@"Video size is too big. Maximum limit allowed is 25 MB."
+                                                                                          okButtonTitle:@"OK"];
+                            alertView.delegate = nil;
+                            [alertView show];
+                            alertView = nil;
+                            
+                            
+                        }
+                        else
+                        {
+                            //            viewAttachment=[[PreviewAttachment_View alloc] initWithFrame:self.view.frame];
+                            //            viewAttachment.isAttachmentImage=NO;
+                            //            viewAttachment.videoURL=videoUrl;
+                            //            viewAttachment.attachmentDelegate=self;
+                            //            [_imgPicker.view addSubview:viewAttachment];
+                            
+                            MPMoviePlayerController *player = [[MPMoviePlayerController alloc] initWithContentURL:videoUrl];
+                            UIImage *thumbnail = [player thumbnailImageAtTime:1.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
+                            [player stop];
+                            player=Nil;
+                            
+                            thumbnail = [self scaleImage:thumbnail toSize:CGSizeMake(175, 175)];
+                            
+                            
+                            NSData *imageData = UIImageJPEGRepresentation(thumbnail, 0.4);
+                            
+                            videoUrl=[NSURL URLWithString:videoPath1];
+                            
+                            tempMediaData  = imageData ;
+                            tempVideoUrl = videoUrl;
+                            
+                            
+                            [mediaAttachButton setImage:[UIImage imageNamed:@"video_icon.png"] forState:UIControlStateNormal];
+                            mediaAttachButton.tag = 4; //tag 4 for video
+                            
+                            
+                            /*[imagesData addObject:imageData];
+                             
+                             NSDate *currDate = [NSDate date];
+                             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+                             [dateFormatter setDateFormat:@"ddMMYYHHmmss"];
+                             NSString *dateString = [dateFormatter stringFromDate:currDate];
+                             NSLog(@"dateString: %@",dateString);
+                             
+                             [QBContent TUploadFile:imageData fileName:[NSString stringWithFormat:@"Video%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString] contentType:@"image/jpeg" isPublic:YES delegate:self];
+                             
+                             [QBContent TUploadFile:imageData fileName:[NSString stringWithFormat:@"Video%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],[[NSUserDefaults standardUserDefaults] stringForKey:@"partner_QB_id"],dateString] contentType:@"image/jpeg" isPublic:YES delegate:self];
+                             
+                             
+                             //displaying file sent message in the chat
+                             QBChatMessage *message = [QBChatMessage message];
+                             NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+                             
+                             NSString *StrPartner_id = [NSString stringWithFormat:@"%ld",(long)[prefs integerForKey:@"SenderId"]];
+                             message.recipientID = [StrPartner_id intValue];
+                             message.text=@"Sending File...";
+                             
+                             NSMutableDictionary *video_Data = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"Video%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString], @"fileName",[NSString stringWithFormat:@"%@",videoUrl],@"videoURL",[NSNumber numberWithInt: 1],@"isVideoUploading",nil];
+                             
+                             [message setCustomParameters:video_Data];
+                             [[QBChat instance] sendMessage:message];*/
+                            
+                            //videoData=nil;
+                            //videoUrl=nil;
+                            
+                        }
+                        
+                        videoData = nil;
+                        [self dismissViewControllerAnimated:YES completion:^{
+                            if(isMusicPlaying)
+                            {
+                                [[MPMusicPlayerController iPodMusicPlayer] play];
+                                //[session setCategory:AVAudioSessionCategoryAmbient error:&sessionCategoryError];
+                            }
+                            
+                            // Initialize audio session
+                            AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+                            
+                            // Active your audio session
+                            [audioSession setActive: NO error: nil];
+                            
+                            // Set audio session category
+                            [audioSession setCategory:AVAudioSessionCategoryAmbient error:nil];
+                            
+                            // Modifying Playback Mixing Behavior, allow playing music in other apps
+                            OSStatus propertySetError = 0;
+                            UInt32 allowMixing = true;
+                            
+                            propertySetError = AudioSessionSetProperty (
+                                                                        kAudioSessionProperty_OverrideCategoryMixWithOthers,
+                                                                        sizeof (allowMixing),
+                                                                        &allowMixing);
+                            
+                            // Active your audio session
+                            [audioSession setActive: YES error: nil];
+                        }];
+                        
+                        
+                        
+                    }
+                        break;
+                        
+                    default:
+                        
+                        break;
+                        
+                }
+                
+                //UISaveVideoAtPathToSavedPhotosAlbum(videoPath1, self, nil, nil);
+                
+                
+                
+            }];
             
-            // Modifying Playback Mixing Behavior, allow playing music in other apps
-            OSStatus propertySetError = 0;
-            UInt32 allowMixing = true;
-            
-            propertySetError = AudioSessionSetProperty (
-                                                        kAudioSessionProperty_OverrideCategoryMixWithOthers,
-                                                        sizeof (allowMixing),
-                                                        &allowMixing);
-            
-            // Active your audio session
-            [audioSession setActive: YES error: nil];
-        }];
+        }
     }
     
     if (CFStringCompare ((__bridge CFStringRef) mediaType, kUTTypeImage, 0)
@@ -6508,7 +6594,7 @@ AppDelegate *appDelegate;
         
         //[self.tableView reloadData];
         //[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[messages count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        
+        // CHANGESS
         //audio file
         if([res.uploadedBlob.contentType isEqualToString:@"audio/mpeg"])
         {
@@ -6838,8 +6924,9 @@ AppDelegate *appDelegate;
                     
                     NSURL *videoUrl =[NSURL URLWithString:(NSString *) [[videoUploading_indexes objectAtIndex:selected_index] objectForKey:@"videoURL"]];
                 
+                    NSData *videoData=[NSData dataWithContentsOfFile:videoUrl.absoluteString];
                     
-                    NSData *videoData = [NSData dataWithContentsOfURL:videoUrl];
+                    //NSData *videoData = [NSData dataWithContentsOfURL:videoUrl];
                     
                     //NSLog(@"video data without compression.......%i",videoData.length);
                     
@@ -8255,7 +8342,7 @@ AppDelegate *appDelegate;
 
 -(void)showFullScreenPicture:(id)sender
 {
-    NSLog(@"%d",messages.count);
+    NSLog(@"%lu",(unsigned long)messages.count);
     UIButton* img_btn = (UIButton*)sender;
     UITableViewCell *cell ;
     //= (UITableViewCell *)[[[[img_btn superview] superview] superview] superview];
@@ -8268,7 +8355,7 @@ AppDelegate *appDelegate;
         cell=(UITableViewCell *)[[[img_btn superview] superview] superview];
     }
     NSIndexPath *indexPath = [tableView indexPathForCell:cell];
-    NSLog(@"%d",indexPath.row);
+    NSLog(@"%ld",(long)indexPath.row);
     
     QBChatMessage *message;
     if(messages.count < 20)
@@ -8288,7 +8375,6 @@ AppDelegate *appDelegate;
 
 -(void) playAudio:(id)sender
 {
-    
     if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying)
     {
         isMusicPlaying = true;
@@ -8307,8 +8393,7 @@ AppDelegate *appDelegate;
     if([messageBody.customParameters[@"audioID"] length]>1 || [messageBody.customParameters[@"shareStatus"] length]>0)
     {
         if([(NSData*)[audioData objectAtIndex:play_btn.tag] length]==0)
-        {
-            mpvc = [[MPMoviePlayerViewController alloc] init];
+        {               mpvc = [[MPMoviePlayerViewController alloc] init];
             mpvc.moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
             [mpvc.moviePlayer setContentURL:[NSURL URLWithString:messageBody.customParameters[@"audioID"]]];
             
@@ -8328,6 +8413,7 @@ AppDelegate *appDelegate;
         }
         else
         {
+            
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsDirectory = [paths objectAtIndex:0];
             NSString *path = [documentsDirectory stringByAppendingPathComponent:@"my_Audio.m4a"];
@@ -8338,10 +8424,64 @@ AppDelegate *appDelegate;
             
             mpvc = [[MPMoviePlayerViewController alloc] initWithContentURL:audioUrl];
             mpvc.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
+            
+            /*
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsDirectory = [paths objectAtIndex:0];
+            NSString *path = [documentsDirectory stringByAppendingPathComponent:@"my_Audio.mp4"];
+            NSError *error = nil;
+            [[audioData objectAtIndex:play_btn.tag] writeToFile:path atomically:YES];
+            
+            NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            NSString* foofile = [documentsPath stringByAppendingPathComponent:@"my_Audio.mp4"];
+            BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:foofile];
+            
+            if (fileExists)
+            {
+                NSLog(@"The file is");
+            }
+           
+            NSURL *audioUrl = [NSURL fileURLWithPath:path];
+            NSData *Data=[[NSData alloc] initWithContentsOfURL:audioUrl];
+            player = [[AVAudioPlayer alloc] initWithData:Data
+                                                             error:&error];
+            if (error)
+            {
+                NSLog(@"Error in audioPlayer: %@",[error localizedDescription]);
+            }
+            else
+            {
+                player.numberOfLoops = 0; //Infinite
+                player.delegate=self;
+                [player play];
+            }
+             */
         }
     }
     else
     {
+        /*
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *path = [documentsDirectory stringByAppendingPathComponent:@"my_Audio.mp4"];
+        NSError *error = nil;
+        [[audioData objectAtIndex:play_btn.tag] writeToFile:path atomically:YES];
+        NSURL *audioUrl = [NSURL fileURLWithPath:path];
+        
+        player = [[AVAudioPlayer alloc] initWithContentsOfURL:audioUrl
+                                                                       error:&error];
+        if (error)
+        {
+            NSLog(@"Error in audioPlayer: %@",[error localizedDescription]);
+        }
+        else
+        {
+        player.numberOfLoops = 0; //Infinite
+        player.delegate=self;
+        [player play];
+        }
+         */
+        
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
         NSString *path = [documentsDirectory stringByAppendingPathComponent:@"my_Audio.m4a"];
@@ -8351,15 +8491,13 @@ AppDelegate *appDelegate;
         
         mpvc = [[MPMoviePlayerViewController alloc] initWithContentURL:audioUrl];
         mpvc.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
+        
     }
     
     [mpvc.moviePlayer prepareToPlay];
-    
     [[NSNotificationCenter defaultCenter] removeObserver:mpvc  name:MPMoviePlayerPlaybackDidFinishNotification object:mpvc.moviePlayer];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(videoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:mpvc.moviePlayer];
-    
     [self presentMoviePlayerViewControllerAnimated:mpvc] ;
     mpvc = nil;
 
@@ -8367,10 +8505,6 @@ AppDelegate *appDelegate;
     
     if(player!=nil)
         player = nil;
-    
-    
-    
-    
     
     if([messageBody.customParameters[@"audioID"] length]>1)
     {
@@ -8416,9 +8550,8 @@ AppDelegate *appDelegate;
     [alert show];
 }*/
 
--(void)showFullScreenVideo:(id)sender{
-    
-    
+-(void)showFullScreenVideo:(id)sender
+{
     if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying)
     {
         isMusicPlaying = true;
@@ -8464,11 +8597,8 @@ AppDelegate *appDelegate;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(videoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:mpvc.moviePlayer];
-    
-    
     [self presentMoviePlayerViewControllerAnimated:mpvc] ;
     mpvc = nil;
-    
 }
 
 -(void)videoFinished:(NSNotification*)aNotification

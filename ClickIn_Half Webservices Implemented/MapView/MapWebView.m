@@ -9,11 +9,14 @@
 #import "MapWebView.h"
 
 @interface MapWebView ()
-
+{
+   
+}
 @end
 
 @implementation MapWebView
 @synthesize activityIndicator,location_coordinates;
+@synthesize locationManager;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,6 +31,39 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest; // 100 m
+    
+    if (IS_IOS_8)
+    {
+        //[locationManager requestAlwaysAuthorization];
+        CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+        
+        // If the status is denied or only granted for when in use, display an alert
+        if (status == kCLAuthorizationStatusAuthorizedWhenInUse || status ==        kCLAuthorizationStatusDenied)
+        {
+            NSString *title;
+            title = (status == kCLAuthorizationStatusDenied) ? @"Location services are off" :   @"Background location is not enabled";
+            NSString *message = @"To use background location you must turn on 'Always' in the Location Services Settings";
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title
+                                                                message:message
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"Cancel"
+                                                      otherButtonTitles:@"Settings", nil];
+            [alertView show];
+        }
+        // The user has not enabled any location services. Request background authorization.
+        else if (status == kCLAuthorizationStatusNotDetermined)
+        {
+            [locationManager requestAlwaysAuthorization];
+        }
+    }
+    
+    [locationManager startUpdatingLocation];
+    [locationManager stopUpdatingLocation];
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSLog(@"%@ >>>>>>>>>>>>>>>> %@",[prefs stringForKey:@"user_id"],[prefs stringForKey:@"user_token"]);
@@ -107,8 +143,6 @@
         backBtn.frame = CGRectMake(0, 425, 72 , 72);
     }
     [webview addSubview:backBtn];
-
-    
     webview = nil;
 }
 
@@ -163,7 +197,11 @@
 
 
 #pragma mark -
-
+- (NSString *)deviceLocation
+{
+    NSString *theLocation = [NSString stringWithFormat:@"latitude: %f longitude: %f", locationManager.location.coordinate.latitude, locationManager.location.coordinate.longitude];
+    return theLocation;
+}
 -(void)ShareLocationButtonAction
 {
     UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, self.view.opaque, 0.0);
@@ -187,7 +225,6 @@
     CGImageRelease(imageRef);
     UIGraphicsEndImageContext();*/
     
-    
     imageView = [self reSizeImage:imageView];
     
     NSData *imageData = UIImageJPEGRepresentation(imageView, 0.4 );
@@ -195,19 +232,15 @@
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     [prefs setObject:imageData forKey:@"locationimagedata"];
     
-    CLLocationManager *locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    locationManager.distanceFilter = kCLDistanceFilterNone;
-    [locationManager startUpdatingLocation];
-    [locationManager stopUpdatingLocation];
+
     CLLocation *location = [locationManager location];
     if (IS_IOS_8)
     {
         //[locationManager requestAlwaysAuthorization];
         [locationManager requestWhenInUseAuthorization];
     }
-    
+        [locationManager startUpdatingLocation];
+        [locationManager stopUpdatingLocation];
     // Configure the new event with information from the location
     
     float longitude=location.coordinate.longitude;
@@ -270,7 +303,13 @@
 }
 */
 
-
+#pragma mark -
+#pragma mark location methods
+- (void)locationManager:(CLLocationManager *)manager
+     didUpdateLocations:(NSArray *)locations
+{
+    [self deviceLocation];
+}
 #pragma mark -
 #pragma mark webview methods
 

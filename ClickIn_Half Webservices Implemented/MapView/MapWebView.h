@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface MapWebView : UIViewController<UIWebViewDelegate,CLLocationManagerDelegate>
 {
@@ -14,4 +15,6 @@
 }
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) NSString *location_coordinates;
+@property (nonatomic, retain) CLLocationManager *locationManager;
+
 @end

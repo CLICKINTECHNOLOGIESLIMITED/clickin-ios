@@ -1,4 +1,4 @@
-//
+  //
 //  UserInfo.m
 //  ClickIn
 //
@@ -16,7 +16,8 @@
 
 @implementation NSDictionary (JRAdditions)
 
-- (NSDictionary *) dictionaryByReplacingNullsWithStrings {
+- (NSDictionary *) dictionaryByReplacingNullsWithStrings
+{
     const NSMutableDictionary *replaced = [NSMutableDictionary dictionaryWithDictionary: self];
     const id nul = [NSNull null];
     const NSString *blank = @"";

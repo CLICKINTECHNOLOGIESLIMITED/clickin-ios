@@ -547,7 +547,12 @@
 
     //[QBAuth destroySessionWithDelegate:self];
     
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     
+    
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [[NSUserDefaults standardUserDefaults] setObject:@"no" forKey:@"IsAutoLogin"];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -562,6 +567,7 @@
     [defaults setObject:@"" forKey:@"QB_id"];
     
     [defaults setObject:@"" forKey:@"user_name"];
+    
     
     
     AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
