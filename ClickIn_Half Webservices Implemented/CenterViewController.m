@@ -7199,7 +7199,7 @@ AppDelegate *appDelegate;
         
            uniqueString = [NSString stringWithFormat:@"%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString];
            
-           cards_data = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults] objectForKey:@"card_clicks"],@"card_clicks",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_heading"],@"card_heading",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_content"],@"card_content",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_url"],@"card_url", @"PLAYED A CARD",@"card_Played_Countered", @"nil",@"card_Accepted_Rejected", uniqueString,@"card_id", [NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]] , @"card_owner", [[NSUserDefaults standardUserDefaults] stringForKey:@"QBUserName"], @"card_originator", [[NSUserDefaults standardUserDefaults] stringForKey:@"is_CustomCard"], @"is_CustomCard", [[NSUserDefaults standardUserDefaults] stringForKey:@"card_DB_ID"], @"card_DB_ID", nil];
+           cards_data = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults] objectForKey:@"card_clicks"],@"card_clicks",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_heading"],@"card_heading",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_content"],@"card_content",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_url"],@"card_url", @"playing",@"card_Played_Countered", @"nil",@"card_Accepted_Rejected", uniqueString,@"card_id", [NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]] , @"card_owner", [[NSUserDefaults standardUserDefaults] stringForKey:@"QBUserName"], @"card_originator", [[NSUserDefaults standardUserDefaults] stringForKey:@"is_CustomCard"], @"is_CustomCard", [[NSUserDefaults standardUserDefaults] stringForKey:@"card_DB_ID"], @"card_DB_ID", nil];
            
            
            
@@ -7215,7 +7215,7 @@ AppDelegate *appDelegate;
            
            uniqueString = [NSString stringWithFormat:@"%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString];
            
-           cards_data = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults] objectForKey:@"card_clicks"],@"card_clicks",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_heading"],@"card_heading",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_content"],@"card_content",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_url"],@"card_url", @"COUNTERED CARD",@"card_Played_Countered", @"countered",@"card_Accepted_Rejected", [[NSUserDefaults standardUserDefaults] objectForKey:@"card_id"],@"card_id", [[NSUserDefaults standardUserDefaults] objectForKey:@"card_owner"],@"card_owner", [[NSUserDefaults standardUserDefaults] stringForKey:@"card_originator"], @"card_originator", [[NSUserDefaults standardUserDefaults] stringForKey:@"is_CustomCard"], @"is_CustomCard", [[NSUserDefaults standardUserDefaults] stringForKey:@"card_DB_ID"], @"card_DB_ID", @"", @"isDelivered",  nil];
+           cards_data = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults] objectForKey:@"card_clicks"],@"card_clicks",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_heading"],@"card_heading",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_content"],@"card_content",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_url"],@"card_url", @"played",@"card_Played_Countered", @"countered",@"card_Accepted_Rejected", [[NSUserDefaults standardUserDefaults] objectForKey:@"card_id"],@"card_id", [[NSUserDefaults standardUserDefaults] objectForKey:@"card_owner"],@"card_owner", [[NSUserDefaults standardUserDefaults] stringForKey:@"card_originator"], @"card_originator", [[NSUserDefaults standardUserDefaults] stringForKey:@"is_CustomCard"], @"is_CustomCard", [[NSUserDefaults standardUserDefaults] stringForKey:@"card_DB_ID"], @"card_DB_ID", @"", @"isDelivered",  nil];
            
            
            NSDictionary *cardDict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%i",[[card_countered_indexes objectForKey:@"selectedIndex"] integerValue]],@"index",@"1",@"status", nil];
@@ -9628,7 +9628,8 @@ static CGFloat padding = 20.0;
                     cell.PhotoView.frame=CGRectZero;
                     cell.PhotoView.image=nil;
                     
-                    if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                    //if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                    if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                         cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  1 ,cell.message.frame.origin.y + 5, 248, 326);
                     else
                         cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  8 ,cell.message.frame.origin.y + 10, 95, 125);
@@ -9685,10 +9686,28 @@ static CGFloat padding = 20.0;
 //                    cell.cardSender.text = [partner_name capitalizedString];
                     
                     cell.cardPlayed_Countered.frame = CGRectMake(cell.cardImageView.frame.origin.x + cell.cardImageView.frame.size.width + 15, cell.cardImageView.frame.origin.y + 18 - 5, 120, 40);
-                    if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                    //if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                    
+                    NSString *card_actionText;
+                if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"accepted"])
+                    {
+                        card_actionText = @"ACCEPTED!";
+                    }
+                    else if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"rejected"])
+                    {
+                        card_actionText = @"REJECTED!";
+                    }
+                    else if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"countered"])
+                        card_actionText = @"COUNTERED CARD";
+                    else if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
+                        card_actionText = @"PLAYED A CARD";
+                    
+                    
+                    if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                         cell.cardPlayed_Countered.text = @"will offer you clicks for";
                     else
-                        cell.cardPlayed_Countered.text = messageBody.customParameters[@"card_Played_Countered"];
+                        cell.cardPlayed_Countered.text = card_actionText;
+                        //cell.cardPlayed_Countered.text = messageBody.customParameters[@"card_Played_Countered"];
                     
                     if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"countered"])
                     {
@@ -9708,7 +9727,8 @@ static CGFloat padding = 20.0;
                     [cell.date setFrame:CGRectMake(-14 , 145 , 70, 10)];
                     
                     
-                    if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                    //if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                    if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                     {
                         [cell.message setFrame:CGRectMake(320 - 250 - padding,
                                                           padding-13,
@@ -9834,7 +9854,8 @@ static CGFloat padding = 20.0;
                         [cell.cardCountered addTarget:self action:@selector(cardCounteredPressed:)
                                      forControlEvents:UIControlEventTouchUpInside];
                         
-                        if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                        //if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                        if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                         {
                             cell.cardAccepted.frame=CGRectMake(cell.cardImageView.frame.origin.x + 20, cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height + 36 + 3 , 32, 32);
                             cell.cardRejected.frame=CGRectMake(cell.cardImageView.frame.origin.x + 20 + 50, cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height + 36 + 3 , 32, 32);
@@ -9855,7 +9876,7 @@ static CGFloat padding = 20.0;
                                 }
                                 else
                                 {
-                                    if([messageBody.customParameters[@"card_originator"] isEqualToString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"QBUserName"]]] && [messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                                    if([messageBody.customParameters[@"card_originator"] isEqualToString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"QBUserName"]]] && [messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                                     {
                                         [cell.cardAccepted setEnabled:false];
                                         [cell.cardRejected setEnabled:false];
@@ -9899,7 +9920,7 @@ static CGFloat padding = 20.0;
                     cell.PhotoView.frame=CGRectZero;
                     cell.PhotoView.image=nil;
                     
-                    if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                    if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                         cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  1 ,cell.message.frame.origin.y + 5, 248, 326);
                     else
                         cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  8 ,cell.message.frame.origin.y + 10, 95, 125);
@@ -9951,10 +9972,28 @@ static CGFloat padding = 20.0;
                     
                     
                     cell.cardPlayed_Countered.frame = CGRectMake(cell.cardImageView.frame.origin.x + cell.cardImageView.frame.size.width + 15, cell.cardImageView.frame.origin.y + 18 - 5, 120, 40);
-                    if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                    
+                    
+                    NSString *card_actionText;
+                    if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"accepted"])
+                    {
+                        card_actionText = @"ACCEPTED!";
+                    }
+                    else if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"rejected"])
+                    {
+                        card_actionText = @"REJECTED!";
+                    }
+                    else if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"countered"])
+                        card_actionText = @"COUNTERED CARD";
+                    else if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
+                        card_actionText = @"PLAYED A CARD";
+                    
+                    
+                    
+                    if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                         cell.cardPlayed_Countered.text = @"will offer you clicks for";
                     else
-                        cell.cardPlayed_Countered.text = messageBody.customParameters[@"card_Played_Countered"];
+                        cell.cardPlayed_Countered.text = card_actionText;
                     
                     if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"countered"])
                     {
@@ -9971,7 +10010,7 @@ static CGFloat padding = 20.0;
                     cell.date.text = [[NSString stringWithFormat:@"%@", time] uppercaseString];
                     [cell.date setFrame:CGRectMake(320-55,145, 70, 10)];
                     
-                    if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                    if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                     {
                         [cell.message setFrame:CGRectMake(padding, padding-13, 250+padding-20 , 388+padding - 72)];
                         [cell.backgroundImageView setFrame:CGRectMake( cell.message.frame.origin.x - padding/2,
@@ -10116,7 +10155,7 @@ static CGFloat padding = 20.0;
                         cell.cardCountered.frame =CGRectZero;
                         cell.cardBarView.frame = CGRectZero;
                         
-                        if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                        if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                         {
                             /*cell.cardAccepted.frame=CGRectMake(cell.cardImageView.frame.origin.x + 20, cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height + 36 , 32, 32);
                             cell.cardRejected.frame=CGRectMake(cell.cardImageView.frame.origin.x + 20 + 50, cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height + 36 , 32, 32);
@@ -10142,7 +10181,7 @@ static CGFloat padding = 20.0;
                                 }
                                 else
                                 {
-                                if([messageBody.customParameters[@"card_originator"] isEqualToString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"QBUserName"]]] && [messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                                if([messageBody.customParameters[@"card_originator"] isEqualToString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"QBUserName"]]] && [messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                                     {
                                         [cell.cardAccepted setEnabled:false];
                                         [cell.cardRejected setEnabled:false];
@@ -11720,7 +11759,7 @@ static CGFloat padding = 20.0;
                 cell.PhotoView.frame=CGRectZero;
                 cell.PhotoView.image=nil;
                 
-                if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                     cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  1 ,cell.message.frame.origin.y + 5, 248, 326);
                 else
                     cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  8 ,cell.message.frame.origin.y + 10, 95, 125);
@@ -11776,10 +11815,26 @@ static CGFloat padding = 20.0;
 //                cell.cardSender.text = [partner_name capitalizedString];
                 
                 cell.cardPlayed_Countered.frame = CGRectMake(cell.cardImageView.frame.origin.x + cell.cardImageView.frame.size.width + 15, cell.cardImageView.frame.origin.y + 18 - 5, 120, 40);
-                if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                
+                NSString *card_actionText;
+                if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"accepted"])
+                {
+                    card_actionText = @"ACCEPTED!";
+                }
+                else if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"rejected"])
+                {
+                    card_actionText = @"REJECTED!";
+                }
+                else if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"countered"])
+                    card_actionText = @"COUNTERED CARD";
+                else if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
+                    card_actionText = @"PLAYED A CARD";
+                
+                
+                if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                     cell.cardPlayed_Countered.text = @"will offer you clicks for";
                 else
-                    cell.cardPlayed_Countered.text = messageBody.customParameters[@"card_Played_Countered"];
+                    cell.cardPlayed_Countered.text = card_actionText;
                 
                 if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"countered"])
                 {
@@ -11796,7 +11851,7 @@ static CGFloat padding = 20.0;
                 cell.date.text = [[NSString stringWithFormat:@"%@",time] uppercaseString];
                 [cell.date setFrame:CGRectMake(-14 , 145 , 70, 10)];
                 
-                if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                 {
                     [cell.message setFrame:CGRectMake(320 - 250 - padding,
                                                       padding-13,
@@ -11915,7 +11970,7 @@ static CGFloat padding = 20.0;
                     [cell.cardCountered addTarget:self action:@selector(cardCounteredPressed:)
                                  forControlEvents:UIControlEventTouchUpInside];
                     
-                    if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                    if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                     {
                         cell.cardAccepted.frame=CGRectMake(cell.cardImageView.frame.origin.x + 20, cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height + 36 + 3, 32, 32);
                         cell.cardRejected.frame=CGRectMake(cell.cardImageView.frame.origin.x + 20 + 50, cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height + 36 + 3, 32, 32);
@@ -11936,7 +11991,7 @@ static CGFloat padding = 20.0;
                             }
                             else
                             {
-                                if([messageBody.customParameters[@"card_originator"] isEqualToString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"QBUserName"]]] && [messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                                if([messageBody.customParameters[@"card_originator"] isEqualToString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"QBUserName"]]] && [messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                                 {
                                     [cell.cardAccepted setEnabled:false];
                                     [cell.cardRejected setEnabled:false];
@@ -11980,7 +12035,7 @@ static CGFloat padding = 20.0;
                 cell.PhotoView.frame=CGRectZero;
                 cell.PhotoView.image=nil;
                 
-                if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                     cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  1 ,cell.message.frame.origin.y + 5, 248, 326);
                 else
                     cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  8 ,cell.message.frame.origin.y + 10, 95, 125);
@@ -12030,13 +12085,28 @@ static CGFloat padding = 20.0;
                 cell.cardSender.text = @"You";
                 
                 cell.cardPlayed_Countered.frame = CGRectMake(cell.cardImageView.frame.origin.x + cell.cardImageView.frame.size.width + 15, cell.cardImageView.frame.origin.y + 18 - 5, 120, 40);
-                if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                
+                NSString *card_actionText;
+                if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"accepted"])
+                {
+                    card_actionText = @"ACCEPTED!";
+                }
+                else if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"rejected"])
+                {
+                    card_actionText = @"REJECTED!";
+                }
+                else if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"countered"])
+                    card_actionText = @"COUNTERED CARD";
+                else if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
+                    card_actionText = @"PLAYED A CARD";
+                
+                if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                 {
                     //cell.cardPlayed_Countered.frame = CGRectMake(cell.cardImageView.frame.origin.x + cell.cardImageView.frame.size.width + 15, cell.cardImageView.frame.origin.y + 18 - 5, 140, 40);
                     cell.cardPlayed_Countered.text = @"will offer you clicks for";
                 }
                 else
-                cell.cardPlayed_Countered.text = messageBody.customParameters[@"card_Played_Countered"];
+                cell.cardPlayed_Countered.text = card_actionText;
                 
                 if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"countered"])
                 {
@@ -12052,7 +12122,7 @@ static CGFloat padding = 20.0;
                 cell.date.text = [[NSString stringWithFormat:@"%@", time] uppercaseString];
                 [cell.date setFrame:CGRectMake(320-55,145, 70, 10)];
                 
-                if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                 {
                     [cell.message setFrame:CGRectMake(padding, padding-13, 250+padding-20 , 388+padding - 72)];
                     [cell.backgroundImageView setFrame:CGRectMake( cell.message.frame.origin.x - padding/2,
@@ -12197,7 +12267,7 @@ static CGFloat padding = 20.0;
                     cell.cardCountered.frame =CGRectZero;
                     cell.cardBarView.frame = CGRectZero;
                     
-                    if([messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                    if([messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                     {
                         /*cell.cardAccepted.frame=CGRectMake(cell.cardImageView.frame.origin.x + 20, cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height + 36 , 32, 32);
                         cell.cardRejected.frame=CGRectMake(cell.cardImageView.frame.origin.x + 20 + 50, cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height + 36 , 32, 32);
@@ -12224,7 +12294,7 @@ static CGFloat padding = 20.0;
                             }
                             else
                             {
-                                if([messageBody.customParameters[@"card_originator"] isEqualToString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"QBUserName"]]] && [messageBody.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                                if([messageBody.customParameters[@"card_originator"] isEqualToString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"QBUserName"]]] && [messageBody.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                                 {
                                     [cell.cardAccepted setEnabled:false];
                                     [cell.cardRejected setEnabled:false];
@@ -12879,7 +12949,7 @@ static CGFloat padding = 20.0;
             
             if([chatMessage.customParameters[@"card_heading"] length]>0)
             {
-                if([chatMessage.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                if([chatMessage.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                 {
                     if([[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",chatMessage.senderID]] )
                         size.height += 305;
@@ -13089,7 +13159,7 @@ static CGFloat padding = 20.0;
             
             if([chatMessage.customParameters[@"card_heading"] length]>0)
             {
-                if([chatMessage.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+                if([chatMessage.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
                 {
                     if([[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",chatMessage.senderID]] )
                         size.height += 305;
@@ -13221,7 +13291,7 @@ static CGFloat padding = 20.0;
         
         if([chatMessage.customParameters[@"card_heading"] length]>0)
         {
-            if([chatMessage.customParameters[@"card_Played_Countered"] isEqualToString:@"PLAYED A CARD"])
+            if([chatMessage.customParameters[@"card_Accepted_Rejected"] isEqualToString:@"nil"])
             {
                 if([[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",chatMessage.senderID]] )
                     size.height += 305;
@@ -13801,7 +13871,7 @@ static CGFloat padding = 20.0;
     NSLog(@"%@",StrPartner_id);
     message.text = @" ";
     
-    NSMutableDictionary *cards_data = [[NSMutableDictionary alloc] initWithObjectsAndKeys:chatMessage.customParameters[@"card_clicks"],@"card_clicks",chatMessage.customParameters[@"card_heading"],@"card_heading",chatMessage.customParameters[@"card_content"],@"card_content",chatMessage.customParameters[@"card_url"],@"card_url", @"ACCEPTED!",@"card_Played_Countered", @"accepted",@"card_Accepted_Rejected", chatMessage.customParameters[@"card_owner"], @"card_owner", chatMessage.customParameters[@"card_originator"], @"card_originator", chatMessage.customParameters[@"is_CustomCard"], @"is_CustomCard", chatMessage.customParameters[@"card_DB_ID"],  @"card_DB_ID",  nil];
+    NSMutableDictionary *cards_data = [[NSMutableDictionary alloc] initWithObjectsAndKeys:chatMessage.customParameters[@"card_id"], @"card_id",                                       chatMessage.customParameters[@"card_clicks"],@"card_clicks",chatMessage.customParameters[@"card_heading"],@"card_heading",chatMessage.customParameters[@"card_content"],@"card_content",chatMessage.customParameters[@"card_url"],@"card_url", @"played",@"card_Played_Countered", @"accepted",@"card_Accepted_Rejected", chatMessage.customParameters[@"card_owner"], @"card_owner", chatMessage.customParameters[@"card_originator"], @"card_originator", chatMessage.customParameters[@"is_CustomCard"], @"is_CustomCard", chatMessage.customParameters[@"card_DB_ID"],  @"card_DB_ID",  nil];
     
     [message setCustomParameters:cards_data];
     
@@ -13992,7 +14062,7 @@ static CGFloat padding = 20.0;
     NSLog(@"%@",StrPartner_id);
     message.text = @" ";
     
-    NSMutableDictionary *cards_data = [[NSMutableDictionary alloc] initWithObjectsAndKeys:chatMessage.customParameters[@"card_clicks"],@"card_clicks",chatMessage.customParameters[@"card_heading"],@"card_heading",chatMessage.customParameters[@"card_content"],@"card_content",chatMessage.customParameters[@"card_url"],@"card_url", @"REJECTED!",@"card_Played_Countered", @"rejected",@"card_Accepted_Rejected", chatMessage.customParameters[@"card_originator"], @"card_originator", chatMessage.customParameters[@"is_CustomCard"], @"is_CustomCard", chatMessage.customParameters[@"card_DB_ID"],  @"card_DB_ID" , nil];
+    NSMutableDictionary *cards_data = [[NSMutableDictionary alloc] initWithObjectsAndKeys:chatMessage.customParameters[@"card_id"], @"card_id",                                       chatMessage.customParameters[@"card_clicks"],@"card_clicks",chatMessage.customParameters[@"card_heading"],@"card_heading",chatMessage.customParameters[@"card_content"],@"card_content",chatMessage.customParameters[@"card_url"],@"card_url", @"played",@"card_Played_Countered", @"rejected",@"card_Accepted_Rejected", chatMessage.customParameters[@"card_originator"], @"card_originator", chatMessage.customParameters[@"is_CustomCard"], @"is_CustomCard", chatMessage.customParameters[@"card_DB_ID"],  @"card_DB_ID" , nil];
     
     [message setCustomParameters:cards_data];
     

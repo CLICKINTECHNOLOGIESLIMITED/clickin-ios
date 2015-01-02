@@ -532,6 +532,11 @@
     
     NSMutableDictionary *custom_Data = [[NSMutableDictionary alloc] init] ;
     [custom_Data addEntriesFromDictionary:message.customParameters];
+    if([message.customParameters[@"card_heading"] length]>0)
+    {
+        [custom_Data setObject:[NSString stringWithFormat:@"%@",@"played"] forKey:@"card_Played_Countered"];
+    }
+    
     [custom_Data setObject:[NSString stringWithFormat:@"%@",message.ID] forKey:@"originalMessageID"];
     [custom_Data setObject:[NSString stringWithFormat:@"%@",txtView.text] forKey:@"comment"];
     [custom_Data setObject:[NSString stringWithFormat:@"%@",@"shared"] forKey:@"shareStatus"];

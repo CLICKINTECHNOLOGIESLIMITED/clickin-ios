@@ -504,6 +504,11 @@
                         else
                             card_actionText = @"PLAYED A CARD";
                         
+                        if(cards_array.count>9)
+                            card_actionText = [cards_array objectAtIndex:9];
+                        else
+                            card_actionText = @"playing";
+                        
                         NSString *card_owner;
                         if([[cards_array objectAtIndex:6] isEqualToString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"QBUserName"]]])
                         {
