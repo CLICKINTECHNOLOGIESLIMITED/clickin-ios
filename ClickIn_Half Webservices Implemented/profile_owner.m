@@ -804,7 +804,7 @@
     
     
 }
-#pragma mark -
+
 #pragma mark - UITableViewDelegate
 
 
@@ -1472,10 +1472,10 @@
     {
         cell=(UITableViewCell *)[[button superview] superview];
     }
-    cell = (UITableViewCell *)[[[button superview] superview] superview];
+    
     NSIndexPath *indexPath = [table indexPathForCell:cell];
     
-    NSLog(@"%d",indexPath.row);
+    NSLog(@"%ld",(long)indexPath.row);
     
     activity=[[LabeledActivityIndicatorView alloc]initWithController:self andText:@"Loading..."];
     [activity show];

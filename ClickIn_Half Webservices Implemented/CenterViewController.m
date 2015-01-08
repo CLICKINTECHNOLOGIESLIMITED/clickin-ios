@@ -8790,7 +8790,7 @@ static CGFloat padding = 20.0;
                 else
                     imageHeight = 225/[messageBody.customParameters[@"imageRatio"] floatValue];
                 
-                if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]] )
+                if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%lu",(unsigned long)messageBody.senderID]] )
                 {
                     cell.imageSentView.frame=CGRectMake(320-padding-175, padding-12, 175, 175);
                     cell.imageSentView.layer.borderWidth = 2.0f;
@@ -8919,9 +8919,9 @@ static CGFloat padding = 20.0;
                 
               //[cell.PhotoView setImageWithURL:[imagesURL objectAtIndex:indexPath.row] placeholderImage:[UIImage imageNamed:@"loading.png"]];
                 
-                NSLog(@"%d",indexPath.row);
-                NSLog(@"%d",[imagesData count]);
-                NSLog(@"%d",[self.messages count]);
+                NSLog(@"%ld",(long)indexPath.row);
+                NSLog(@"%lu",(unsigned long)[imagesData count]);
+                NSLog(@"%lu",(unsigned long)[self.messages count]);
                 
                 
                 [cell.imageSentView addTarget:self action:@selector(showFullScreenPicture:)                               forControlEvents:UIControlEventTouchUpInside];
@@ -10888,12 +10888,21 @@ static CGFloat padding = 20.0;
                                    boldFont, NSFontAttributeName,nil];
             NSDictionary *subAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
                                       regularFont, NSFontAttributeName,foregroundColor, NSForegroundColorAttributeName, nil];
-            const NSRange range = NSMakeRange(0,[StrClicks length]);
-            NSMutableAttributedString *attributedText =
-            [[NSMutableAttributedString alloc] initWithString:message
-                                                   attributes:attrs];
-            [attributedText setAttributes:subAttrs range:range];
-            [cell.message setAttributedText:attributedText];
+            // RANGE ISSUE COMES HERE
+            if (StrClicks.length>0)
+            {
+                const NSRange range = NSMakeRange(0,[StrClicks length]);
+                NSMutableAttributedString *attributedText =
+                [[NSMutableAttributedString alloc] initWithString:message
+                                                       attributes:attrs];
+                [attributedText setAttributes:subAttrs range:range];
+                [cell.message setAttributedText:attributedText];
+            }
+            else
+            {
+                [cell.message setText:message];
+            }
+            
         }
         
         //check for image sent
@@ -11067,7 +11076,7 @@ static CGFloat padding = 20.0;
             [cell.clicksImageView setFrame:CGRectZero];
             cell.clicksImageView.image=nil;
             
-            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]] )
+            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%lu",(unsigned long)messageBody.senderID]] )
             {//iiinnnn right side 1
                 cell.VideoSentView.frame=CGRectMake(320 - padding -175, padding-12, 175, 175);
 //                cell.VideoSentView.layer.borderWidth = 2.0f;
@@ -11136,7 +11145,7 @@ static CGFloat padding = 20.0;
             cell.clicksImageView.image=nil;
 
             
-            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]] )
+            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%lu",(unsigned long)messageBody.senderID]] )
             {
                 cell.VideoSentView.frame=CGRectMake(320-padding-175, padding-12, 175, 175);
                 cell.VideoSentView.layer.borderWidth = 2.0f;
@@ -11213,7 +11222,7 @@ static CGFloat padding = 20.0;
             [cell.clicksImageView setFrame:CGRectZero];
             cell.clicksImageView.image=nil;
             
-            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]] )
+            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%lu",(unsigned long)messageBody.senderID]] )
             {
                 cell.sound_bgView.frame=CGRectMake(320 - padding -175, padding-12, 175, 50);
                 cell.sound_iconView.frame=CGRectMake(320 - padding -120, padding-9, 100, 44);
@@ -11263,7 +11272,7 @@ static CGFloat padding = 20.0;
             [cell.clicksImageView setFrame:CGRectZero];
             cell.clicksImageView.image=nil;
             
-            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]] )
+            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%lu",(unsigned long)messageBody.senderID]] )
             {
                 cell.sound_bgView.frame=CGRectMake(320 - padding -175, padding-12, 175, 50);
                 cell.sound_iconView.frame=CGRectMake(320 - padding -120, padding-9, 100, 44);
@@ -11322,7 +11331,7 @@ static CGFloat padding = 20.0;
             else
                 imageHeight = 225/[messageBody.customParameters[@"imageRatio"] floatValue];
             
-            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]] )
+            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%lu",(unsigned long)messageBody.senderID]] )
             {
                 cell.LocationSentView.frame=CGRectMake(320-padding-175, padding-12, 175, 175);
                 cell.LocationSentView.layer.borderWidth = 2.0f;
@@ -11371,7 +11380,7 @@ static CGFloat padding = 20.0;
             else
                 imageHeight = 225/[messageBody.customParameters[@"imageRatio"] floatValue];
             
-            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]] )
+            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%lu",(unsigned long)messageBody.senderID]] )
             {
                 cell.LocationSentView.frame=CGRectMake(320-padding-175, padding-12, 175, 175);
                 cell.LocationSentView.layer.borderWidth = 2.0f;
@@ -11408,9 +11417,9 @@ static CGFloat padding = 20.0;
                 cell.LocationSentView.frame=CGRectMake(padding, padding - 12, 175, 175);
                 [cell.LocationSentView setImage:[UIImage imageWithData:[imagesData objectAtIndex:indexPath.row]] forState:UIControlStateNormal];
             }
-            NSLog(@"%d",indexPath.row);
-            NSLog(@"%d",[imagesData count]);
-            NSLog(@"%d",[self.messages count]);
+            NSLog(@"%ld",(long)indexPath.row);
+            NSLog(@"%lu",(unsigned long)[imagesData count]);
+            NSLog(@"%lu",(unsigned long)[self.messages count]);
             
             [cell.LocationSentView addTarget:self action:@selector(showMapView:) forControlEvents:UIControlEventTouchUpInside];
         }
@@ -11540,7 +11549,7 @@ static CGFloat padding = 20.0;
         {
             
         
-        if(![[NSString stringWithFormat:@"%ld",(long)[prefs integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]] )
+        if(![[NSString stringWithFormat:@"%ld",(long)[prefs integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%lu",(unsigned long)messageBody.senderID]] )
         {
             //bgImage = [[UIImage imageNamed:@"chatboxsml2.png"] stretchableImageWithLeftCapWidth:24  topCapHeight:16];
             if([messageBody.customParameters[@"fileID"] length]>1 || [messageBody.customParameters[@"isFileUploading"] length]>0)
@@ -11696,7 +11705,7 @@ static CGFloat padding = 20.0;
         if([messageBody.customParameters[@"fileID"] length]>1 || [messageBody.customParameters[@"isFileUploading"] length]>0 || [messageBody.customParameters[@"locationID"] length]>1 || [messageBody.customParameters[@"isLocationUploading"] length]>0 || [messageBody.customParameters[@"videoID"] length]>1 || [messageBody.customParameters[@"isVideoUploading"] integerValue]==1 || [messageBody.customParameters[@"audioID"] length]>1 || [messageBody.customParameters[@"isAudioUploading"] length]>0)
         {
             
-            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]] )
+            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%lu",(unsigned long)messageBody.senderID]] )
             {
                 
                 if(![messageBody.customParameters[@"clicks"] isEqualToString:@"no"] && [messageBody.customParameters[@"clicks"]length]>0)
@@ -11832,7 +11841,7 @@ static CGFloat padding = 20.0;
             cell.message.layer.borderWidth = 0.0f;
             cell.message.layer.borderColor = [[UIColor whiteColor] CGColor];
             
-            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]] )
+            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%lu",(unsigned long)messageBody.senderID]] )
             {
                 [cell.share_btn setImage:[UIImage imageNamed:@"share.png"] forState:UIControlStateNormal];
                 [cell.share_btn setFrame:CGRectMake(cell.date.frame.origin.x + 45, cell.date.frame.origin.y-25, 30, 30)];
@@ -11863,7 +11872,7 @@ static CGFloat padding = 20.0;
         //-------for displaying cards------------
         if([messageBody.customParameters[@"card_heading"] length]>0)
         {
-            if(![[NSString stringWithFormat:@"%ld",(long)[prefs integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]] )
+            if(![[NSString stringWithFormat:@"%ld",(long)[prefs integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%lu",(unsigned long)messageBody.senderID]] )
             {
                 
                 [cell.message setFrame:CGRectMake(320 - 240 - padding,
@@ -12873,7 +12882,7 @@ static CGFloat padding = 20.0;
         
         if([messageBody.customParameters[@"isDelivered"] isEqualToString:@"yes"])
         {
-            if([[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]])
+            if([[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%lu",(unsigned long)messageBody.senderID]])
             {
                 cell.deliveredIcon.frame = CGRectMake(cell.date.frame.origin.x+39, cell.date.frame.origin.y-1, 34/2, 25/2);
                 cell.deliveredIcon.image= [UIImage imageNamed:@"tick.png"];
@@ -12946,7 +12955,7 @@ static CGFloat padding = 20.0;
         
         if([messageBody.customParameters[@"isDelivered"] isEqualToString:@"yes"])
         {
-            if([[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]])
+            if([[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%lu",(unsigned long)messageBody.senderID]])
             {
                 cell.deliveredIcon.frame = CGRectMake(cell.date.frame.origin.x+39, cell.date.frame.origin.y-1, 34/2, 25/2);
                 cell.deliveredIcon.image= [UIImage imageNamed:@"tick.png"];
@@ -12958,7 +12967,7 @@ static CGFloat padding = 20.0;
         {
             //cell.deliveredIcon.frame = CGRectZero;
             
-            if([[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]])
+            if([[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%lu",(unsigned long)messageBody.senderID]])
             {
                 cell.deliveredIcon.frame = CGRectMake(cell.date.frame.origin.x+39, cell.date.frame.origin.y-1, 28/2, 25/2);
                 
@@ -13181,8 +13190,8 @@ static CGFloat padding = 20.0;
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"heightForRowAtIndexPath %d",[self.messages count]);
-    NSLog(@"%d",indexPath.row);
+    NSLog(@"heightForRowAtIndexPath %lu",(unsigned long)[self.messages count]);
+    NSLog(@"%ld",(long)indexPath.row);
     if(isChatHistoryOrNot == TRUE)
     {
         if(indexPath.row == 0)
@@ -13432,7 +13441,8 @@ static CGFloat padding = 20.0;
                 size.height += 115;
         }
         
-        return size.height+padding-11;
+//        return size.height+padding-11;
+         return size.height+padding;
     }
 }
 
@@ -13451,7 +13461,7 @@ static CGFloat padding = 20.0;
     }
     
     NSIndexPath *indexPath = [tableView indexPathForCell:cell];
-    NSLog(@"%d",indexPath.row);
+    //NSLog(@"%d",indexPath.row);
     
     QBChatMessage *chat_message;
     
@@ -13539,9 +13549,7 @@ static CGFloat padding = 20.0;
     arrCardStatus = nil;
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    
-    
+
     QBChatMessage * message = [[QBChatMessage alloc] init];
     message.text = @"SHARED.";
     //updatedMessage.customParameters = message.customParameters;
@@ -13556,9 +13564,7 @@ static CGFloat padding = 20.0;
     [custom_Data setObject:chat_message.customParameters[@"isMessageSender"] forKey:@"isMessageSender"];
     
     [custom_Data setObject:chat_message.customParameters[@"messageSenderID"] forKey:@"messageSenderID"];
-    
     [custom_Data setObject:@"yes" forKey:@"isAccepted"];
-    
     [custom_Data setObject:chat_message.customParameters[@"facebookToken"] forKey:@"facebookToken"];
     
     [custom_Data setObject:chat_message.customParameters[@"sharingMedia"] forKey:@"sharingMedia"];
@@ -13580,7 +13586,7 @@ static CGFloat padding = 20.0;
     NSString *dateString = [dateFormatter stringFromDate:currDate];
     NSLog(@"dateString: %@",dateString);
     
-    NSString *uniqueString = [NSString stringWithFormat:@"%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],[NSString stringWithFormat:@"%ld",(long)message.recipientID],dateString];
+    NSString *uniqueString = [NSString stringWithFormat:@"%ld%@%@",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],[NSString stringWithFormat:@"%ld",(long)message.recipientID],dateString];
     
     message.ID = uniqueString;
     
