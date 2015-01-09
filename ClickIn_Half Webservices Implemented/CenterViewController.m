@@ -11005,7 +11005,7 @@ static CGFloat padding = 20.0;
             else
                 imageHeight = 225/[messageBody.customParameters[@"imageRatio"] floatValue];
             
-            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%d",messageBody.senderID]] )
+            if(![[NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]]isEqualToString:[NSString stringWithFormat:@"%lu",(unsigned long)messageBody.senderID]] )
             {
                 cell.imageSentView.frame=CGRectMake(320-padding-175, padding-12, 175, 175);
                 cell.imageSentView.layer.borderWidth = 2.0f;
@@ -13441,8 +13441,8 @@ static CGFloat padding = 20.0;
                 size.height += 115;
         }
         
-//        return size.height+padding-11;
-         return size.height+padding;
+       return size.height+padding-11;
+        // return size.height+padding;
     }
 }
 
@@ -14198,7 +14198,8 @@ static CGFloat padding = 20.0;
     NSLog(@"%@",StrPartner_id);
     message.text = @" ";
     
-    NSMutableDictionary *cards_data = [[NSMutableDictionary alloc] initWithObjectsAndKeys:chatMessage.customParameters[@"card_id"], @"card_id",                                       chatMessage.customParameters[@"card_clicks"],@"card_clicks",chatMessage.customParameters[@"card_heading"],@"card_heading",chatMessage.customParameters[@"card_content"],@"card_content",chatMessage.customParameters[@"card_url"],@"card_url", @"played",@"card_Played_Countered", @"rejected",@"card_Accepted_Rejected", chatMessage.customParameters[@"card_originator"], @"card_originator", chatMessage.customParameters[@"is_CustomCard"], @"is_CustomCard", chatMessage.customParameters[@"card_DB_ID"],  @"card_DB_ID" , nil];
+    NSMutableDictionary *cards_data = [[NSMutableDictionary alloc] initWithObjectsAndKeys:chatMessage.customParameters[@"card_id"], @"card_id",                                       chatMessage.customParameters[@"card_clicks"],@"card_clicks",chatMessage.customParameters[@"card_heading"],@"card_heading",chatMessage.customParameters[@"card_content"],@"card_content",chatMessage.customParameters[@"card_url"],@"card_url", @"played",@"card_Played_Countered", @"rejected",@"card_Accepted_Rejected",
+        chatMessage.customParameters[@"card_owner"], @"card_owner",chatMessage.customParameters[@"card_originator"], @"card_originator", chatMessage.customParameters[@"is_CustomCard"], @"is_CustomCard", chatMessage.customParameters[@"card_DB_ID"],  @"card_DB_ID" , nil];
     
     [message setCustomParameters:cards_data];
     
