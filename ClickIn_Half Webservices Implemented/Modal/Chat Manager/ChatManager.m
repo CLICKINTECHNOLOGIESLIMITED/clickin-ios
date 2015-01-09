@@ -140,6 +140,8 @@
     NSMutableDictionary *custom_Data = [[NSMutableDictionary alloc] init] ;
     [custom_Data addEntriesFromDictionary:message.customParameters];
     [custom_Data setObject:[NSString stringWithFormat:@"%@",message.ID] forKey:@"common_platform_id"];
+    if([message.customParameters[@"isDelivered"] isEqualToString:@""])
+        [custom_Data setObject:[NSString stringWithFormat:@"%@",@"_"] forKey:@"isDelivered"];
     [message setCustomParameters:custom_Data];
     
     [[QBChat instance] sendMessage:message];
@@ -798,6 +800,16 @@
     
     if([message.text isEqualToString:@" "])
         message.text = @"";
+    
+    if([message.customParameters[@"isDelivered"] isEqualToString:@"_"])
+    {
+        NSMutableDictionary *custom_Data = [[NSMutableDictionary alloc] init] ;
+        [custom_Data addEntriesFromDictionary:message.customParameters];
+        
+        [custom_Data setObject:@"" forKey:@"isDelivered"];
+        [message setCustomParameters:custom_Data];
+        custom_Data = nil;
+    }
     
     // play sound notification
     if([message.customParameters[@"isDelivered"] length]==0 && [message.customParameters[@"isComposing"] length] == 0)
