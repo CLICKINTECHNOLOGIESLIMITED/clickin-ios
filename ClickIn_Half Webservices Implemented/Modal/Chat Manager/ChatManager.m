@@ -142,6 +142,17 @@
     [custom_Data setObject:[NSString stringWithFormat:@"%@",message.ID] forKey:@"common_platform_id"];
     if([message.customParameters[@"isDelivered"] isEqualToString:@""])
         [custom_Data setObject:[NSString stringWithFormat:@"%@",@"_"] forKey:@"isDelivered"];
+    
+    //replace empty string from custom card
+    if([message.customParameters[@"card_heading"] length]>0)
+    {
+        if([message.customParameters[@"is_CustomCard"] isEqualToString:@"true"])
+        {
+            [custom_Data setObject:[NSString stringWithFormat:@"%@",@"_"] forKey:@"card_DB_ID"];
+            [custom_Data setObject:[NSString stringWithFormat:@"%@",@"_"] forKey:@"card_content"];
+            [custom_Data setObject:[NSString stringWithFormat:@"%@",@"_"] forKey:@"card_url"];
+        }
+    }
     [message setCustomParameters:custom_Data];
     
     [[QBChat instance] sendMessage:message];
@@ -368,7 +379,12 @@
                             NSLog(@"senderID: %lld",[SenderId longLongValue]);
                             
                             [message setCustomParameters:[@{@"clicks" : [NSString stringWithFormat:@"%@",MessageClicks]} mutableCopy]];
-                            message.text = [NSString stringWithFormat:@"%@%@",MessageClicks ,MessageText];
+                            
+                            NSUInteger numberOfOccurrencesSpaces = [[MessageClicks componentsSeparatedByString:@" "] count] - 1;
+                            if(numberOfOccurrencesSpaces>2)
+                                message.text = [NSString stringWithFormat:@"%@%@",MessageClicks ,MessageText];
+                            else
+                                message.text = [NSString stringWithFormat:@"%@      %@",MessageClicks ,MessageText];
                             
                         }
                     }
@@ -512,12 +528,34 @@
                             card_actionText = @"playing";
                         
                         NSString *card_owner;
-                        if([[cards_array objectAtIndex:6] isEqualToString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"QBUserName"]]])
+                        
+                        if(cards_array.count>10)
                         {
-                            card_owner =[NSString stringWithFormat:@"%ld", (long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]];
+                            if([cards_array objectAtIndex:10]!=[NSNull null] && [[cards_array objectAtIndex:10] length]>0)
+                            {
+                                card_owner = [cards_array objectAtIndex:10];
+                            }
+                            else
+                            {
+                                if([[cards_array objectAtIndex:6] isEqualToString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"QBUserName"]]])
+                                {
+                                    card_owner =[NSString stringWithFormat:@"%ld", (long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]];
+                                }
+                                else{
+                                    card_owner = @"";
+                                }
+
+                            }
                         }
-                        else{
-                            card_owner = @"";
+                        else
+                        {
+                            if([[cards_array objectAtIndex:6] isEqualToString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] stringForKey:@"QBUserName"]]])
+                            {
+                                card_owner =[NSString stringWithFormat:@"%ld", (long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]];
+                            }
+                            else{
+                                card_owner = @"";
+                            }
                         }
                         
                         NSString *card_clicks;
@@ -810,6 +848,25 @@
         [message setCustomParameters:custom_Data];
         custom_Data = nil;
     }
+    
+    //replace empty string for custom card
+    if([message.customParameters[@"card_heading"] length]>0)
+    {
+        if([message.customParameters[@"is_CustomCard"] isEqualToString:@"true"])
+        {
+            NSMutableDictionary *custom_Data = [[NSMutableDictionary alloc] init] ;
+            [custom_Data addEntriesFromDictionary:message.customParameters];
+            
+            [custom_Data setObject:@"" forKey:@"card_DB_ID"];
+            [custom_Data setObject:@"" forKey:@"card_content"];
+            [custom_Data setObject:@"" forKey:@"card_url"];
+            
+            [message setCustomParameters:custom_Data];
+            custom_Data = nil;
+        }
+    }
+
+    
     
     // play sound notification
     if([message.customParameters[@"isDelivered"] length]==0 && [message.customParameters[@"isComposing"] length] == 0)

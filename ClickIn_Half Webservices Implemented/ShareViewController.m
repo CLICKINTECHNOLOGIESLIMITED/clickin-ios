@@ -118,6 +118,8 @@
         else*/
             lblText.frame =  CGRectMake(10,101, 300, size.height+25);
         
+        int noOfline = size.height/16;
+        
         if(size.height > 30)
         {
             Scroll.contentSize = CGSizeMake(320, 524+size.height);
@@ -139,9 +141,19 @@
             ClicksImage = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 14, 15)];
             
             if([[message.customParameters[@"clicks"] substringToIndex:1] isEqualToString:@"-"])
-                [ClicksImage setFrame:CGRectMake(35,15,13,14)];
+            {
+                if(lblText.numberOfLines==2)
+                    [ClicksImage setFrame:CGRectMake(35,5,13,14)];
+                else
+                    [ClicksImage setFrame:CGRectMake(35,15,13,14)];
+            }
             else
-                [ClicksImage setFrame:CGRectMake(40,15,13,14)];
+            {
+                if(lblText.numberOfLines==2)
+                    [ClicksImage setFrame:CGRectMake(40,5,13,14)];
+                else
+                    [ClicksImage setFrame:CGRectMake(40,15,13,14)];
+            }
             ClicksImage.image=[UIImage imageNamed:@"headerIconRedWhiteColor.png"];
             [lblText addSubview:ClicksImage];
         }
