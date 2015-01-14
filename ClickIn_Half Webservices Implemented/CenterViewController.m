@@ -982,6 +982,7 @@ AppDelegate *appDelegate;
     {
         //hide
         [prefs setObject:@"no" forKey:[NSString stringWithFormat:@"%dpopup",int_leftmenuIndex]];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         view.hidden = YES;
     }
 
@@ -1500,6 +1501,7 @@ AppDelegate *appDelegate;
     view.hidden = YES;
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     [prefs setObject:@"no" forKey:[NSString stringWithFormat:@"%dpopup",int_leftmenuIndex]];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 -(void)okGotItButtonAction:(id)sender
@@ -1520,6 +1522,7 @@ AppDelegate *appDelegate;
         [prefs setObject:@"no" forKey:[NSString stringWithFormat:@"%dpopup",int_leftmenuIndex]];
         view.hidden = YES;
     }
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)chatHistoryFetched:(NSNotification *)notification
@@ -7302,7 +7305,7 @@ AppDelegate *appDelegate;
            
            uniqueString = [NSString stringWithFormat:@"%d%@%@",[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"],partner_QB_id,dateString];
            
-           cards_data = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults] objectForKey:@"card_clicks"],@"card_clicks",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_heading"],@"card_heading",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_content"],@"card_content",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_url"],@"card_url", @"played",@"card_Played_Countered", @"countered",@"card_Accepted_Rejected", [[NSUserDefaults standardUserDefaults] objectForKey:@"card_id"],@"card_id", [[NSUserDefaults standardUserDefaults] objectForKey:@"card_owner"],@"card_owner", [[NSUserDefaults standardUserDefaults] stringForKey:@"card_originator"], @"card_originator", [[NSUserDefaults standardUserDefaults] stringForKey:@"is_CustomCard"], @"is_CustomCard", [[NSUserDefaults standardUserDefaults] stringForKey:@"card_DB_ID"], @"card_DB_ID", @"", @"isDelivered",  nil];
+           cards_data = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults] objectForKey:@"card_clicks"],@"card_clicks",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_heading"],@"card_heading",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_content"],@"card_content",[[NSUserDefaults standardUserDefaults] objectForKey:@"card_url"],@"card_url", @"playing",@"card_Played_Countered", @"countered",@"card_Accepted_Rejected", [[NSUserDefaults standardUserDefaults] objectForKey:@"card_id"],@"card_id", [[NSUserDefaults standardUserDefaults] objectForKey:@"card_owner"],@"card_owner", [[NSUserDefaults standardUserDefaults] stringForKey:@"card_originator"], @"card_originator", [[NSUserDefaults standardUserDefaults] stringForKey:@"is_CustomCard"], @"is_CustomCard", [[NSUserDefaults standardUserDefaults] stringForKey:@"card_DB_ID"], @"card_DB_ID", @"", @"isDelivered",  nil];
            
            
            NSDictionary *cardDict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%i",[[card_countered_indexes objectForKey:@"selectedIndex"] integerValue]],@"index",@"1",@"status", nil];
@@ -7354,14 +7357,14 @@ AppDelegate *appDelegate;
                               [[NSUserDefaults standardUserDefaults] objectForKey:@"card_content"],
                               [[NSUserDefaults standardUserDefaults] objectForKey:@"card_url"],
                               [[NSUserDefaults standardUserDefaults] objectForKey:@"card_clicks"],
-                              @"nil",[prefs stringForKey:@"QBUserName"], [[NSUserDefaults standardUserDefaults] stringForKey:@"is_CustomCard"],[[NSUserDefaults standardUserDefaults] stringForKey:@"card_DB_ID"],
+                              @"nil",[prefs stringForKey:@"QBUserName"], [[NSUserDefaults standardUserDefaults] stringForKey:@"is_CustomCard"],[[NSUserDefaults standardUserDefaults] stringForKey:@"card_DB_ID"], @"playing", [NSString stringWithFormat:@"%ld",(long)[[NSUserDefaults standardUserDefaults] integerForKey:@"SenderId"]],
                               nil];
         else
             cards_array=[NSArray arrayWithObjects: [[NSUserDefaults standardUserDefaults] objectForKey:@"card_id"],[[NSUserDefaults standardUserDefaults] objectForKey:@"card_heading"],
                          [[NSUserDefaults standardUserDefaults] objectForKey:@"card_content"],
                          [[NSUserDefaults standardUserDefaults] objectForKey:@"card_url"],
                          [[NSUserDefaults standardUserDefaults] objectForKey:@"card_clicks"],
-                         @"countered",[[NSUserDefaults standardUserDefaults] stringForKey:@"card_originator"], [[NSUserDefaults standardUserDefaults] stringForKey:@"is_CustomCard"], [[NSUserDefaults standardUserDefaults] stringForKey:@"card_DB_ID"],
+                         @"countered",[[NSUserDefaults standardUserDefaults] stringForKey:@"card_originator"], [[NSUserDefaults standardUserDefaults] stringForKey:@"is_CustomCard"], [[NSUserDefaults standardUserDefaults] stringForKey:@"card_DB_ID"], @"playing", [[NSUserDefaults standardUserDefaults] objectForKey:@"card_owner"],
                          nil];
         
         [object.fields setObject:cards_array forKey:@"cards"];
@@ -14092,6 +14095,8 @@ static CGFloat padding = 20.0;
                           chatMessage.customParameters[@"card_originator"],
                           chatMessage.customParameters[@"is_CustomCard"],
                           chatMessage.customParameters[@"card_DB_ID"],
+                          chatMessage.customParameters[@"card_Played_Countered"],
+                          chatMessage.customParameters[@"card_owner"],
                           nil];
     [object.fields setObject:cards_array forKey:@"cards"];
     [object.fields setObject:[prefs stringForKey:@"relationShipId"] forKey:@"relationshipId"];
@@ -14239,6 +14244,8 @@ static CGFloat padding = 20.0;
                           chatMessage.customParameters[@"card_originator"],
                           chatMessage.customParameters[@"is_CustomCard"],
                           chatMessage.customParameters[@"card_DB_ID"],
+                          chatMessage.customParameters[@"card_Played_Countered"],
+                          chatMessage.customParameters[@"card_owner"],
                           nil];
     [object.fields setObject:cards_array forKey:@"cards"];
     [object.fields setObject:[prefs stringForKey:@"relationShipId"] forKey:@"relationshipId"];
