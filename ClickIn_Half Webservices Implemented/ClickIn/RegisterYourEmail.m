@@ -335,8 +335,6 @@ AppDelegate *appDelegate;
 }
 
 #pragma mark Custom Functions
-
-
 -(void)DoneButtonAction
 {
     appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
@@ -378,6 +376,17 @@ AppDelegate *appDelegate;
             NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:Data options:kNilOptions error:&error];
             if([[jsonResponse objectForKey:@"message"] isEqualToString:@"Email updated"])
             {
+                /////////A USER ACCOUNT HAS BEEN CREATED SUCCESSFULLY , CREATE AN ALIAS USER FOR MIXPANEL /////////
+                /*
+                Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                NSString *strPhoneNum=[prefs stringForKey:@"phoneNumber"];
+                [mixpanel createAlias:strPhoneNum
+                        forDistinctID:mixpanel.distinctId];
+                [mixpanel identify:strPhoneNum];
+                [mixpanel.people set:@{@"userId": strPhoneNum}];
+                 */
+                
+                
                 UIViewController *SearchContactsViewController = [story instantiateViewControllerWithIdentifier:@"SearchContactsViewController"];
                 [self.navigationController pushViewController:SearchContactsViewController animated:YES];
                 

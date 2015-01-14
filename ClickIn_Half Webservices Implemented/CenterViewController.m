@@ -133,9 +133,7 @@ AppDelegate *appDelegate;
 //    // Set chat notifications
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(chatDidReceiveMessageNotification:)
 //        name:NotificationDidReceiveNewMessage object:nil];
-    
-    
-    
+
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(ProfileInfoNotificationReceived:)

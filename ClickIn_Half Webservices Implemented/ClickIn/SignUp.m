@@ -919,8 +919,6 @@ AppDelegate *appDelegate;
 
 
 #pragma mark -
-#pragma mark ActivityIndicatorView methods
-
 //-(void)drawOverlayView
 //{
 //    UIView *temp_noActionView = [[UIView alloc]initWithFrame:CGRectMake(0,0,320,568)];

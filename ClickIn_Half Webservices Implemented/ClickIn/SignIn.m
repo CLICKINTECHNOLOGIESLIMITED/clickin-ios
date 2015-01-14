@@ -612,6 +612,18 @@ AppDelegate *appDelegate;
                 //              [alert show];
                 //              alert = nil;
                 
+                ///////////////////////IDENTIFY MIXPANEL USER WHEN THE USER LOGS IN./////////////
+                
+                /*
+                Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                NSString *strPhoneNum=[jsonResponse objectForKey:@"phone_no"];
+                [mixpanel identify:strPhoneNum];
+                [mixpanel registerSuperProperties:@{@"UserId": strPhoneNum}];
+                 */
+            
+               //[mixpanel.people set:@{@"Name": [jsonResponse objectForKey:@"user_name"]}];
+                //[mixpanel.people set:@{@"emailId": txt_Phone_mail.text}];
+
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                 
                 [defaults setObject:@"yes" forKey:@"IsAutoLogin"];

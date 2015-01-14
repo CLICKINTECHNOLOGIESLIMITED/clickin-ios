@@ -46,6 +46,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    /////////////////////MIXPANEL CODE //////////////////////
+    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+    
+   
     // google analytics code
     [GAI sharedInstance].trackUncaughtExceptions = YES; // Enable exception reporting
     
@@ -452,6 +456,8 @@
             }
             else
             {
+                
+                
                 NSString  *stringin;
                 if(IS_IPAD)
                     stringin=@"Main_iPad";
@@ -474,7 +480,14 @@
 		}
 	}
     else
-    {
+    {// ALSO CALLED IN CASE OF
+        /*
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        NSString *str=[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
+        NSLog(@"mixpanel.distinctId %@",mixpanel.distinctId);
+        [mixpanel identify:str];
+        */
+        
         NSString  *stringin;
         if(IS_IPAD)
             stringin=@"Main_iPad";

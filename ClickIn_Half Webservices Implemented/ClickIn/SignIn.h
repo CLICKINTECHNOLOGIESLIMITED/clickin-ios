@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 #import "TKTintedKeyboardViewController.h"
 #import "ModelManager.h"
+#import "Mixpanel.h"
 
 @interface SignIn : TKTintedKeyboardViewController<UIScrollViewDelegate,UITextFieldDelegate,QBActionStatusDelegate,UIAlertViewDelegate,MODropAlertViewDelegate>
 {

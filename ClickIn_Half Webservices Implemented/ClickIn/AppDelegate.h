@@ -10,7 +10,7 @@
 #import "Reachability.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "MFSideMenu.h"
-
+#import "Mixpanel.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,QBActionStatusDelegate,UIAlertViewDelegate,MODropAlertViewDelegate>
 {

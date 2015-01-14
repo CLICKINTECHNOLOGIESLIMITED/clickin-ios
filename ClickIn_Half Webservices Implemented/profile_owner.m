@@ -525,6 +525,9 @@
 }
 -(void)editbuttonpressed
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"Edit Profile" properties:nil];
+    
     EditProfileViewController *editProfile = [[EditProfileViewController alloc] initWithNibName:nil bundle:nil];
     editProfile.delegate_imageupdated=self;
     [self.navigationController pushViewController:editProfile animated:YES];

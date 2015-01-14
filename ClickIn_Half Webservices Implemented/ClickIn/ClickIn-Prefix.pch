@@ -67,6 +67,8 @@
 
 #define DomainNameUrl @"https://dev.clickinapp.com/"
 
+#define MIXPANEL_TOKEN @"379c76c54492387a149b19fcc27e9fc5"
+
 //#define DomainNameUrl @"http://23.21.65.97/"
 
 // Latest Staging

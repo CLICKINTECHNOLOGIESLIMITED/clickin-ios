@@ -17,6 +17,7 @@
 #import "following_owner.h"
 #import "ModelManager.h"
 #import "EditProfileViewController.h"
+#import "Mixpanel.h"
 
 @interface profile_owner : UIViewController<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,UIGestureRecognizerDelegate,UIAlertViewDelegate,MODropAlertViewDelegate,imageUpdated>
 {
