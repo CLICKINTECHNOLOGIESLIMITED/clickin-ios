@@ -16,6 +16,7 @@
 #import "SBJSON.h"
 #import "ModelManager.h"
 #import "RelationInfo.h"
+#import "Mixpanel.h"
 
 @interface profile_otheruser : UIViewController<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,UIGestureRecognizerDelegate,UIAlertViewDelegate,MODropAlertViewDelegate>
 {

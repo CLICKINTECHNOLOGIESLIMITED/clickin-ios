@@ -480,13 +480,14 @@
 		}
 	}
     else
-    {// ALSO CALLED IN CASE OF
-        /*
-        Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        NSString *str=[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
-        NSLog(@"mixpanel.distinctId %@",mixpanel.distinctId);
-        [mixpanel identify:str];
-        */
+    {
+        // ALSO CALLED IN CASE OF
+        
+//        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+//        NSString *str=[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
+//        NSLog(@"mixpanel.distinctId %@",mixpanel.distinctId);
+//        [mixpanel identify:str];
+        
         
         NSString  *stringin;
         if(IS_IPAD)

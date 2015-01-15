@@ -524,6 +524,8 @@
 
 -(void)followersPressed
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"OtherUserFollowers" properties:nil];
     NSLog(@"followers pressed");
     
     //if(![followers_count_text.text isEqualToString:@"0"])
@@ -557,6 +559,9 @@
 -(void)followingPressed
 {
     NSLog(@"following pressed");
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"OtherUserFollowing" properties:nil];
+    
     //if(![following_count_text.text isEqualToString:@"0"])
     {
         following_owner *followingowner = [[following_owner alloc] initWithNibName:nil bundle:nil];
@@ -595,21 +600,24 @@
 -(void)followbuttonpressed
 {
     //[activity show];
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
     
      // for async call
-     
+    
      UIButton *followbutton = (UIButton *)[self.view viewWithTag:13];
      
      if(relationObject.userDetails.isFollowed==false)
      {
-     [followbutton setImage:[UIImage imageNamed:@"BTNRequest.png"] forState:UIControlStateNormal];
-     [relationObject.userDetails followUserAction];
+         [mixpanel track:@"FollowUser" properties:nil];
+         [followbutton setImage:[UIImage imageNamed:@"BTNRequest.png"] forState:    UIControlStateNormal];
+         [relationObject.userDetails followUserAction];
      }
      else
      {
-     [followbutton setImage:[UIImage imageNamed:@"profile_follow_button.png"] forState:UIControlStateNormal];
-     [relationObject.userDetails unfollowUserAction];
+         [mixpanel track:@"UnfollowUser" properties:nil];
+         [followbutton setImage:[UIImage imageNamed:@"profile_follow_button.png"] forState:UIControlStateNormal];
+         [relationObject.userDetails unfollowUserAction];
      }
     
 //    if(relationObject.userDetails.isFollowed==false)

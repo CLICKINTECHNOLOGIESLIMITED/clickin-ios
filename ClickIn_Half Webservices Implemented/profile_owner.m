@@ -66,6 +66,12 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    ///////////////////////IDENTIFY MIXPANEL USER WHEN THE USER LOGS IN./////////////
+    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    NSString *strPhoneNo=[[NSUserDefaults standardUserDefaults] valueForKey:@"phoneNumber"];
+    [mixpanel identify:strPhoneNo];
+    
     profileLoadedFirstTime = true;
     
     [[NSNotificationCenter defaultCenter]
@@ -455,6 +461,10 @@
 
 -(void)followersPressed
 {
+    // MIXPANEL TRACKING
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"MyFollowers" properties:nil];
+    
     NSLog(@"followers pressed");
     //[(NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"user_name"] capitalizedString]
     //if(![followers_count_text.text isEqualToString:@"0"])
@@ -486,6 +496,9 @@
 
 -(void)followingPressed
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"MyFollowing" properties:nil];
+    
     NSLog(@"following pressed");
    // if(![following_count_text.text isEqualToString:@"0"])
     {
@@ -1448,6 +1461,11 @@
 
 -(void)addSomeOneToClick:(UIButton*)sender
 {
+    // MIXPANEL TRACKING
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"ClickInWithSomeone" properties:nil];
+    
+    
     SearchContactsViewController *sendinvite = [[SearchContactsViewController alloc] initWithNibName:nil bundle:nil];
     sendinvite.isFromMenu = @"true";
     //SendInvite *sendinvite = [[SendInvite alloc] initWithNibName:Nil bundle:nil];
@@ -1661,6 +1679,9 @@
 
 -(void)Deletebuttonpressed:(id)sender
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"DeletePartner" properties:nil];
+    
     UIButton *button = (UIButton *)sender;
     UITableViewCell *cell;
     if (IS_IOS_7)
@@ -1709,6 +1730,9 @@
 
 -(void)scopebuttonpressed
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"RelationshipPrivacyChanged" properties:nil];
+    
     bool relation_visibility;
     UIButton *button = ((UIButton*)[((UITableViewCell*)[table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:selected_row inSection:1]]).contentView viewWithTag:8]);
     if([[button imageForState:UIControlStateNormal] isEqual:[UIImage imageNamed:@"profile_public_scope.png"]])
