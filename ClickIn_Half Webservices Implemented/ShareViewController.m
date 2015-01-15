@@ -562,6 +562,12 @@
         [custom_Data setObject:message.customParameters[@"imageURL"] forKey:@"videoThumbnail"];
     }
     
+    if([message.customParameters[@"isLocationUploading"] length]>0)
+    {
+        [custom_Data setObject:message.customParameters[@"imageURL"] forKey:@"locationID"];
+    }
+
+    
     [custom_Data setObject:[NSString stringWithFormat:@"%@",message.ID] forKey:@"originalMessageID"];
     [custom_Data setObject:[NSString stringWithFormat:@"%@",txtView.text] forKey:@"comment"];
     [custom_Data setObject:[NSString stringWithFormat:@"%@",@"shared"] forKey:@"shareStatus"];
