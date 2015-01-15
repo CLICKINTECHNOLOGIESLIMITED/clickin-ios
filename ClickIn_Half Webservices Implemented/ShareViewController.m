@@ -102,23 +102,25 @@
     }
 
     
-    CGSize textSize = { 300.0, 11535.0};
+    CGSize textSize = { 280.0, 11535.0};
     if(message.text.length > 0)
     {
         CGSize size;
-//        size= [message.text sizeWithFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:18.0]
-//                               constrainedToSize:textSize
-//                                   lineBreakMode:NSLineBreakByWordWrapping];
-//        NSLog(@"%f",size.height);
+        size= [message.text sizeWithFont:lblText.font
+                               constrainedToSize:textSize
+                                   lineBreakMode:NSLineBreakByWordWrapping];
+        NSLog(@"%f",size.height);
+        
+        
         
         lblText.text=message.text;
-        size = [lblText sizeThatFits:CGSizeMake(300, 9999)];
+        //size = [lblText sizeThatFits:textSize];
         /*if (IS_IPHONE_5)
             lblText.frame =  CGRectMake(10,101-80, 300, size.height+25);
         else*/
             lblText.frame =  CGRectMake(10,101, 300, size.height+25);
         
-        int noOfline = size.height/16;
+        int noOfline = ceil(size.height / lblText.font.lineHeight);
         
         if(size.height > 30)
         {
@@ -130,9 +132,9 @@
             ClicksImage = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 14, 15)];
             
             if([[message.customParameters[@"clicks"] substringToIndex:1] isEqualToString:@"-"])
-                [ClicksImage setFrame:CGRectMake(35,15,13,14)];
+                [ClicksImage setFrame:CGRectMake(35,16,13,14)];
             else
-                [ClicksImage setFrame:CGRectMake(40,15,13,14)];
+                [ClicksImage setFrame:CGRectMake(40,16,13,14)];
             ClicksImage.image=[UIImage imageNamed:@"headerIconRedWhiteColor.png"];
             [lblText addSubview:ClicksImage];
         }
@@ -142,15 +144,15 @@
             
             if([[message.customParameters[@"clicks"] substringToIndex:1] isEqualToString:@"-"])
             {
-                if(lblText.numberOfLines==2)
-                    [ClicksImage setFrame:CGRectMake(35,5,13,14)];
+                if(noOfline>=2)
+                    [ClicksImage setFrame:CGRectMake(35,6,13,14)];
                 else
                     [ClicksImage setFrame:CGRectMake(35,15,13,14)];
             }
             else
             {
-                if(lblText.numberOfLines==2)
-                    [ClicksImage setFrame:CGRectMake(40,5,13,14)];
+                if(noOfline>=2)
+                    [ClicksImage setFrame:CGRectMake(40,6,13,14)];
                 else
                     [ClicksImage setFrame:CGRectMake(40,15,13,14)];
             }
@@ -548,6 +550,23 @@
     {
         [custom_Data setObject:[NSString stringWithFormat:@"%@",@"played"] forKey:@"card_Played_Countered"];
     }
+    
+    if([message.customParameters[@"audioStreamURL"] length]>0)
+    {
+        [custom_Data setObject:message.customParameters[@"audioStreamURL"] forKey:@"audioID"];
+    }
+    
+    if([message.customParameters[@"videoStreamURL"] length]>0)
+    {
+        [custom_Data setObject:message.customParameters[@"videoStreamURL"] forKey:@"videoID"];
+        [custom_Data setObject:message.customParameters[@"imageURL"] forKey:@"videoThumbnail"];
+    }
+    
+    if([message.customParameters[@"isLocationUploading"] length]>0)
+    {
+        [custom_Data setObject:message.customParameters[@"imageURL"] forKey:@"locationID"];
+    }
+
     
     [custom_Data setObject:[NSString stringWithFormat:@"%@",message.ID] forKey:@"originalMessageID"];
     [custom_Data setObject:[NSString stringWithFormat:@"%@",txtView.text] forKey:@"comment"];
