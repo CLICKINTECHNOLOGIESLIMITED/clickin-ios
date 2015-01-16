@@ -10,6 +10,7 @@
 #import "LableInsets.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "TKTintedKeyboardViewController.h"
+#import "Mixpanel/Mixpanel.h"
 
 @protocol SharedMessageDelegate
 

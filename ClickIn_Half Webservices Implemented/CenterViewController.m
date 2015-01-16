@@ -2172,16 +2172,28 @@ AppDelegate *appDelegate;
 #pragma mark attachment delegates
 -(void)cancelAttachment
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    if (viewAttachment.isAttachmentImage)
+    {
+        [mixpanel track:@"ImageAttachmentCancelled" properties:nil];
+    }
+    else
+    {
+        [mixpanel track:@"VideoAttachmentCancelled" properties:nil];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:^
     {
          [viewAttachment removeFromSuperview];
     }];
-    
 }
 -(void)addAttachment
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    
     if (viewAttachment.isAttachmentImage)
     {
+        [mixpanel track:@"SelectedImageAttached" properties:nil];
         tempImageRatio = 1;
         
         
@@ -2236,6 +2248,7 @@ AppDelegate *appDelegate;
     }
     else
     {
+        [mixpanel track:@"SelectedVideoAttached" properties:nil];
         MPMoviePlayerController *player = [[MPMoviePlayerController alloc] initWithContentURL:viewAttachment.videoURL];
         UIImage *thumbnail = [player thumbnailImageAtTime:1.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
         [player stop];
@@ -2273,6 +2286,9 @@ AppDelegate *appDelegate;
 
 -(IBAction)btnPartnarImgAction:(id)sender
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"RPageCheckMyPartnerProfile" properties:nil];
+    
     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"LeftMenuPartnerQBId"];
 
     profile_otheruser *profile_other = [[profile_otheruser alloc] initWithNibName:nil bundle:nil];
@@ -2367,6 +2383,9 @@ AppDelegate *appDelegate;
 -(IBAction)topCardButton:(id)sender
 {
     //card selection
+    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"TradeButtonClicked" properties:nil];
     
     [[NSUserDefaults standardUserDefaults] setObject:@""  forKey:@"card_heading"];
     [[NSUserDefaults standardUserDefaults] setObject:@""  forKey:@"card_content"];
@@ -2806,6 +2825,9 @@ AppDelegate *appDelegate;
     
     if(sender.tag==6)
     {
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"AttachLocationButtonClicked" properties:nil];
+        
         [[NSUserDefaults standardUserDefaults] setObject:[[NSData alloc] init]  forKey:@"locationimagedata"];
         [[NSUserDefaults standardUserDefaults] setObject:@""  forKey:@"locationCoordinates"];
         //[self.navigationController pushViewController:[[MapWebView alloc] init] animated:YES];
@@ -2823,6 +2845,10 @@ AppDelegate *appDelegate;
     {
         //audio picking
         //[self AlertForSeLectionTheAudioCapturing];
+        
+        
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"AttachAudioNoteButtonClicked" properties:nil];
 
         [textView resignFirstResponder];
         
@@ -2845,6 +2871,10 @@ AppDelegate *appDelegate;
 
 -(void)hideRecordingView
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"AudioRecordingCancelled" properties:nil];
+    
+    
     [UIView animateWithDuration:0.4 animations:^() {
         startRecordingView.alpha = 0;
     }];
@@ -3653,7 +3683,6 @@ AppDelegate *appDelegate;
             NSDictionary *personDict = [[NSDictionary alloc] initWithObjectsAndKeys:index,@"index",message.customParameters[@"isAudioUploading"],@"blobName", nil];
             [audioUploading_indexes addObject:personDict];
         }
-
     }
     
     else if(mediaAttachButton.tag==4)
@@ -4568,6 +4597,9 @@ AppDelegate *appDelegate;
 // share btn press
 -(void)shareBtnPress:(UIButton*)sender
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"RPageShareButtonClicked" properties:nil];
+    
     ChatMessageTableViewCell *cell;
     if (IS_IOS_7)
     {
@@ -4811,7 +4843,9 @@ AppDelegate *appDelegate;
 //media button pressed
 -(IBAction)mediaButton:(id)sender
 {
-    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"AttachButtonClicked" properties:nil];
+ 
     //[self AlertForSeLectionTheImageCapturing];
     if(mediaScrollview.alpha==0)
     {
@@ -4880,6 +4914,9 @@ AppDelegate *appDelegate;
 
 -(void)AlertForSeLectionTheImageCapturing
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"AttachImageButtonClicked" properties:nil];
+    
     [self hideRecordingView];
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"TAKE A PICTURE",@"FROM YOUR GALLERY",nil];
     [alert show];
@@ -4889,6 +4926,10 @@ AppDelegate *appDelegate;
 
 -(void)AlertForSeLectionTheVideoCapturing
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"AttachVideoButtonClicked" properties:nil];
+    
+    
      [self hideRecordingView];
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"CAPTURE A VIDEO",@"FROM YOUR GALLERY",nil];
     [alert show];
@@ -5023,6 +5064,7 @@ AppDelegate *appDelegate;
 
 -(void)showImagePicker:(UIImagePickerControllerSourceType) sourceType
 {
+    Mixpanel *mixpanel=[Mixpanel sharedInstance];
     @try
     {
         if(_imgPicker==nil)
@@ -5033,11 +5075,13 @@ AppDelegate *appDelegate;
         _imgPicker.delegate = self;
         if (_imgPicker.sourceType == UIImagePickerControllerSourceTypeCamera)
         {
+             [mixpanel track:@"ClickImageFromCamera" properties:nil];
             _imgPicker.showsCameraControls = YES;
             _imgPicker.allowsEditing=NO;
         }
         else
         {
+             [mixpanel track:@"ChooseImageFromGallery" properties:nil];
             [_imgPicker setAllowsEditing:NO];
         }
         
@@ -5054,6 +5098,7 @@ AppDelegate *appDelegate;
 }
 -(void)showVideoPicker:(UIImagePickerControllerSourceType) sourceType
 {
+    Mixpanel *mixpanel=[Mixpanel sharedInstance];
     @try {
         if(_imgPicker==nil)
             _imgPicker = [[UIImagePickerController alloc] init];
@@ -5068,10 +5113,13 @@ AppDelegate *appDelegate;
         
         isVideoPickedFromLibrary = true;
         if (_imgPicker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+            
+            [mixpanel track:@"RecordVideoFromCamera" properties:nil];
             _imgPicker.showsCameraControls = YES;
             isVideoPickedFromLibrary = false;
         }
         if ( [UIImagePickerController isSourceTypeAvailable:sourceType]) {
+            [mixpanel track:@"ChooseVideoFromGallery" properties:nil];
             [self presentViewController:_imgPicker animated:YES completion:nil];
         }
     }
@@ -13449,6 +13497,9 @@ static CGFloat padding = 20.0;
 
 - (void)shareAcceptedPressed:(UIButton*)sender
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"ShareRequestAccepted" properties:nil];
+    
     UIButton* sender_btn = (UIButton*)sender;
     UITableViewCell *cell;
     
@@ -13683,6 +13734,10 @@ static CGFloat padding = 20.0;
 
 - (void)shareRejectedPressed:(UIButton*)sender
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"ShareRequestRejected" properties:nil];
+    
+    
     UIButton* sender_btn = (UIButton*)sender;
     UITableViewCell *cell;
     if (IS_IOS_7)

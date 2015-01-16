@@ -204,6 +204,9 @@
 }
 -(void)ShareLocationButtonAction
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"LocationShared" properties:nil];
+    
     UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, self.view.opaque, 0.0);
     [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *imageView = UIGraphicsGetImageFromCurrentImageContext();
@@ -326,6 +329,8 @@
 
 - (void) backButtonAction
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"LocationSharingCancelled" properties:nil];
     //[self.navigationController popViewControllerAnimated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }

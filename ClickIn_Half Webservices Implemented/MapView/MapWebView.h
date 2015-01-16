@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "Mixpanel.h"
 
 @interface MapWebView : UIViewController<UIWebViewDelegate,CLLocationManagerDelegate>
 {

@@ -1244,6 +1244,10 @@
     {
         if(![((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerName  isEqualToString:@"<null>"] && ![((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPhoneNumber isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"]]) // if user is not created
         {
+            
+            Mixpanel *mixpanel = [Mixpanel sharedInstance];
+            [mixpanel track:@"CheckOthersPartnerProfile" properties:nil];
+            
             profile_otheruser *profile_other = [[profile_otheruser alloc] initWithNibName:nil bundle:nil];
             /*profile_other.otheruser_phone_no=((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPhoneNumber;
             profile_other.relationship_id=((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).relationship_ID;
@@ -1269,7 +1273,8 @@
 //    alert.tag = 44;
 //    [alert show];
 //    alert = nil;
-    
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"RequestToClickInOtherUserPartnerProfile" properties:nil];
     
     MODropAlertView *alertView = [[MODropAlertView alloc]initDropAlertWithTitle:@"Are you sure"
                                                                     description:[NSString stringWithFormat:@"you want to click with \n %@",relationObject.partnerName]
@@ -1289,6 +1294,7 @@
     {
         if(buttonType==0)
         {
+            
             [profilemanager sendClickInRequest:relationObject.partnerPhoneNumber];
         }
     }

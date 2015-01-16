@@ -66,11 +66,21 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    // Models
+    modelmanager=[ModelManager modelManager];
+    profilemanager=modelmanager.profileManager;
+    
     ///////////////////////IDENTIFY MIXPANEL USER WHEN THE USER LOGS IN./////////////
     
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    NSString *strPhoneNo=[[NSUserDefaults standardUserDefaults] valueForKey:@"phoneNumber"];
+    
+    NSString *strPhoneNo=[[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumber"];
+    NSLog(@"phone num %@",strPhoneNo);
     [mixpanel identify:strPhoneNo];
+    
+
+    //NSString *strPhoneNum=modelmanager.profileManager.ownerDetails.phoneNumber;
+    
     
     profileLoadedFirstTime = true;
     
@@ -113,9 +123,7 @@
     
     
     
-    // Models
-    modelmanager=[ModelManager modelManager];
-    profilemanager=modelmanager.profileManager;
+    
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSLog(@"%@ >>>>>>>>>>>>>>>> %@",[prefs stringForKey:@"user_id"],[prefs stringForKey:@"user_token"]);
@@ -1439,6 +1447,11 @@
                                                                                                                                     label:@"Browsing user's profile"
                                                                                                                                     value:nil] build]];
                 
+                // MIXPANEL TRACKING
+                Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                [mixpanel track:@"CheckMyPartnerProfile" properties:nil];
+                
+                
                 profile_otheruser *profile_other = [[profile_otheruser alloc] initWithNibName:nil bundle:nil];
                /* profile_other.otheruser_phone_no=((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPhoneNumber;
                 profile_other.relationship_id=((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).relationship_ID;
@@ -1483,6 +1496,9 @@
 
 -(void)AcceptButtonAction:(id)sender
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"AcceptUserRequest" properties:nil];
+    
     UIButton *button = (UIButton *)sender;
     UITableViewCell *cell;
     if (IS_IOS_7)
@@ -1564,6 +1580,9 @@
 
 -(void)relationcancelpressed:(id)sender
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"RejectUserRequest" properties:nil];
+    
     UIButton *button = (UIButton *)sender;
     UITableViewCell *cell;
     if (IS_IOS_7)

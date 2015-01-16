@@ -535,6 +535,16 @@
     
 //    [activity show];
 //    [self performSelector:@selector(callShareWebservice) withObject:nil afterDelay:0.1];
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    
+    [mixpanel.people increment:@"NumberofShares" by:[NSNumber numberWithInt:1]];
+    
+    if (txtView.text.length>0)
+    {
+        [mixpanel track:@"ShareWithComment" properties:nil];
+    }
+    
+    
     QBChatMessage * updatedMessage = [[QBChatMessage alloc] init];
     updatedMessage.text = message.text;
     
@@ -553,6 +563,9 @@
     
     if([message.customParameters[@"audioStreamURL"] length]>0)
     {
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"AudioShared" properties:nil];
+        
         [custom_Data setObject:message.customParameters[@"audioStreamURL"] forKey:@"audioID"];
     }
     
@@ -569,6 +582,7 @@
 
     
     [custom_Data setObject:[NSString stringWithFormat:@"%@",message.ID] forKey:@"originalMessageID"];
+    
     [custom_Data setObject:[NSString stringWithFormat:@"%@",txtView.text] forKey:@"comment"];
     [custom_Data setObject:[NSString stringWithFormat:@"%@",@"shared"] forKey:@"shareStatus"];
     [custom_Data setObject:@"" forKey:@"isDelivered"];
@@ -592,6 +606,9 @@
     
     if([[[NSUserDefaults standardUserDefaults] stringForKey:@"fb_accesstoken"] length]>0)
     {
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"AppShareandFBshare" properties:nil];
+        
         if(sharing_media.length==0)
             sharing_media = [sharing_media stringByAppendingString:@"facebook"];
         else
