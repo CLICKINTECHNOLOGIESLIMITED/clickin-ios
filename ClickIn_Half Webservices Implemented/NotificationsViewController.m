@@ -1127,7 +1127,8 @@ AppDelegate *appDelegate;
             iconView.image = [UIImage imageNamed:@"shareN.png"];
         else if([[notificationType objectAtIndex:indexPath.row] isEqualToString:@"follow"] || [[notificationType objectAtIndex:indexPath.row] isEqualToString:@"followstatus"] || [[notificationType objectAtIndex:indexPath.row] isEqualToString:@"followrequest"])
                 iconView.image = [UIImage imageNamed:@"requestfollowN.png"];
-        else if([[notificationType objectAtIndex:indexPath.row] isEqualToString:@"invite"] || [[notificationType objectAtIndex:indexPath.row] isEqualToString:@"relationrequest"] || [[notificationType objectAtIndex:indexPath.row] isEqualToString:@"relationstatus"] || [[notificationType objectAtIndex:indexPath.row] isEqualToString:@"relationdelete"])
+        else if([[notificationType objectAtIndex:indexPath.row] isEqualToString:@"invite"] || [[notificationType objectAtIndex:indexPath.row] isEqualToString:@"relationrequest"] || [[notificationType objectAtIndex:indexPath.row] isEqualToString:@"relationstatus"] || [[notificationType objectAtIndex:indexPath.row] isEqualToString:@"relationdelete"] ||
+            [[notificationType objectAtIndex:indexPath.row] isEqualToString:@"updateprofilepic"])
             iconView.image = [UIImage imageNamed:@"click-requestN.png"];
         else if([[notificationType objectAtIndex:indexPath.row] isEqualToString:@"newsfeed"] || [[notificationType objectAtIndex:indexPath.row] isEqualToString:@"star"])
             iconView.image = [UIImage imageNamed:@"starN.png"];
@@ -1135,6 +1136,7 @@ AppDelegate *appDelegate;
             iconView.image = [UIImage imageNamed:@"cloudN.png"];
         else if([[notificationType objectAtIndex:indexPath.row] isEqualToString:@"relationship"] || [[notificationType objectAtIndex:indexPath.row] isEqualToString:@"relationvisibility"] )
             iconView.image = [UIImage imageNamed:@"relationshipN.png"];
+            
         
         
         CGSize notificationSize;

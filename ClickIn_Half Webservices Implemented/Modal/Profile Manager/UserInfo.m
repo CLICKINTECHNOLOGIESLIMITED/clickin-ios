@@ -873,4 +873,23 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:Notification_FollowersFollowingUpdated object:nil userInfo:Nil];
 }
 
+//reset user info
+-(void) resetUserInfo
+{
+    name = @"";
+    phoneNumber = @"";
+    profilePicUrl = @"";
+    age = @"";
+    gender = @"";
+    email = @"";
+    followerCount = @"";
+    followingCount = @"";
+    notificationCount = @"";
+    city = @"";
+    country = @"";
+    [followerRequestedArray removeAllObjects];
+    [followerArray removeAllObjects];
+    [followingArray removeAllObjects];
+}
+
 @end
