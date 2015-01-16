@@ -568,6 +568,8 @@
     
     [defaults setObject:@"" forKey:@"user_name"];
     
+    [defaults setObject:@"" forKey:@"user_pic"];
+    [profilemanager.ownerDetails resetUserInfo];
     
     
     AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];

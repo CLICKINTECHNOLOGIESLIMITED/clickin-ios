@@ -49,6 +49,8 @@
 -(void)getFollowerFollowingList:(BOOL)isOwner;
 -(void)getFollowerFollowingListSynchronous:(BOOL)isOwner;
 
+-(void) resetUserInfo;
+
 @property(nonatomic,retain) AVAudioPlayer *inAppNotificationSound;
 
 @end

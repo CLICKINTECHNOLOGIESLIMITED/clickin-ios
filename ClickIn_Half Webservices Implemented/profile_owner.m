@@ -50,7 +50,12 @@
     }
     NSLog(@"user pic %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]);
 //    // update pic
-    [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]] placeholderImage:owner_profilepic.image options:SDWebImageRefreshCached ];
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"] length]>0)
+        [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:@"user_pic"]] placeholderImage:owner_profilepic.image options:SDWebImageRefreshCached ];
+    else
+    {
+        owner_profilepic.image = nil;
+    }
 }
 
 -(void)imageUpdated:(NSData*)imageData
@@ -363,7 +368,7 @@
     NSLog(@"profilemanager.ownerDetails.profilePicUrl %@",profilemanager.ownerDetails.profilePicUrl);
     //set the profile pic
 
-//    [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
+    [owner_profilepic sd_setImageWithURL:[NSURL URLWithString:profilemanager.ownerDetails.profilePicUrl] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed];
     
     //set age and gender
     

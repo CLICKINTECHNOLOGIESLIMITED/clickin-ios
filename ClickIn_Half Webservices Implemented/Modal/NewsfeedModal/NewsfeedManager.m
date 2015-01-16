@@ -303,8 +303,14 @@
                     else
                     {
                         [message setCustomParameters:[@{@"clicks" : [NSString stringWithFormat:@"%@",MessageClicks]} mutableCopy]];
-                        message.text = [NSString stringWithFormat:@"%@%@",MessageClicks ,MessageText];
+                        //message.text = [NSString stringWithFormat:@"%@%@",MessageClicks ,MessageText];
                         
+                        
+                        NSUInteger numberOfOccurrencesSpaces = [[MessageClicks componentsSeparatedByString:@" "] count] - 1;
+                        if(numberOfOccurrencesSpaces>2)
+                            message.text = [NSString stringWithFormat:@"%@%@",MessageClicks ,MessageText];
+                        else
+                            message.text = [NSString stringWithFormat:@"%@      %@",MessageClicks ,MessageText];
                     }
                 }
                 else

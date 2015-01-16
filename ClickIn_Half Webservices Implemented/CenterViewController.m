@@ -4626,6 +4626,9 @@ AppDelegate *appDelegate;
     ShareViewController* SharingController = [[ShareViewController alloc] init];
     SharingController.delegate = self;
     SharingController.message = message;
+    NSLog(@"indexpath .row .....%d",indexPath.row);
+    if(indexPath.row<=imagesData.count)
+    {
     if(isChatHistoryOrNot == FALSE)
     {
         SharingController.ImageData = [imagesData objectAtIndex:indexPath.row];
@@ -4633,6 +4636,7 @@ AppDelegate *appDelegate;
     else
     {
         SharingController.ImageData = [imagesData objectAtIndex:indexPath.row-1];
+    }
     }
    [self.navigationController pushViewController:SharingController animated:YES];
    //SharingController =nil;
@@ -7410,7 +7414,7 @@ AppDelegate *appDelegate;
                          [[NSUserDefaults standardUserDefaults] objectForKey:@"card_content"],
                          [[NSUserDefaults standardUserDefaults] objectForKey:@"card_url"],
                          [[NSUserDefaults standardUserDefaults] objectForKey:@"card_clicks"],
-                         @"countered",[[NSUserDefaults standardUserDefaults] stringForKey:@"card_originator"], [[NSUserDefaults standardUserDefaults] stringForKey:@"is_CustomCard"], [[NSUserDefaults standardUserDefaults] stringForKey:@"card_DB_ID"], @"playing", [[NSUserDefaults standardUserDefaults] objectForKey:@"card_owner"],
+                         @"countered",[[NSUserDefaults standardUserDefaults] stringForKey:@"card_originator"], [[NSUserDefaults standardUserDefaults] stringForKey:@"is_CustomCard"], [[NSUserDefaults standardUserDefaults] stringForKey:@"card_DB_ID"], @"played", [[NSUserDefaults standardUserDefaults] objectForKey:@"card_owner"],
                          nil];
         
         [object.fields setObject:cards_array forKey:@"cards"];
@@ -8680,7 +8684,16 @@ AppDelegate *appDelegate;
 
 -(void)showMapView:(UIButton*)sender
 {
-    ChatMessageTableViewCell *cell = (ChatMessageTableViewCell*)[[[[sender superview] superview] superview] superview];
+    ChatMessageTableViewCell *cell;
+    
+    if (IS_IOS_7)
+    {
+        cell  = (ChatMessageTableViewCell*)[[[[sender superview] superview] superview] superview];
+    }
+    else
+    {
+        cell= (ChatMessageTableViewCell*)[[[sender superview] superview] superview];
+    }
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     
     MapWebView *Obj= [[MapWebView alloc] init];
