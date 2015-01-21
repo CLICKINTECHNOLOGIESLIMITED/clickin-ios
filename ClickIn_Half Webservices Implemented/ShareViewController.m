@@ -361,7 +361,7 @@
         cardClicksTop.frame = CGRectMake(imgView.frame.origin.x+7 ,imgView.frame.origin.y-5 , 25, 25);
         cardClicksTop.numberOfLines=1;
         cardClicksTop.textAlignment=NSTextAlignmentCenter;
-        [cardClicksTop setFont:[UIFont fontWithName:@"AvenirNextLTPro-MediumCn" size:10]];
+        [cardClicksTop setFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:10]];
         [cardClicksTop setTextColor:[UIColor colorWithRed:254/255.0 green:254/255.0 blue:254/255.0 alpha:1]];
         cardClicksTop.text = [message.customParameters[@"card_clicks"] uppercaseString];
         [lightGrayBGView addSubview:cardClicksTop];
@@ -372,7 +372,7 @@
         cardClicksBottom.frame = CGRectMake(imgView.frame.origin.x+ imgView.frame.size.width - 48 ,imgView.frame.origin.y + imgView.frame.size.height - 20 , 25, 25);
         cardClicksBottom.numberOfLines=1;
         cardClicksBottom.textAlignment=NSTextAlignmentRight;
-        [cardClicksBottom setFont:[UIFont fontWithName:@"AvenirNextLTPro-MediumCn" size:10]];
+        [cardClicksBottom setFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:10]];
         [cardClicksBottom setTextColor:[UIColor colorWithRed:254/255.0 green:254/255.0 blue:254/255.0 alpha:1]];
         cardClicksBottom.text = [message.customParameters[@"card_clicks"] uppercaseString];
         [lightGrayBGView addSubview:cardClicksBottom];

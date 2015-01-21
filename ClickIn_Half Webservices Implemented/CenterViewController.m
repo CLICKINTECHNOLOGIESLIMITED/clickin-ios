@@ -1199,6 +1199,10 @@ AppDelegate *appDelegate;
     
     QBChatMessage *message = dictionary[@"sharedMessage"];
     NSData *image_data = dictionary[@"imageData"];
+    if(image_data==nil)
+    {
+        image_data = [[NSData alloc] init];
+    }
     
     [self.messages addObject:message];
     
@@ -1252,11 +1256,13 @@ AppDelegate *appDelegate;
     {
         [object.fields setObject:message.customParameters[@"fileID"] forKey:@"content"];
         [object.fields setObject:@"2" forKey:@"type"];
+        [object.fields setObject:message.customParameters[@"imageRatio"] forKey:@"imageRatio"];
     }
     else if([message.customParameters[@"isFileUploading"] length]>0)
     {
         [object.fields setObject:message.customParameters[@"imageURL"] forKey:@"content"];
         [object.fields setObject:@"2" forKey:@"type"];
+        [object.fields setObject:message.customParameters[@"imageRatio"] forKey:@"imageRatio"];
     }
     
     else if([message.customParameters[@"videoID"] length]>1)
@@ -4597,7 +4603,7 @@ AppDelegate *appDelegate;
     SharingController.delegate = self;
     SharingController.message = message;
     NSLog(@"indexpath .row .....%d",indexPath.row);
-    if(indexPath.row<=imagesData.count)
+    //if(indexPath.row<=imagesData.count)
     {
     if(isChatHistoryOrNot == FALSE)
     {
@@ -5190,7 +5196,7 @@ AppDelegate *appDelegate;
                         
                     case AVAssetExportSessionStatusCompleted:
                     {
-                        
+                        //videoUrl = [NSURL URLWithString:videoPath1];
                         
                         NSLog(@"URL is  %@", videoUrl.absoluteString);
                         NSData *videoData = [NSData dataWithContentsOfURL:videoUrl];
@@ -9780,6 +9786,8 @@ static CGFloat padding = 20.0;
                     else
                         cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  8 ,cell.message.frame.origin.y + 10, 95, 125);
                     //[cell.cardImageView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"card_url"]] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                    [cell.cardImageView sd_setImageWithURL:[NSURL URLWithString:@""]];
+                    cell.cardImageView.image = nil;
                     cell.cardImageView.image = [UIImage imageNamed:@"steamy-shower_chat.png"];
                     
                     cell.cardHeading.frame = CGRectMake(cell.cardImageView.frame.origin.x + 10, cell.cardImageView.frame.origin.y + 25, 75, 42);
@@ -9790,14 +9798,15 @@ static CGFloat padding = 20.0;
                     
                     cell.cardTopClicks.frame = CGRectMake(cell.cardImageView.frame.origin.x + 2, cell.cardImageView.frame.origin.y + 1, 20, 20);
                     [cell.cardTopClicks setFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:14]];
-                    cell.cardTopClicks.text = messageBody.customParameters[@"card_clicks"];
+                    cell.cardTopClicks.text = [NSString stringWithFormat:@"%02d", [messageBody.customParameters[@"card_clicks"] integerValue]];
                     
                     cell.cardBottomClicks.frame = CGRectMake(cell.cardImageView.frame.origin.x + cell.cardImageView.frame.size.width - 34, cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height - 20, 20, 20);
                     [cell.cardBottomClicks setFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:14]];
-                    cell.cardBottomClicks.text = messageBody.customParameters[@"card_clicks"];
+                    cell.cardBottomClicks.text = [NSString stringWithFormat:@"%02d", [messageBody.customParameters[@"card_clicks"] integerValue]];
                     
                     if([messageBody.customParameters[@"is_CustomCard"] isEqualToString:@"true"])
                     {
+                        cell.cardImageView.image = nil;
                         cell.cardImageView.image = [UIImage imageNamed:@"custom_card_Bar.png"];
                         cell.cardHeading.frame = CGRectMake(cell.message.frame.origin.x +  8 + 6 ,cell.message.frame.origin.y + 10 + 18 , 95-12, 125 -40);
                         cell.cardHeading.numberOfLines=4;
@@ -9889,6 +9898,7 @@ static CGFloat padding = 20.0;
                         {
                             cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  1 + 11 ,cell.message.frame.origin.y + 5 + 7, 248 - 22, 326 - 14);
                             //cell.cardImageView.image = [UIImage imageNamed:@"savewater.png"];
+                            cell.cardImageView.image = nil;
                             [cell.cardImageView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"card_url"]] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                             cell.cardHeading.frame = CGRectZero;
                             cell.cardHeading.numberOfLines=2;
@@ -9905,6 +9915,7 @@ static CGFloat padding = 20.0;
                         else
                         {
                             cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x -  1.5 + 7 ,cell.message.frame.origin.y + 5 + 3, 248 -14, 326 - 9);
+                            cell.cardImageView.image = nil;
                             cell.cardImageView.image = [UIImage imageNamed:@"custom_card_Bar.png"];
                             //[cell.cardImageView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"card_url"]] placeholderImage:nil usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                             cell.cardHeading.frame = CGRectMake(cell.message.frame.origin.x +  25 ,cell.message.frame.origin.y + 5  + 48, 248-48, 326-100);
@@ -10071,6 +10082,8 @@ static CGFloat padding = 20.0;
                     else
                         cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  8 ,cell.message.frame.origin.y + 10, 95, 125);
                     
+                    [cell.cardImageView sd_setImageWithURL:[NSURL URLWithString:@""]];
+                    cell.cardImageView.image = nil;
                     cell.cardImageView.image = [UIImage imageNamed:@"steamy-shower_chat.png"];
                     //[cell.cardImageView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"card_url"]] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                     
@@ -10082,14 +10095,15 @@ static CGFloat padding = 20.0;
                     
                     cell.cardTopClicks.frame = CGRectMake(cell.cardImageView.frame.origin.x + 2, cell.cardImageView.frame.origin.y + 1, 20, 20);
                     [cell.cardTopClicks setFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:14]];
-                    cell.cardTopClicks.text = messageBody.customParameters[@"card_clicks"];
+                    cell.cardTopClicks.text = [NSString stringWithFormat:@"%02d", [messageBody.customParameters[@"card_clicks"] integerValue]];
                     
                     cell.cardBottomClicks.frame = CGRectMake(cell.cardImageView.frame.origin.x + cell.cardImageView.frame.size.width - 34, cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height - 20, 20, 20);
                     [cell.cardBottomClicks setFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:14]];
-                    cell.cardBottomClicks.text = messageBody.customParameters[@"card_clicks"];
+                    cell.cardBottomClicks.text = [NSString stringWithFormat:@"%02d", [messageBody.customParameters[@"card_clicks"] integerValue]];
                     
                     if([messageBody.customParameters[@"is_CustomCard"] isEqualToString:@"true"])
                     {
+                        cell.cardImageView.image = nil;
                         cell.cardImageView.image = [UIImage imageNamed:@"custom_card_Bar.png"];
                         cell.cardHeading.frame = CGRectMake(cell.message.frame.origin.x +  8 + 6 ,cell.message.frame.origin.y + 10 +18 , 95-12, 125 -40);
                         cell.cardHeading.numberOfLines=4;
@@ -10169,6 +10183,7 @@ static CGFloat padding = 20.0;
                         {
                             cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  1 + 11,cell.message.frame.origin.y + 5 + 7, 248 -22, 326 - 14);
                             //cell.cardImageView.image = [UIImage imageNamed:@"savewater.png"];
+                            cell.cardImageView.image = nil;
                             [cell.cardImageView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"card_url"]] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                             cell.cardHeading.frame = CGRectZero;
                             cell.cardHeading.numberOfLines=2;
@@ -10182,6 +10197,7 @@ static CGFloat padding = 20.0;
                         else
                         {
                             cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x -  1.5 +7 ,cell.message.frame.origin.y + 5 + 3, 248-14, 326 - 9);
+                            cell.cardImageView.image = nil;
                             cell.cardImageView.image = [UIImage imageNamed:@"custom_card_Bar.png"];
                             //[cell.cardImageView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"card_url"]] placeholderImage:nil usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                             cell.cardHeading.frame = CGRectMake(cell.message.frame.origin.x +  25 ,cell.message.frame.origin.y + 5  + 48, 248-48, 326-100);
@@ -10496,6 +10512,13 @@ static CGFloat padding = 20.0;
                         
                         cell.shareBottomBarImgView.frame = CGRectMake(320-28-220, 46 + imageHeight, 220, 2);
                         cell.shareBottomBarImgView.image = [UIImage imageNamed:@"bar.png"];
+                        
+                        [cell.cardImageView sd_setImageWithURL:[NSURL URLWithString:@""]];
+                        cell.cardImageView.image = nil;
+                        if([messageBody.customParameters[@"is_CustomCard"] isEqualToString:@"true"])
+                            cell.cardImageView.image = [UIImage imageNamed:@"custom_card_Bar.png"];
+                        else
+                            cell.cardImageView.image = [UIImage imageNamed:@"steamy-shower_chat.png"];
                     }
                     else
                     {
@@ -10668,6 +10691,13 @@ static CGFloat padding = 20.0;
                         {
                             cell.cardSender.text = @"You";
                         }
+                        
+                        [cell.cardImageView sd_setImageWithURL:[NSURL URLWithString:@""]];
+                        cell.cardImageView.image = nil;
+                        if([messageBody.customParameters[@"is_CustomCard"] isEqualToString:@"true"])
+                            cell.cardImageView.image = [UIImage imageNamed:@"custom_card_Bar.png"];
+                        else
+                            cell.cardImageView.image = [UIImage imageNamed:@"steamy-shower_chat.png"];
                     }
                     
                     cell.message.frame = CGRectMake(cell.message.frame.origin.x + 7.5f, 45+imageHeight, 220, cell.message.frame.size.height);
@@ -11918,6 +11948,9 @@ static CGFloat padding = 20.0;
                     cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  1 ,cell.message.frame.origin.y + 5, 248, 326);
                 else
                     cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  8 ,cell.message.frame.origin.y + 10, 95, 125);
+                
+                [cell.cardImageView sd_setImageWithURL:[NSURL URLWithString:@""]];
+                cell.cardImageView.image = nil;
                 cell.cardImageView.image = [UIImage imageNamed:@"steamy-shower_chat.png"];
                 //[cell.cardImageView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"card_url"]] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                 
@@ -11929,14 +11962,15 @@ static CGFloat padding = 20.0;
                 
                 cell.cardTopClicks.frame = CGRectMake(cell.cardImageView.frame.origin.x + 2, cell.cardImageView.frame.origin.y + 1, 20, 20);
                 [cell.cardTopClicks setFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:14]];
-                cell.cardTopClicks.text = messageBody.customParameters[@"card_clicks"];
+                cell.cardTopClicks.text = [NSString stringWithFormat:@"%02d", [messageBody.customParameters[@"card_clicks"] integerValue]] ;
                 
                 cell.cardBottomClicks.frame = CGRectMake(cell.cardImageView.frame.origin.x + cell.cardImageView.frame.size.width - 34, cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height - 20, 20, 20);
                 [cell.cardBottomClicks setFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:14]];
-                cell.cardBottomClicks.text = messageBody.customParameters[@"card_clicks"];
+                cell.cardBottomClicks.text = [NSString stringWithFormat:@"%02d", [messageBody.customParameters[@"card_clicks"] integerValue]];
                 
                 if([messageBody.customParameters[@"is_CustomCard"] isEqualToString:@"true"])
                 {
+                    cell.cardImageView.image = nil;
                     cell.cardImageView.image = [UIImage imageNamed:@"custom_card_Bar.png"];
                     cell.cardHeading.frame = CGRectMake(cell.message.frame.origin.x +  8 + 6 ,cell.message.frame.origin.y + 10 + 18 , 95-12, 125 -40);
                     cell.cardHeading.numberOfLines=4;
@@ -12020,6 +12054,7 @@ static CGFloat padding = 20.0;
                     {
                         cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  1 + 11 ,cell.message.frame.origin.y + 5 + 7, 248 - 22, 326 - 14);
                         //cell.cardImageView.image = [UIImage imageNamed:@"savewater.png"];
+                        cell.cardImageView.image = nil;
                         [cell.cardImageView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"card_url"]] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                         cell.cardHeading.frame = CGRectZero;
                         cell.cardHeading.numberOfLines=2;
@@ -12034,6 +12069,7 @@ static CGFloat padding = 20.0;
                     else
                     {
                         cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x -  1.5 +7 ,cell.message.frame.origin.y + 5 + 3, 248-14, 326 - 9);
+                        cell.cardImageView.image = nil;
                         cell.cardImageView.image = [UIImage imageNamed:@"custom_card_Bar.png"];
                         //[cell.cardImageView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"card_url"]] placeholderImage:nil usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                         cell.cardHeading.frame = CGRectMake(cell.message.frame.origin.x +  25 ,cell.message.frame.origin.y + 5  + 48, 248-48, 326-100);
@@ -12194,6 +12230,9 @@ static CGFloat padding = 20.0;
                     cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  1 ,cell.message.frame.origin.y + 5, 248, 326);
                 else
                     cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  8 ,cell.message.frame.origin.y + 10, 95, 125);
+                
+                [cell.cardImageView sd_setImageWithURL:[NSURL URLWithString:@""]];
+                cell.cardImageView.image = nil;
                 cell.cardImageView.image = [UIImage imageNamed:@"steamy-shower_chat.png"];
                 //[cell.cardImageView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"card_url"]] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                 
@@ -12205,14 +12244,15 @@ static CGFloat padding = 20.0;
                 
                 cell.cardTopClicks.frame = CGRectMake(cell.cardImageView.frame.origin.x + 2, cell.cardImageView.frame.origin.y + 1, 20, 20);
                 [cell.cardTopClicks setFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:14]];
-                cell.cardTopClicks.text = messageBody.customParameters[@"card_clicks"];
+                cell.cardTopClicks.text = [NSString stringWithFormat:@"%02d", [messageBody.customParameters[@"card_clicks"] integerValue]];
                 
                 cell.cardBottomClicks.frame = CGRectMake(cell.cardImageView.frame.origin.x + cell.cardImageView.frame.size.width - 34, cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height - 20, 20, 20);
                 [cell.cardBottomClicks setFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:14]];
-                cell.cardBottomClicks.text = messageBody.customParameters[@"card_clicks"];
+                cell.cardBottomClicks.text = [NSString stringWithFormat:@"%02d", [messageBody.customParameters[@"card_clicks"] integerValue]];
                 
                 if([messageBody.customParameters[@"is_CustomCard"] isEqualToString:@"true"])
                 {
+                    cell.cardImageView.image = nil;
                     cell.cardImageView.image = [UIImage imageNamed:@"custom_card_Bar.png"];
                     cell.cardHeading.frame = CGRectMake(cell.message.frame.origin.x +  8 + 6 ,cell.message.frame.origin.y + 10 +18 , 95-12, 125 -40);
                     cell.cardHeading.numberOfLines=4;
@@ -12289,6 +12329,7 @@ static CGFloat padding = 20.0;
                     {
                         cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x +  1 + 11,cell.message.frame.origin.y + 5 + 7, 248 - 22, 326 - 14);
                         //cell.cardImageView.image = [UIImage imageNamed:@"savewater.png"];
+                        cell.cardImageView.image = nil;
                         [cell.cardImageView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"card_url"]] placeholderImage:nil options:SDWebImageRefreshCached | SDWebImageRetryFailed usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                         cell.cardHeading.frame = CGRectZero;
                         cell.cardHeading.numberOfLines=2;
@@ -12302,6 +12343,7 @@ static CGFloat padding = 20.0;
                     else
                     {
                         cell.cardImageView.frame = CGRectMake(cell.message.frame.origin.x -  1.5 +7 ,cell.message.frame.origin.y + 5 + 3, 248-14, 326 - 9);
+                        cell.cardImageView.image = nil;
                         cell.cardImageView.image = [UIImage imageNamed:@"custom_card_Bar.png"];
                         //[cell.cardImageView setImageWithURL:[NSURL URLWithString:messageBody.customParameters[@"card_url"]] placeholderImage:nil usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                         cell.cardHeading.frame = CGRectMake(cell.message.frame.origin.x +  25 ,cell.message.frame.origin.y + 5  + 48, 248-48, 326-100);
@@ -12615,6 +12657,13 @@ static CGFloat padding = 20.0;
                     
                     cell.shareBottomBarImgView.frame = CGRectMake(320-28-220, 46 + imageHeight, 220, 2);
                     cell.shareBottomBarImgView.image = [UIImage imageNamed:@"bar.png"];
+                    
+                    [cell.cardImageView sd_setImageWithURL:[NSURL URLWithString:@""]];
+                    cell.cardImageView.image = nil;
+                    if([messageBody.customParameters[@"is_CustomCard"] isEqualToString:@"true"])
+                        cell.cardImageView.image = [UIImage imageNamed:@"custom_card_Bar.png"];
+                    else
+                        cell.cardImageView.image = [UIImage imageNamed:@"steamy-shower_chat.png"];
                 }
                 else
                 {
@@ -12787,6 +12836,13 @@ static CGFloat padding = 20.0;
                     {
                         cell.cardSender.text = @"You";
                     }
+                    
+                    [cell.cardImageView sd_setImageWithURL:[NSURL URLWithString:@""]];
+                    cell.cardImageView.image = nil;
+                    if([messageBody.customParameters[@"is_CustomCard"] isEqualToString:@"true"])
+                        cell.cardImageView.image = [UIImage imageNamed:@"custom_card_Bar.png"];
+                    else
+                        cell.cardImageView.image = [UIImage imageNamed:@"steamy-shower_chat.png"];
                 }
                 
                 cell.message.frame = CGRectMake(cell.message.frame.origin.x + 7.5f, 45+imageHeight, 220, cell.message.frame.size.height);
@@ -13184,7 +13240,7 @@ static CGFloat padding = 20.0;
     
     
     [cell.animationView startCanvasAnimation];
-    
+    [cell setNeedsLayout];
 	return cell;
 }
 

@@ -1242,7 +1242,7 @@
             //profile pic
             if(((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl.length>0)
             {
-                
+                profile_pic.image = nil;
                 NSLog(@"URL IS %@",((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl);
                NSURL *url= [NSURL URLWithString:((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl];
                 [profile_pic sd_setImageWithURL:url placeholderImage:nil options:SDWebImageRefreshCached completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL)
