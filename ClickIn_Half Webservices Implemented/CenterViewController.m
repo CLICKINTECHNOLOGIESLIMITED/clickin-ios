@@ -70,6 +70,97 @@ AppDelegate *appDelegate;
 
 - (void)dealloc
 {
+    //remove video from document directory if already picked
+    int videoClickedCount=0;
+    int no_videos_stored=0;
+    if(tempVideoUrl.path.length>0)
+    {
+        NSString *videoPath1;
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        
+        NSDirectoryEnumerator *directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:[paths objectAtIndex:0]];
+        
+        
+        for (NSString *path in directoryEnumerator)
+        {
+            NSLog(@"File Names: %@", path);
+            if ([path containsString:@"videoClicked"]) {
+                NSRange range = [path rangeOfString:[NSString stringWithFormat:@"%@videoClicked", strRelationShipId]];
+                int videoCount = [[path substringFromIndex:range.length] intValue];
+                if(videoCount>videoClickedCount)
+                    videoClickedCount = videoCount;
+                
+                no_videos_stored++;
+            }
+
+        }
+        NSLog(@"File Names: %i", videoClickedCount);
+        
+        videoPath1 = [NSString stringWithFormat:@"%@/%@videoClicked%i.mp4", [paths objectAtIndex:0],strRelationShipId,videoClickedCount];
+        
+        //check if file exists if yes then delete the file
+        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:videoPath1];
+        if (fileExists) {
+            [[NSFileManager defaultManager] removeItemAtPath:videoPath1 error:NULL];
+            no_videos_stored--;
+        }
+        
+    }
+    else
+    {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        
+        NSDirectoryEnumerator *directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:[paths objectAtIndex:0]];
+        
+        
+        for (NSString *path in directoryEnumerator)
+        {
+            if ([path containsString:@"videoClicked"]) {
+                NSRange range = [path rangeOfString:[NSString stringWithFormat:@"%@videoClicked", strRelationShipId]];
+                int videoCount = [[path substringFromIndex:range.length] intValue];
+                if(videoCount>videoClickedCount)
+                    videoClickedCount = videoCount;
+                
+                no_videos_stored++;
+            }
+            
+        }
+
+    }
+
+    //keep not more than 20 video data in documents directory
+    if(no_videos_stored>20)
+    {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        
+        NSDirectoryEnumerator *directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:[paths objectAtIndex:0]];
+        
+        
+        for (NSString *path in directoryEnumerator)
+        {
+            if ([path containsString:@"videoClicked"]) {
+                NSRange range = [path rangeOfString:[NSString stringWithFormat:@"%@videoClicked", strRelationShipId]];
+                int videoCount = [[path substringFromIndex:range.length] intValue];
+                if(videoCount<=videoClickedCount-20)
+                {
+                    NSString *videoPath1 = [NSString stringWithFormat:@"%@/%@videoClicked%i.mp4", [paths objectAtIndex:0],strRelationShipId,videoCount];
+                    
+                    //check if file exists if yes then delete the file
+                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:videoPath1];
+                    if (fileExists) {
+                        [[NSFileManager defaultManager] removeItemAtPath:videoPath1 error:NULL];
+                    }
+
+                }
+                
+                
+            }
+            
+        }
+
+    }
+    
+    
      tableView.delegate = nil;
      textView.delegate = nil;
      textView.delegateNotification=nil;
@@ -2842,6 +2933,36 @@ AppDelegate *appDelegate;
         }];
     }
     
+    //remove video from document directory if already picked
+    if(tempVideoUrl.path.length>0)
+    {
+        NSString *videoPath1;
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        
+        NSDirectoryEnumerator *directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:[paths objectAtIndex:0]];
+        
+        int videoClickedCount=0;
+        for (NSString *path in directoryEnumerator)
+        {
+            NSLog(@"File Names: %@", path);
+            if ([path containsString:@"videoClicked"]) {
+                NSRange range = [path rangeOfString:[NSString stringWithFormat:@"%@videoClicked", strRelationShipId]];
+                int videoCount = [[path substringFromIndex:range.length] intValue];
+                if(videoCount>videoClickedCount)
+                    videoClickedCount = videoCount;
+            }
+        }
+        NSLog(@"File Names: %i", videoClickedCount);
+        
+        videoPath1 = [NSString stringWithFormat:@"%@/%@videoClicked%i.mp4", [paths objectAtIndex:0],strRelationShipId,videoClickedCount];
+        
+        //check if file exists if yes then delete the file
+        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:videoPath1];
+        if (fileExists) {
+            [[NSFileManager defaultManager] removeItemAtPath:videoPath1 error:NULL];
+        }
+
+    }
     
     tempMediaData = nil;
     tempImageRatio = 1;
@@ -5164,7 +5285,27 @@ AppDelegate *appDelegate;
             AVAssetExportSession *exportSession = [[AVAssetExportSession alloc]initWithAsset:avAsset presetName:AVAssetExportPresetMediumQuality];
             
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            videoPath1 = [NSString stringWithFormat:@"%@/videoClick.mp4", [paths objectAtIndex:0]];
+            
+            
+            //testing
+            NSDirectoryEnumerator *directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:[paths objectAtIndex:0]];
+            
+            int videoClickedCount=0;
+            for (NSString *path in directoryEnumerator)
+            {
+                NSLog(@"File Names: %@", path);
+                if ([path containsString:@"videoClicked"]) {
+                    NSRange range = [path rangeOfString:[NSString stringWithFormat:@"%@videoClicked", strRelationShipId]];
+                    int videoCount = [[path substringFromIndex:range.length] intValue];
+                    if(videoCount>videoClickedCount)
+                        videoClickedCount = videoCount;
+                }
+
+            }
+            NSLog(@"File Names: %i", videoClickedCount);
+            ////////end testing
+            
+            videoPath1 = [NSString stringWithFormat:@"%@/%@videoClicked%i.mp4", [paths objectAtIndex:0],strRelationShipId,videoClickedCount+1];
             
             //check if file exists if yes then delete the file
             BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:videoPath1];
@@ -6823,7 +6964,7 @@ AppDelegate *appDelegate;
         message.text=tempMsg.text;
             if(message.text.length==0)
                 message.text = @" ";
-        NSMutableDictionary *custom_Data = [[NSMutableDictionary alloc] initWithObjectsAndKeys: tempMsg.customParameters[@"clicks"] ,@"clicks", res.uploadedBlob.publicUrl, @"videoID", [[videoUploading_indexes objectAtIndex:selected_index] objectForKey:@"imageURL"] ,@"videoThumbnail", nil];
+        NSMutableDictionary *custom_Data = [[NSMutableDictionary alloc] initWithObjectsAndKeys: tempMsg.customParameters[@"clicks"] ,@"clicks", res.uploadedBlob.publicUrl, @"videoID", [[videoUploading_indexes objectAtIndex:selected_index] objectForKey:@"imageURL"] ,@"videoThumbnail", tempMsg.customParameters[@"videoURL"], @"videoURL", nil];
         //message.recipientID = 546; // opponent's id
         //NSMutableDictionary *video_Data = [[NSMutableDictionary alloc] initWithObjectsAndKeys:                                               res.uploadedBlob.publicUrl,@"videoID", [[videoUploading_indexes objectAtIndex:selected_index] objectForKey:@"imageURL"] ,@"videoThumbnail", nil];
             
@@ -8574,7 +8715,6 @@ AppDelegate *appDelegate;
         isMusicPlaying = false;
     
     
-    
     UIButton* play_btn = (UIButton*)sender;
     
     
@@ -8585,15 +8725,26 @@ AppDelegate *appDelegate;
     MPMoviePlayerViewController *mpvc;
     if([messageBody.customParameters[@"videoID"] length]>1)
     {
-        mpvc = [[MPMoviePlayerViewController alloc] init];
-        mpvc.moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
-        [mpvc.moviePlayer setContentURL:[NSURL URLWithString:messageBody.customParameters[@"videoID"]]];
+        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@", messageBody.customParameters[@"videoURL"]]];
+        if(([messageBody.customParameters[@"videoURL"] length] > 1) && fileExists)
+        {
+            mpvc = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:messageBody.customParameters[@"videoURL"]]];
+            
+            mpvc.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
+        }
+        else
+        {
+            mpvc = [[MPMoviePlayerViewController alloc] init];
+            mpvc.moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
+            [mpvc.moviePlayer setContentURL:[NSURL URLWithString:messageBody.customParameters[@"videoID"]]];
+        }
     }
     else
     {
         if([messageBody.customParameters[@"shareStatus"] length]==0)
         {
-            mpvc = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:messageBody.customParameters[@"videoURL"]]];
+            mpvc = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:messageBody.customParameters[@"videoURL"]]];
+            
             mpvc.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
         }
         else
@@ -8794,6 +8945,11 @@ static CGFloat padding = 20.0;
                 [cell.message setAttributedText:attributedText];
             }
             
+            //clear cell's imageview data for resuable cells
+            [cell.PhotoView setImageWithURL:[NSURL URLWithString:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            [cell.ThumbnailPhotoView setImageWithURL:[NSURL URLWithString:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            [cell.LocationView setImageWithURL:[NSURL URLWithString:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            
             //check for image sent
             
             if([messageBody.customParameters[@"fileID"] length]>1)// image
@@ -8921,6 +9077,7 @@ static CGFloat padding = 20.0;
                 }
                 else
                 {
+                    cell.PhotoView.alpha = 0;
                     if(![messageBody.customParameters[@"clicks"] isEqualToString:@"no"] && [messageBody.customParameters[@"clicks"]length]>0)
                     {
                         cell.imageSentView.layer.borderWidth = 2.0f;
@@ -9306,6 +9463,7 @@ static CGFloat padding = 20.0;
                 }
                 else
                 {
+                    cell.LocationView.alpha = 0;
                     if(![messageBody.customParameters[@"clicks"] isEqualToString:@"no"] && [messageBody.customParameters[@"clicks"]length]>0)
                     {
                         cell.LocationSentView.layer.borderWidth = 2.0f;
@@ -10951,6 +11109,11 @@ static CGFloat padding = 20.0;
             
         }
         
+        //clear cell's imageview data for resuable cells
+        [cell.PhotoView setImageWithURL:[NSURL URLWithString:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [cell.ThumbnailPhotoView setImageWithURL:[NSURL URLWithString:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [cell.LocationView setImageWithURL:[NSURL URLWithString:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        
         //check for image sent
         
         if([messageBody.customParameters[@"fileID"] length]>1)
@@ -11040,7 +11203,7 @@ static CGFloat padding = 20.0;
         {
             cell.PhotoView.image=nil;
             cell.PhotoView.frame = CGRectZero;
-            cell.PhotoView.alpha = 0;
+            cell.PhotoView.alpha = 1;
             [cell.imageSentView setImage:nil forState:UIControlStateNormal];
             [cell.clicksImageView setFrame:CGRectZero];
             cell.clicksImageView.image=nil;
@@ -11073,6 +11236,7 @@ static CGFloat padding = 20.0;
             }
             else
             {
+                cell.PhotoView.alpha = 0;
                 if(![messageBody.customParameters[@"clicks"] isEqualToString:@"no"] && [messageBody.customParameters[@"clicks"]length]>0)
                 {
                     cell.imageSentView.layer.borderWidth = 2.0f;
@@ -11450,6 +11614,7 @@ static CGFloat padding = 20.0;
             }
             else
             {
+                cell.LocationView.alpha = 0;
                 if(![messageBody.customParameters[@"clicks"] isEqualToString:@"no"] && [messageBody.customParameters[@"clicks"]length]>0)
                 {
                     cell.LocationSentView.layer.borderWidth = 2.0f;
