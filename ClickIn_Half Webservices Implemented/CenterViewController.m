@@ -84,19 +84,22 @@ AppDelegate *appDelegate;
         for (NSString *path in directoryEnumerator)
         {
             NSLog(@"File Names: %@", path);
-            if ([path containsString:@"videoClicked"]) {
-                NSRange range = [path rangeOfString:[NSString stringWithFormat:@"%@videoClicked", strRelationShipId]];
-                int videoCount = [[path substringFromIndex:range.length] intValue];
-                if(videoCount>videoClickedCount)
-                    videoClickedCount = videoCount;
-                
-                no_videos_stored++;
+            if ([path containsString:@"video_"]) {
+                NSRange range = [path rangeOfString:[NSString stringWithFormat:@"%@video_", partner_QB_id]];
+                if(range.length>0)
+                {
+                    int videoCount = [[path substringFromIndex:range.length] intValue];
+                    if(videoCount>videoClickedCount)
+                        videoClickedCount = videoCount;
+                    
+                    no_videos_stored++;
+                }
             }
 
         }
         NSLog(@"File Names: %i", videoClickedCount);
         
-        videoPath1 = [NSString stringWithFormat:@"%@/%@videoClicked%i.mp4", [paths objectAtIndex:0],strRelationShipId,videoClickedCount];
+        videoPath1 = [NSString stringWithFormat:@"%@/%@video_%i.mp4", [paths objectAtIndex:0],partner_QB_id,videoClickedCount];
         
         //check if file exists if yes then delete the file
         BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:videoPath1];
@@ -115,21 +118,24 @@ AppDelegate *appDelegate;
         
         for (NSString *path in directoryEnumerator)
         {
-            if ([path containsString:@"videoClicked"]) {
-                NSRange range = [path rangeOfString:[NSString stringWithFormat:@"%@videoClicked", strRelationShipId]];
-                int videoCount = [[path substringFromIndex:range.length] intValue];
-                if(videoCount>videoClickedCount)
-                    videoClickedCount = videoCount;
-                
-                no_videos_stored++;
+            if ([path containsString:@"video_"]) {
+                NSRange range = [path rangeOfString:[NSString stringWithFormat:@"%@video_", partner_QB_id]];
+                if(range.length>0)
+                {
+                    int videoCount = [[path substringFromIndex:range.length] intValue];
+                    if(videoCount>videoClickedCount)
+                        videoClickedCount = videoCount;
+                    
+                    no_videos_stored++;
+                }
             }
             
         }
 
     }
 
-    //keep not more than 20 video data in documents directory
-    if(no_videos_stored>20)
+    //keep not more than 25 video data in documents directory
+    if(no_videos_stored>25)
     {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         
@@ -138,19 +144,22 @@ AppDelegate *appDelegate;
         
         for (NSString *path in directoryEnumerator)
         {
-            if ([path containsString:@"videoClicked"]) {
-                NSRange range = [path rangeOfString:[NSString stringWithFormat:@"%@videoClicked", strRelationShipId]];
-                int videoCount = [[path substringFromIndex:range.length] intValue];
-                if(videoCount<=videoClickedCount-20)
+            if ([path containsString:@"video_"]) {
+                NSRange range = [path rangeOfString:[NSString stringWithFormat:@"%@video_", partner_QB_id]];
+                if(range.length>0)
                 {
-                    NSString *videoPath1 = [NSString stringWithFormat:@"%@/%@videoClicked%i.mp4", [paths objectAtIndex:0],strRelationShipId,videoCount];
-                    
-                    //check if file exists if yes then delete the file
-                    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:videoPath1];
-                    if (fileExists) {
-                        [[NSFileManager defaultManager] removeItemAtPath:videoPath1 error:NULL];
-                    }
+                    int videoCount = [[path substringFromIndex:range.length] intValue];
+                    if(videoCount<=videoClickedCount-25)
+                    {
+                        NSString *videoPath1 = [NSString stringWithFormat:@"%@/%@video_%i.mp4", [paths objectAtIndex:0],partner_QB_id,videoCount];
+                        
+                        //check if file exists if yes then delete the file
+                        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:videoPath1];
+                        if (fileExists) {
+                            [[NSFileManager defaultManager] removeItemAtPath:videoPath1 error:NULL];
+                        }
 
+                    }
                 }
                 
                 
@@ -1290,7 +1299,7 @@ AppDelegate *appDelegate;
     
     QBChatMessage *message = dictionary[@"sharedMessage"];
     NSData *image_data = dictionary[@"imageData"];
-    if(image_data==nil)
+    if(image_data.length==0)
     {
         image_data = [[NSData alloc] init];
     }
@@ -2945,16 +2954,19 @@ AppDelegate *appDelegate;
         for (NSString *path in directoryEnumerator)
         {
             NSLog(@"File Names: %@", path);
-            if ([path containsString:@"videoClicked"]) {
-                NSRange range = [path rangeOfString:[NSString stringWithFormat:@"%@videoClicked", strRelationShipId]];
-                int videoCount = [[path substringFromIndex:range.length] intValue];
-                if(videoCount>videoClickedCount)
-                    videoClickedCount = videoCount;
+            if ([path containsString:@"video_"]) {
+                NSRange range = [path rangeOfString:[NSString stringWithFormat:@"%@video_", partner_QB_id]];
+                if(range.length>0)
+                {
+                    int videoCount = [[path substringFromIndex:range.length] intValue];
+                    if(videoCount>videoClickedCount)
+                        videoClickedCount = videoCount;
+                }
             }
         }
         NSLog(@"File Names: %i", videoClickedCount);
         
-        videoPath1 = [NSString stringWithFormat:@"%@/%@videoClicked%i.mp4", [paths objectAtIndex:0],strRelationShipId,videoClickedCount];
+        videoPath1 = [NSString stringWithFormat:@"%@/%@video_%i.mp4", [paths objectAtIndex:0],partner_QB_id,videoClickedCount];
         
         //check if file exists if yes then delete the file
         BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:videoPath1];
@@ -5294,24 +5306,30 @@ AppDelegate *appDelegate;
             for (NSString *path in directoryEnumerator)
             {
                 NSLog(@"File Names: %@", path);
-                if ([path containsString:@"videoClicked"]) {
-                    NSRange range = [path rangeOfString:[NSString stringWithFormat:@"%@videoClicked", strRelationShipId]];
-                    int videoCount = [[path substringFromIndex:range.length] intValue];
-                    if(videoCount>videoClickedCount)
-                        videoClickedCount = videoCount;
+                if ([path containsString:@"video_"]) {
+                    NSRange range = [path rangeOfString:[NSString stringWithFormat:@"%@video_", partner_QB_id]];
+                    if(range.length>0)
+                    {
+                        int videoCount = [[path substringFromIndex:range.length] intValue];
+                        if(videoCount>videoClickedCount)
+                            videoClickedCount = videoCount;
+                    }
                 }
 
             }
             NSLog(@"File Names: %i", videoClickedCount);
             ////////end testing
             
-            videoPath1 = [NSString stringWithFormat:@"%@/%@videoClicked%i.mp4", [paths objectAtIndex:0],strRelationShipId,videoClickedCount+1];
+            videoPath1 = [NSString stringWithFormat:@"%@/%@video_%i.mp4", [paths objectAtIndex:0],partner_QB_id,videoClickedCount+1];
             
             //check if file exists if yes then delete the file
             BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:videoPath1];
             if (fileExists) {
                 [[NSFileManager defaultManager] removeItemAtPath:videoPath1 error:NULL];
             }
+            
+            [mediaAttachButton setImage:[UIImage imageNamed:@"video_icon.png"] forState:UIControlStateNormal];
+            mediaAttachButton.tag = 4;
             
             exportSession.outputURL = [NSURL fileURLWithPath:videoPath1];
             NSLog(@"videopath of your mp4 file = %@",videoPath1);  // PATH OF YOUR .mp4 FILE
@@ -5380,8 +5398,8 @@ AppDelegate *appDelegate;
                             tempVideoUrl = videoUrl;
                             
                             
-                            [mediaAttachButton setImage:[UIImage imageNamed:@"video_icon.png"] forState:UIControlStateNormal];
-                            mediaAttachButton.tag = 4; //tag 4 for video
+//                            [mediaAttachButton setImage:[UIImage imageNamed:@"video_icon.png"] forState:UIControlStateNormal];
+//                            mediaAttachButton.tag = 4; //tag 4 for video
                             
                             
                             /*[imagesData addObject:imageData];
@@ -5457,7 +5475,6 @@ AppDelegate *appDelegate;
                 }
                 
                 //UISaveVideoAtPathToSavedPhotosAlbum(videoPath1, self, nil, nil);
-                
                 
                 
             }];
@@ -5699,6 +5716,7 @@ AppDelegate *appDelegate;
 
     }];
 }
+
 
 -(UIImage *)scaleImage:(UIImage *)image toSize:(CGSize)newSize
 {
@@ -6218,10 +6236,6 @@ AppDelegate *appDelegate;
         }
         else
         {
-//            if([StrClicks intValue]!=0)
-//            {
-//                [self performSelector:@selector(playClicksChangesSound) withObject:nil afterDelay:0.2];
-//            }
             
             addMyFriendClicks += [StrClicks intValue];
             rightTopHeaderClicks.text = [NSString stringWithFormat:@"%d",addMyFriendClicks];
@@ -6229,14 +6243,14 @@ AppDelegate *appDelegate;
         
         
         //if([message.customParameters[@"isFileUploading"] length]==0 && [message.customParameters[@"isVideoUploading"] length]==0 && [message.customParameters[@"isLocationUploading"] length]==0)
-        {
+        //{
             [imagesData addObject:[[NSData alloc] init]];
-        }
+        //}
         
         //if([message.customParameters[@"isAudioUploading"] length]==0)
-        {
+        //{
             [audioData addObject:[[NSData alloc] init]];
-        }
+        //}
         
         [self.messages addObject:message];
         
@@ -8743,9 +8757,19 @@ AppDelegate *appDelegate;
     {
         if([messageBody.customParameters[@"shareStatus"] length]==0)
         {
-            mpvc = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:messageBody.customParameters[@"videoURL"]]];
-            
-            mpvc.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
+            BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@", messageBody.customParameters[@"videoURL"]]];
+            if(([messageBody.customParameters[@"videoURL"] length] > 1) && fileExists)
+            {
+                mpvc = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:messageBody.customParameters[@"videoURL"]]];
+                
+                mpvc.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
+            }
+            else
+            {
+                mpvc = [[MPMoviePlayerViewController alloc] init];
+                mpvc.moviePlayer.movieSourceType = MPMovieSourceTypeStreaming;
+                [mpvc.moviePlayer setContentURL:[NSURL URLWithString:messageBody.customParameters[@"videoStreamURL"]]];
+            }
         }
         else
         {
