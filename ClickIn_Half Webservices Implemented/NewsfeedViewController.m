@@ -1460,10 +1460,10 @@ AppDelegate *appDelegate;
             cell.cardContent.text = messageBody.customParameters[@"card_content"];
             
             cell.cardTopClicks.frame = CGRectMake(cell.cardImageView.frame.origin.x + 2, cell.cardImageView.frame.origin.y + 1, 20, 20);
-            cell.cardTopClicks.text = messageBody.customParameters[@"card_clicks"];
+            cell.cardTopClicks.text = [NSString stringWithFormat:@"%02d", [messageBody.customParameters[@"card_clicks"] integerValue]];
             
             cell.cardBottomClicks.frame = CGRectMake(cell.cardImageView.frame.origin.x + cell.cardImageView.frame.size.width - 34, cell.cardImageView.frame.origin.y + cell.cardImageView.frame.size.height - 20, 20, 20);
-            cell.cardBottomClicks.text = messageBody.customParameters[@"card_clicks"];
+            cell.cardBottomClicks.text = [NSString stringWithFormat:@"%02d", [messageBody.customParameters[@"card_clicks"] integerValue]];
             
             if([messageBody.customParameters[@"is_CustomCard"] isEqualToString:@"true"])
             {

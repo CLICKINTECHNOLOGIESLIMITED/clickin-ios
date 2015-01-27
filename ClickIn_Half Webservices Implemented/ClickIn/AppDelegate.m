@@ -68,20 +68,20 @@
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     [prefs setObject:@"no" forKey:@"is_typing"];
     
-//    [QBSettings setApplicationID:6768];
-//    [QBSettings setAuthorizationKey:@"QVr4uK5tt6cu6dN"];
-//    [QBSettings setAuthorizationSecret:@"4thHbq-eyLVJrhe"];
-//    [QBSettings setAccountKey:@"gBv3BjZnFzkVPUZEqEXm"];
+    [QBSettings setApplicationID:6768];
+    [QBSettings setAuthorizationKey:@"QVr4uK5tt6cu6dN"];
+    [QBSettings setAuthorizationSecret:@"4thHbq-eyLVJrhe"];
+    [QBSettings setAccountKey:@"gBv3BjZnFzkVPUZEqEXm"];
 
     // Live QuickBlox
-    [QBSettings setApplicationID:5];
-    [QBSettings setAuthorizationKey:@"6QQJq2FSKKzHK2-"];
-    [QBSettings setAuthorizationSecret:@"k9cTQAeFWrkEAWv"];
-   
-    [QBSettings setServerChatDomain:@"chatclickin.quickblox.com"];
-    [QBSettings setServerApiDomain:@"https://apiclickin.quickblox.com"];
-    [QBSettings setContentBucket:@"qb-clickin"];
-    [QBSettings setAccountKey:@"pFfuTqT7DxQiGUiqFABc"];
+//    [QBSettings setApplicationID:5];
+//    [QBSettings setAuthorizationKey:@"6QQJq2FSKKzHK2-"];
+//    [QBSettings setAuthorizationSecret:@"k9cTQAeFWrkEAWv"];
+//   
+//    [QBSettings setServerChatDomain:@"chatclickin.quickblox.com"];
+//    [QBSettings setServerApiDomain:@"https://apiclickin.quickblox.com"];
+//    [QBSettings setContentBucket:@"qb-clickin"];
+//    [QBSettings setAccountKey:@"pFfuTqT7DxQiGUiqFABc"];
     
     
     [Crashlytics startWithAPIKey:@"b1409c5492785c7335d721bdcd1bb08ca9248515"];
@@ -1214,24 +1214,26 @@
             version = [config valueForKey:@"version"];
         }
         
-        NSString *current_version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+        NSString *current_version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
         //Check your version with the version in app store
         if (![version isEqualToString:current_version])
         {
             NSArray *subVersions = [version componentsSeparatedByString:@"."];
             if(subVersions.count==2)
             {
-//                UIAlertView *createUserResponseAlert = [[UIAlertView alloc] initWithTitle:@"New Version!!" message: @"A new version of Clickin' is available to download" delegate:self cancelButtonTitle:nil otherButtonTitles: @"Download", nil];
-//                createUserResponseAlert.delegate = self;
-//                [createUserResponseAlert show];
-//                createUserResponseAlert = nil;
+                NSString *currentVersionValue = [current_version stringByReplacingOccurrencesOfString:@"." withString:@""];
                 
-                MODropAlertView *alertView = [[MODropAlertView alloc]initDropAlertWithTitle:@"New Version!!"
-                                                                                description:@"A new version of Clickin' is available to download"
-                                                                              okButtonTitle:@"Download"];
-                alertView.delegate = self;
-                [alertView show];
-                alertView = nil;
+                NSString *appStoreVersionValue = [version stringByReplacingOccurrencesOfString:@"." withString:@""];
+                
+                if([appStoreVersionValue integerValue] > [currentVersionValue integerValue])
+                {
+                    MODropAlertView *alertView = [[MODropAlertView alloc]initDropAlertWithTitle:@"New Version!!"
+                                                                                    description:@"A new version of Clickin' is available to download"
+                                                                                  okButtonTitle:@"Download"];
+                    alertView.delegate = self;
+                    [alertView show];
+                    alertView = nil;
+                }
             }
             subVersions = nil;
         }

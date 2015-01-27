@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Clickin&apos;</string>
+	<string>Clickin'</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
@@ -37,6 +37,8 @@
 	<string>ClickIn</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>ClickIn' would like to access your Location Services</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AvenirNextLTPro-BoldCn.ttf</string>
@@ -67,7 +69,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>ClickIn&apos; would like to access your Location Services</string>
 </dict>
 </plist>
