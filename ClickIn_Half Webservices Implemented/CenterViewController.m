@@ -1119,6 +1119,18 @@ AppDelegate *appDelegate;
     if([dict objectForKey:@"ArrayAudioData"])
          [audioData addObjectsFromArray:(NSMutableArray *)[dict objectForKey:@"ArrayAudioData"]];
 //    audioData = (NSMutableArray *)[dict objectForKey:@"ArrayAudioData"];
+    
+    if(imagesData.count!=self.messages.count)
+    {
+        for(int i=0;i<self.messages.count-imagesData.count;i++)
+            [imagesData addObject:[[NSData alloc] init]];
+    }
+    
+    if(audioData.count!=self.messages.count)
+    {
+        for(int i=0;i<self.messages.count-audioData.count;i++)
+            [audioData addObject:[[NSData alloc] init]];
+    }
 
     if(self.messages.count >= 20)
     {
