@@ -65,16 +65,18 @@
 
 #define alertNetRechMessage NSLocalizedString(@"Please check your internet connection.",@"")
 
-//#define DomainNameUrl @"https://dev.clickinapp.com/"
+#define DomainNameUrl @"https://dev.clickinapp.com/"
 
-#define MIXPANEL_TOKEN @"379c76c54492387a149b19fcc27e9fc5"
+//#define MIXPANEL_TOKEN @"379c76c54492387a149b19fcc27e9fc5"
+
+#define MIXPANEL_TOKEN @"ab8ec8af89e0450a03d9ffe94b0d0590"
 
 //#define DomainNameUrl @"http://23.21.65.97/"
 
 // Latest Staging
 //#define DomainNameUrl @"https://staging.clickinapp.com/"
 
-#define DomainNameUrl @"https://api.clickinapp.com/"
+//#define DomainNameUrl @"https://api.clickinapp.com/"
 
 #define QBchatTable @"chats"
 

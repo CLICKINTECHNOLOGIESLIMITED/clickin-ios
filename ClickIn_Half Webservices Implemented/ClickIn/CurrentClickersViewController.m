@@ -288,6 +288,10 @@ AppDelegate *appDelegate;
 
 -(void) phonebookBtnPressed
 {
+   // [[Mixpanel sharedInstance] track:@"FindFriendsThroughPhonebook"];
+    
+    [[Mixpanel sharedInstance] track:@"LeftMenuFindFriendsButtonClicked" properties:@{@"Activity":@"FindFriendsThroughPhonebook"}];
+    
     intValue = 1;
     tblViewFBUsers.hidden = YES;
     tblView.hidden = NO;
@@ -301,6 +305,8 @@ AppDelegate *appDelegate;
 
 -(void) facebookBtnPressed
 {
+    //[[Mixpanel sharedInstance] track:@"FindFriendsThroughFacebook"];
+    [[Mixpanel sharedInstance] track:@"LeftMenuFindFriendsButtonClicked" properties:@{@"Activity":@"FindFriendsThroughFacebook"}];
     tblView.hidden=YES;
     tblViewFBUsers.hidden=NO;
     intValue = 2;

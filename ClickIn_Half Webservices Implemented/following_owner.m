@@ -488,6 +488,8 @@
     {
         if(buttonType==0)
         {
+            [[Mixpanel sharedInstance] track:@"LeftMenuFindFriendsButtonClicked" properties:@{@"Activity":@"UnfollowUser"}];
+           // [[Mixpanel sharedInstance] track:@"UnfollowUser"];
             [self FollowingButtonAction];
         }
     }

@@ -373,6 +373,8 @@ AppDelegate *appDelegate;
     
     if(newLength == 4)
     {
+        Mixpanel *mixpanel=[Mixpanel sharedInstance];
+        [mixpanel track:@"VerificationCodeEntered"];
         [text_Field resignFirstResponder];
         [self callVerifyService:VCodeString];
     }
@@ -767,6 +769,7 @@ AppDelegate *appDelegate;
 
 -(void)ResendVcodeWebservice:(id)sender
 {
+    
     [text_Field becomeFirstResponder];
     
     
@@ -791,6 +794,8 @@ AppDelegate *appDelegate;
         
         return ;
     }
+    
+    [[Mixpanel sharedInstance] track:@"ResendVerificationCode"];
     [self performSelector:@selector(callResendCodeWebservice) withObject:nil afterDelay:0.1];
 }
 

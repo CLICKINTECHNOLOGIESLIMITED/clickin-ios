@@ -600,7 +600,7 @@
 -(void)followbuttonpressed
 {
     //[activity show];
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+//    Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
     
      // for async call
@@ -609,13 +609,15 @@
      
      if(relationObject.userDetails.isFollowed==false)
      {
-         [mixpanel track:@"FollowUser" properties:nil];
+        [[Mixpanel sharedInstance] track:@"LeftMenuFindFriendsButtonClicked" properties:@{@"Activity":@"FollowUser"}];
+       //  [mixpanel track:@"FollowUser" properties:nil];
          [followbutton setImage:[UIImage imageNamed:@"BTNRequest.png"] forState:    UIControlStateNormal];
          [relationObject.userDetails followUserAction];
      }
      else
      {
-         [mixpanel track:@"UnfollowUser" properties:nil];
+        // [[Mixpanel sharedInstance] track:@"LeftMenuFindFriendsButtonClicked" properties:@{@"Activity":@"UnfollowUser"}];
+       //  [mixpanel track:@"UnfollowUser" properties:nil];
          [followbutton setImage:[UIImage imageNamed:@"profile_follow_button.png"] forState:UIControlStateNormal];
          [relationObject.userDetails unfollowUserAction];
      }

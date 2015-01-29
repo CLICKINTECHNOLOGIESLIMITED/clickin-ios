@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ModelManager.h"
+#import "Mixpanel.h"
 
 @interface ViewController : UIViewController<QBActionStatusDelegate,UIScrollViewDelegate,MODropAlertViewDelegate>
 {

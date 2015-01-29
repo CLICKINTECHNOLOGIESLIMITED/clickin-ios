@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ModelManager.h"
 #import "TKTintedKeyboardViewController.h"
+#import "Mixpanel/Mixpanel.h"
 
 @interface SpamAbuseViewController : TKTintedKeyboardViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
 {

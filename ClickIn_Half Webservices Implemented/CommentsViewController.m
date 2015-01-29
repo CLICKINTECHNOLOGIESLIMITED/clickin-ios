@@ -597,6 +597,9 @@
     [appDelegate performSelector:@selector(CheckInternetConnection)];
     if(appDelegate.internetWorking == 0)//0: internet working
     {
+        NSString *strName=[[[[ModelManager modelManager] profileManager] ownerDetails] name];
+        NSString *strCommented=[NSString stringWithFormat:@"Commented by %@",strName];
+        [[Mixpanel sharedInstance] track:@"LeftMenuTheFeedButtonClicked" properties:@{@"Activity":strCommented}];
         [selectedNewsfeed addComment:textView.text];
         /*
         NSString *str = [NSString stringWithFormat:DomainNameUrl@"newsfeed/savecommentstar"];

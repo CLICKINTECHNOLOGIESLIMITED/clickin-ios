@@ -492,7 +492,7 @@
 {
     // google analytics
   
-
+    [[Mixpanel sharedInstance] track:@"SignInButtonClicked"];
     NSLog(@"Signin:");
     [scrollTimer invalidate];
     scrollTimer = nil;
@@ -502,6 +502,7 @@
 
 -(void)clk_btn_SignUp
 {
+    [[Mixpanel sharedInstance] track:@"SignUpButtonClicked"];
     NSLog(@"SignUp:");
     [scrollTimer invalidate];
     scrollTimer = nil;

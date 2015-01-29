@@ -14,6 +14,7 @@
 //#import "AGSimpleImageEditorView.h"
 #import "TKTintedKeyboardViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "Mixpanel.h"
 
 @interface AddYourDetails : TKTintedKeyboardViewController<UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,FBLoginViewDelegate,FBViewControllerDelegate,ASIHTTPRequestDelegate,UITextFieldDelegate,MODropAlertViewDelegate>
 {

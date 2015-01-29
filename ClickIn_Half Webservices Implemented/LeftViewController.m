@@ -45,6 +45,9 @@
 {
 //    SDImageCache *imageCache = [SDImageCache sharedImageCache];
 //    [imageCache clearMemory];
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"LeftMenuOpened" properties:nil];
+    
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
      //[self getuserrelations];
@@ -310,6 +313,9 @@
 
 -(void)searchOnServer
 {
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel track:@"UserSearched" properties:nil];
+    
     [timerCallService invalidate];
     timerCallService=nil;
     crossButton.hidden = YES;
@@ -1427,7 +1433,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"didSelect");
     [SearchtxtView resignFirstResponder];
+    Mixpanel *mixpanel=[Mixpanel sharedInstance];
+    
     if(StrTable == tableView)
     {
         if(arrUsers.count == indexPath.row)
@@ -1470,6 +1479,9 @@
     
     if(indexPath.section==0)
     {
+        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+        [mixpanel track:@"OwnProfileOpened" properties:nil];
+        
         PartnerQBId = @"";
         [[NSUserDefaults standardUserDefaults] setObject:self.PartnerQBId forKey:@"LeftMenuPartnerQBId"];
            // profile_owner *profile = [[profile_owner alloc] initWithNibName:nil bundle:nil];
@@ -1518,6 +1530,8 @@
             NSLog(@"%@",PartnerQBId);
             if(![PartnerQBId isEqualToString:[NSString stringWithFormat:@"%@",((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerQB_ID]] )
             {
+                [mixpanel track:@"LeftMenuPartnerButtonClicked"];
+                
                 CenterViewController *center = [[CenterViewController alloc] initWithNibName:@"CenterViewController" bundle:nil];
                 center.partner_QB_id=[NSString stringWithFormat:@"%@",((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerQB_ID];
                 center.partner_pic=((RelationInfo*)[relationArray objectAtIndex:indexPath.row]).partnerPicUrl;
@@ -1588,8 +1602,11 @@
         
         PartnerQBId = @"";
         [[NSUserDefaults standardUserDefaults] setObject:self.PartnerQBId forKey:@"LeftMenuPartnerQBId"];
+        
+        
         if (indexPath.row==0) //newsfeed
         {
+            [mixpanel track:@"LeftMenuTheFeedButtonClicked"];
             NewsfeedViewController *ObjNewsfeed = [[NewsfeedViewController alloc] initWithNibName:@"NewsfeedViewController" bundle:nil];
             ObjNewsfeed.firstTimeLoad = @"yes";
             UINavigationController *navigationController = self.menuContainerViewController.centerViewController;
@@ -1605,6 +1622,7 @@
         }
         if (indexPath.row==1) //Find friends
         {
+           // [mixpanel track:@"LeftMenuFindFriendsButtonClicked"];
             CurrentClickersViewController *CurrentClickers = [[CurrentClickersViewController alloc] initWithNibName:nil bundle:nil];
             CurrentClickers.isFromMenu = @"true";
             UINavigationController *navigationController = self.menuContainerViewController.centerViewController;
@@ -1621,7 +1639,7 @@
         {
             //InviteContactsViewController *sendinvite = [[InviteContactsViewController alloc] initWithNibName:Nil bundle:nil];
             //SearchContactsViewController *sendinvite = [[SearchContactsViewController alloc] initWithNibName:nil bundle:nil];
-            
+            [mixpanel track:@"LeftMenuInviteButtonClicked"];
             InvitationViewController *sendinvite = [[InvitationViewController alloc] initWithNibName:nil bundle:nil];
             
             sendinvite.isFromMenu = @"true";
@@ -1649,6 +1667,7 @@
         }
         if (indexPath.row==3) //settings
         {
+            [mixpanel track:@"LeftMenuSettingsButtonClicked"];
             //EditProfileViewController *editProfile = [[EditProfileViewController alloc] initWithNibName:nil bundle:nil];
             SettingsViewController *editProfile = [[SettingsViewController alloc] initWithNibName:nil bundle:nil];
             

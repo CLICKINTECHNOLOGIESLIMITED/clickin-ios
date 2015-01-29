@@ -13,6 +13,7 @@
 #import "TKTintedKeyboardViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <SDWebImage/UIImageView+UIActivityIndicatorForSDWebImage.h>
+#import "Modal/ModelManager.h"
 
 
 @interface CommentsViewController : TKTintedKeyboardViewController<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,UITextFieldDelegate,HPGrowingTextViewDelegate>

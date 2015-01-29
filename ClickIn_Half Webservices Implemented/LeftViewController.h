@@ -14,6 +14,7 @@
 #import "SendInvite.h"
 #import "ModelManager.h"
 #import "TKTintedKeyboardViewController.h"
+#import "Mixpanel.h"
 
 
 @interface LeftViewController : TKTintedKeyboardViewController<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,UITextFieldDelegate,leftchatReceiveProtocol>

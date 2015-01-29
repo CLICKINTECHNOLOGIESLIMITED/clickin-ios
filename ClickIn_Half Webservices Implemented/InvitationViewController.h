@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AddressBook/AddressBook.h"
 #import "profile_owner.h"
+#import "Mixpanel.h"
 
 @interface InvitationViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate>
 {

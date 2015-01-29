@@ -465,24 +465,34 @@ const float MIN_HEIGHT_MESSAGE_TEXTBOX = 30;
     
     if(sender.tag==5)
     {
-        topClicks.text=[NSString stringWithFormat:@"0%i",sender.tag];
-        bottomClicks.text=[NSString stringWithFormat:@"0%i",sender.tag];
+        topClicks.text=[NSString stringWithFormat:@"0%li",(long)sender.tag];
+        bottomClicks.text=[NSString stringWithFormat:@"0%li",(long)sender.tag];
     
-        clicks = [NSString stringWithFormat:@"0%i",sender.tag];
+        clicks = [NSString stringWithFormat:@"0%li",(long)sender.tag];
     }
     else
     {
-        topClicks.text=[NSString stringWithFormat:@"%i",sender.tag];
-        bottomClicks.text=[NSString stringWithFormat:@"%i",sender.tag];
+        topClicks.text=[NSString stringWithFormat:@"%li",(long)sender.tag];
+        bottomClicks.text=[NSString stringWithFormat:@"%li",(long)sender.tag];
         
-        clicks = [NSString stringWithFormat:@"%i",sender.tag];
+        clicks = [NSString stringWithFormat:@"%li",(long)sender.tag];
     }
     
 }
 
 -(void)playBtnPressed
 {
+   // NSString * __weak string = [[NSString alloc] initWithFormat:@"First Name: Hello "];
+    
+   // NSLog(@"string: %@", string);
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    NSString *strPointsPlayed=top_Clicks.text;
+    [[Mixpanel sharedInstance] track:@"RPageTradeButtonClicked" properties:@{
+                                                                             @"PointsPlayed": strPointsPlayed}];
+  
+    
     NSLog(@">>> %d",[topClicks.text intValue]);
+    
     NSLog(@">>> %d",[[[NSUserDefaults standardUserDefaults] stringForKey:@"UserClicks"] intValue]);
     
     
@@ -547,6 +557,11 @@ const float MIN_HEIGHT_MESSAGE_TEXTBOX = 30;
             contentHeading = customTextView.text;
             content = @"";
         }
+        
+        NSString *str=[NSString stringWithFormat:@"%@",contentHeading];
+        [[Mixpanel sharedInstance] track:@"RPageTradeButtonClicked" properties:@{@"CardPlayedName":str}];
+        //[mixpanel.people increment:str by:[NSNumber numberWithInt:1]];
+        
         [[NSUserDefaults standardUserDefaults] setObject:ID  forKey:@"card_DB_ID"];
         [[NSUserDefaults standardUserDefaults] setObject:contentHeading  forKey:@"card_heading"];
         [[NSUserDefaults standardUserDefaults] setObject:content  forKey:@"card_content"];

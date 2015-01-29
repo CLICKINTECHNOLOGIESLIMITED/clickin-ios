@@ -1,6 +1,3 @@
-
-
-//
 //  CenterViewController.m
 //  ClickIn
 //
@@ -2172,14 +2169,16 @@ AppDelegate *appDelegate;
 #pragma mark attachment delegates
 -(void)cancelAttachment
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+  //  Mixpanel *mixpanel = [Mixpanel sharedInstance];
     if (viewAttachment.isAttachmentImage)
     {
-        [mixpanel track:@"ImageAttachmentCancelled" properties:nil];
+      //  [mixpanel track:@"ImageAttachmentCancelled" properties:nil];
+        [[Mixpanel sharedInstance] track:@"AttachButtonClicked" properties:@{@"Activity":@"ImageAttachmentCancelled"}];
     }
     else
     {
-        [mixpanel track:@"VideoAttachmentCancelled" properties:nil];
+        [[Mixpanel sharedInstance] track:@"AttachButtonClicked" properties:@{@"Activity":@"VideoAttachmentCancelled"}];
+//        [mixpanel track:@"VideoAttachmentCancelled" properties:nil];
     }
     
     [self dismissViewControllerAnimated:YES completion:^
@@ -2189,14 +2188,13 @@ AppDelegate *appDelegate;
 }
 -(void)addAttachment
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+   // Mixpanel *mixpanel = [Mixpanel sharedInstance];
     
     if (viewAttachment.isAttachmentImage)
     {
-        [mixpanel track:@"SelectedImageAttached" properties:nil];
+         [[Mixpanel sharedInstance] track:@"AttachButtonClicked" properties:@{@"Activity":@"SelectedImageAttached"}];
+        //[mixpanel track:@"SelectedImageAttached" properties:nil];
         tempImageRatio = 1;
-        
-        
         //NSURL *imagePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
         
         //NSString *imageName = [imagePath lastPathComponent];
@@ -2248,7 +2246,7 @@ AppDelegate *appDelegate;
     }
     else
     {
-        [mixpanel track:@"SelectedVideoAttached" properties:nil];
+    
         MPMoviePlayerController *player = [[MPMoviePlayerController alloc] initWithContentURL:viewAttachment.videoURL];
         UIImage *thumbnail = [player thumbnailImageAtTime:1.0 timeOption:MPMovieTimeOptionNearestKeyFrame];
         [player stop];
@@ -2385,7 +2383,7 @@ AppDelegate *appDelegate;
     //card selection
     
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"TradeButtonClicked" properties:nil];
+    [mixpanel track:@"RPageTradeButtonClicked" properties:nil];
     
     [[NSUserDefaults standardUserDefaults] setObject:@""  forKey:@"card_heading"];
     [[NSUserDefaults standardUserDefaults] setObject:@""  forKey:@"card_content"];
@@ -2825,8 +2823,9 @@ AppDelegate *appDelegate;
     
     if(sender.tag==6)
     {
-        Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        [mixpanel track:@"AttachLocationButtonClicked" properties:nil];
+//        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+//        [mixpanel track:@"AttachLocationButtonClicked" properties:nil];
+        [[Mixpanel sharedInstance] track:@"AttachButtonClicked" properties:@{@"Activity":@"AttachLocationButtonClicked"}];
         
         [[NSUserDefaults standardUserDefaults] setObject:[[NSData alloc] init]  forKey:@"locationimagedata"];
         [[NSUserDefaults standardUserDefaults] setObject:@""  forKey:@"locationCoordinates"];
@@ -2847,8 +2846,9 @@ AppDelegate *appDelegate;
         //[self AlertForSeLectionTheAudioCapturing];
         
         
-        Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        [mixpanel track:@"AttachAudioNoteButtonClicked" properties:nil];
+//        Mixpanel *mixpanel = [Mixpanel sharedInstance];
+//        [mixpanel track:@"AttachAudioNoteButtonClicked" properties:nil];
+        [[Mixpanel sharedInstance] track:@"AttachButtonClicked" properties:@{@"Activity":@"AttachAudioNoteButtonClicked"}];
 
         [textView resignFirstResponder];
         
@@ -3511,6 +3511,8 @@ AppDelegate *appDelegate;
     [message1 setText:@"        "];
     [message1 setCustomParameters:[@{@"isComposing" : @"NO"} mutableCopy]];
     [chatmanager sendMessage:message1 dict:nil];
+    
+     Mixpanel *mixpanel=[Mixpanel sharedInstance];
 
     appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
     [appDelegate performSelector:@selector(CheckInternetConnection)];
@@ -3535,6 +3537,9 @@ AppDelegate *appDelegate;
         if([[textClicks.text stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]] isEqualToString:@"00"] || [[textClicks.text stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]] isEqualToString:@"0"] || [[textClicks.text stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]] isEqualToString:@"-00"] || textClicks == nil)
         {
             //return if empty spaces entered
+            
+            
+            
             NSString *rawString = [textView text];
             NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
             NSString *trimmed = [rawString stringByTrimmingCharactersInSet:whitespace];
@@ -3576,12 +3581,29 @@ AppDelegate *appDelegate;
 
     if([[textClicks.text stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]] isEqualToString:@"00"] || [[textClicks.text stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]] isEqualToString:@"0"] || [[textClicks.text stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]] isEqualToString:@"-00"] || textClicks == nil)
     {
+        //qwerty normal text
+        [[Mixpanel sharedInstance] track:@"RPageShareButtonClicked" properties:@{@"Activity":@"TextMessageSent"}];
+        //[mixpanel.people increment:@"NumberOfTextMessagesSent" by:[NSNumber numberWithInt:1]];
         message.text = textView.text;
         //[message setCustomParameters:[@{@"clicks" : @"no"} mutableCopy]];
         [custom_Data setObject:@"no" forKey:@"clicks"];
     }
     else
     {
+        
+        [[Mixpanel sharedInstance] track:@"RPageShareButtonClicked" properties:@{@"Activity":@"ClickMessageSent"}];
+       // [mixpanel.people increment:@"NumberOfClickMessagesSent" by:[NSNumber numberWithInt:1]];
+        
+        NSString *strClicksSent=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",textClicks.text]];
+//        [mixpanel track:strClicksSent];
+        NSInteger clicks=[[textClicks text] integerValue];
+
+        [[Mixpanel sharedInstance] track:@"RPageShareButtonClicked" properties:@{@"ClicksSent":strClicksSent}];
+        [[[Mixpanel sharedInstance] people] increment:@"TotalClicksSent" by:[NSNumber numberWithInteger:clicks]];
+        
+        [[Mixpanel sharedInstance] track:@"RPageShareButtonClicked" properties:@{@"Activity" : @"UserDraggedClickBar"}];
+//        [mixpanel track:@"UserDraggedClickBar"];
+        //qwerty clicks text
         [custom_Data setObject:[NSString stringWithFormat:@"%@",textClicks.text] forKey:@"clicks"];
         //[message setCustomParameters:[@{@"clicks" : [NSString stringWithFormat:@"%@",textClicks.text]} mutableCopy]];
         message.text = [NSString stringWithFormat:@"%@ %@",textClicks.text ,textView.text];
@@ -3609,6 +3631,12 @@ AppDelegate *appDelegate;
     
     if(mediaAttachButton.tag==2)
     {
+//        NSString *strClicksSent=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",textClicks.text]];
+//        [[Mixpanel sharedInstance] track:@"RPageShareButtonClicked" properties:@{@"ClicksWithPhoto":strClicksSent}];
+        
+        [[Mixpanel sharedInstance] track:@"RPageShareButtonClicked" properties:@{@"Activity":@"MediaSent"}];
+     //   [mixpanel.people increment:@"NumberOfMediaSent" by:[NSNumber numberWithInt:1]];
+        //qwerty Image media
         NSDate *currDate = [NSDate date];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
         [dateFormatter setDateFormat:@"ddMMYYHHmmss"];
@@ -3648,6 +3676,9 @@ AppDelegate *appDelegate;
     
     else if(mediaAttachButton.tag==3)
     {
+        //qwerty audio media
+     //   [mixpanel.people increment:@"NumberOfMediaSent" by:[NSNumber numberWithInt:1]];
+        [[Mixpanel sharedInstance] track:@"RPageShareButtonClicked" properties:@{@"Activity":@"MediaSent"}];
         NSDate *currDate = [NSDate date];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
         [dateFormatter setDateFormat:@"ddMMYYHHmmss"];
@@ -3687,6 +3718,9 @@ AppDelegate *appDelegate;
     
     else if(mediaAttachButton.tag==4)
     {
+        [[Mixpanel sharedInstance] track:@"RPageShareButtonClicked" properties:@{@"Activity":@"MediaSent"}];
+      //  [mixpanel.people increment:@"NumberOfMediaSent" by:[NSNumber numberWithInt:1]];
+        //qwerty video media
         [imagesData addObject:tempMediaData];
         
         NSDate *currDate = [NSDate date];
@@ -4918,8 +4952,9 @@ AppDelegate *appDelegate;
 
 -(void)AlertForSeLectionTheImageCapturing
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"AttachImageButtonClicked" properties:nil];
+//    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+//    [mixpanel track:@"AttachImageButtonClicked" properties:nil];
+    [[Mixpanel sharedInstance] track:@"AttachButtonClicked" properties:@{@"Activity":@"AttachImageButtonClicked"}];
     
     [self hideRecordingView];
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"TAKE A PICTURE",@"FROM YOUR GALLERY",nil];
@@ -4930,8 +4965,10 @@ AppDelegate *appDelegate;
 
 -(void)AlertForSeLectionTheVideoCapturing
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"AttachVideoButtonClicked" properties:nil];
+//    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+//    [mixpanel track:@"AttachVideoButtonClicked" properties:nil];
+  
+    [[Mixpanel sharedInstance] track:@"AttachButtonClicked" properties:@{@"Activity":@"AttachVideoButtonClicked"}];
     
     
      [self hideRecordingView];
@@ -5068,7 +5105,7 @@ AppDelegate *appDelegate;
 
 -(void)showImagePicker:(UIImagePickerControllerSourceType) sourceType
 {
-    Mixpanel *mixpanel=[Mixpanel sharedInstance];
+   // Mixpanel *mixpanel=[Mixpanel sharedInstance];
     @try
     {
         if(_imgPicker==nil)
@@ -5079,13 +5116,15 @@ AppDelegate *appDelegate;
         _imgPicker.delegate = self;
         if (_imgPicker.sourceType == UIImagePickerControllerSourceTypeCamera)
         {
-             [mixpanel track:@"ClickImageFromCamera" properties:nil];
+            [[Mixpanel sharedInstance] track:@"AttachButtonClicked" properties:@{@"Activity":@"ClickImageFromCamera"}];
+             //[mixpanel track:@"ClickImageFromCamera" properties:nil];
             _imgPicker.showsCameraControls = YES;
             _imgPicker.allowsEditing=NO;
         }
         else
         {
-             [mixpanel track:@"ChooseImageFromGallery" properties:nil];
+            [[Mixpanel sharedInstance] track:@"AttachButtonClicked" properties:@{@"Activity":@"ChooseImageFromGallery"}];
+            // [mixpanel track:@"ChooseImageFromGallery" properties:nil];
             [_imgPicker setAllowsEditing:NO];
         }
         
@@ -5118,12 +5157,14 @@ AppDelegate *appDelegate;
         isVideoPickedFromLibrary = true;
         if (_imgPicker.sourceType == UIImagePickerControllerSourceTypeCamera) {
             
-            [mixpanel track:@"RecordVideoFromCamera" properties:nil];
+            [[Mixpanel sharedInstance] track:@"AttachButtonClicked" properties:@{@"Activity":@"RecordVideoFromCamera"}];
+            //[mixpanel track:@"RecordVideoFromCamera" properties:nil];
             _imgPicker.showsCameraControls = YES;
             isVideoPickedFromLibrary = false;
         }
         if ( [UIImagePickerController isSourceTypeAvailable:sourceType]) {
-            [mixpanel track:@"ChooseVideoFromGallery" properties:nil];
+            [[Mixpanel sharedInstance] track:@"AttachButtonClicked" properties:@{@"Activity":@"ChooseVideoFromGallery"}];
+            //[mixpanel track:@"ChooseVideoFromGallery" properties:nil];
             [self presentViewController:_imgPicker animated:YES completion:nil];
         }
     }
@@ -5173,6 +5214,8 @@ AppDelegate *appDelegate;
     if (CFStringCompare ((__bridge CFStringRef) mediaType, kUTTypeMovie, 0)
         == kCFCompareEqualTo)
     {
+        [[Mixpanel sharedInstance] track:@"AttachButtonClicked" properties:@{@"Activity":@"SelectedVideoAttached"}];
+        //[[Mixpanel sharedInstance] track:@"SelectedVideoAttached"];
         // video + audio file
         __block NSURL *videoUrl;
         //NSString *moviePath = (NSString*)[[info objectForKey:UIImagePickerControllerMediaURL] path];
@@ -5561,10 +5604,8 @@ AppDelegate *appDelegate;
    //
 }
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-    
-    
-    
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
     
     [self dismissViewControllerAnimated:YES completion:^{
@@ -13510,8 +13551,8 @@ static CGFloat padding = 20.0;
 
 - (void)shareAcceptedPressed:(UIButton*)sender
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"ShareRequestAccepted" properties:nil];
+    [[Mixpanel sharedInstance] track:@"RPageShareButtonClicked" properties:@{@"Activity":
+                                                                    @"ShareRequestAccepted"}];
     
     UIButton* sender_btn = (UIButton*)sender;
     UITableViewCell *cell;
@@ -13747,9 +13788,8 @@ static CGFloat padding = 20.0;
 
 - (void)shareRejectedPressed:(UIButton*)sender
 {
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
-    [mixpanel track:@"ShareRequestRejected" properties:nil];
-    
+    [[Mixpanel sharedInstance] track:@"RPageShareButtonClicked" properties:@{@"Activity":
+                                                                                 @"ShareRequestRejected"}];
     
     UIButton* sender_btn = (UIButton*)sender;
     UITableViewCell *cell;
@@ -14246,6 +14286,9 @@ static CGFloat padding = 20.0;
     // update card status for localstorage
     
     [self UpdateCardStatusLocalStorage:chatMessage];
+    
+    NSString *strCardHeading=chatMessage.customParameters[@"card_heading"];
+    [[Mixpanel sharedInstance] track:@"RPageTradeButtonClicked" properties:@{@"CardAcceptedName":strCardHeading}];
     chatMessage = nil;
 }
 
@@ -14381,6 +14424,9 @@ static CGFloat padding = 20.0;
     
     [self UpdateCardStatusLocalStorage:chatMessage];
     
+    NSString *strCardHeading=chatMessage.customParameters[@"card_heading"];
+    [[Mixpanel sharedInstance] track:@"RPageTradeButtonClicked" properties:@{@"CardRejectedName":
+        strCardHeading}];
     chatMessage = nil;
     
 }

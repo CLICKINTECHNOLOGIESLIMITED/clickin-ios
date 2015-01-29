@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TKTintedKeyboardViewController.h"
 #import "ModelManager.h"
+#import "Mixpanel/Mixpanel.h"
 
 @interface SettingsViewController : TKTintedKeyboardViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UITextViewDelegate,QBActionStatusDelegate,UIAlertViewDelegate,MODropAlertViewDelegate>
 {

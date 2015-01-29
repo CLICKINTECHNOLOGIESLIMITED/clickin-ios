@@ -8,6 +8,7 @@
 
 #import "MFSideMenuContainerViewController.h"
 #import <QuartzCore/QuartzCore.h>
+
 //#import "MFAppDelegate.h"
 NSString * const MFSideMenuStateNotificationEvent = @"MFSideMenuStateNotificationEvent";
 
@@ -245,7 +246,8 @@ typedef enum {
 #pragma mark -
 #pragma mark - Menu State
 
-- (void)toggleLeftSideMenuCompletion:(void (^)(void))completion {
+- (void)toggleLeftSideMenuCompletion:(void (^)(void))completion
+{
     if(self.menuState == MFSideMenuStateLeftMenuOpen) {
         [self setMenuState:MFSideMenuStateClosed completion:completion];
     } else {
@@ -326,7 +328,8 @@ typedef enum {
 }
 
 // these callbacks are called when the menu will become visible, not neccessarily when they will OPEN
-- (void)leftMenuWillShow {
+- (void)leftMenuWillShow
+{
     [self.leftMenuViewController view].hidden = NO;
     [self.leftMenuViewController viewWillAppear:YES];
     [self.menuContainerView bringSubviewToFront:[self.leftMenuViewController view]];

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TKTintedKeyboardViewController.h"
+#import "Mixpanel.h"
 
 @interface PlayCardView : TKTintedKeyboardViewController<UITextViewDelegate>
 {

@@ -426,7 +426,10 @@ AppDelegate *appDelegate;
         
     }
     else
+    {
+        [[Mixpanel sharedInstance] track:@"SignUpSkipInvitingFriends"];
         [self performSelector:@selector(callSlideMenu) withObject:self afterDelay:0.1];
+    }
 }
 
 
@@ -540,13 +543,15 @@ AppDelegate *appDelegate;
   //  [tblView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
--(MFSideMenuContainerViewController *)menuContainerViewController {
+-(MFSideMenuContainerViewController *)menuContainerViewController
+{
     return (MFSideMenuContainerViewController *)self.navigationController.parentViewController;
 }
 
 
 - (void) skipBtnPressed
 {
+   // NOT CALLED
     [self performSelector:@selector(callSlideMenu) withObject:self afterDelay:0.1];
     skipBtn.enabled = false;
     //UIViewController *invitationView = [story instantiateViewControllerWithIdentifier:@"SendInvite"];
@@ -839,6 +844,12 @@ AppDelegate *appDelegate;
     }
     else
     {
+//        NSString *strActionName=[NSString stringWithFormat:@"%i-FriendsInvited",selectedContacts.count];
+//        [[Mixpanel sharedInstance] track:strActionName];
+        Mixpanel *mixpanel=[Mixpanel sharedInstance];
+        long int count=[selectedContacts count];
+        [mixpanel.people increment:@"FriendsInvited" by:[NSNumber numberWithLong:count]];
+        
         NSLog(@"selected contacts: %@",selectedContacts);
         
         [self performSelector:@selector(sendInAppSMS:) withObject:selectedContacts afterDelay:0.1];

@@ -560,13 +560,13 @@
     
 //    [activity show];
 //    [self performSelector:@selector(callShareWebservice) withObject:nil afterDelay:0.1];
-    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [[Mixpanel sharedInstance] track:@"RPageShareButtonClicked" properties:@{@"Activity":@"UserShares"}];
     
-    [mixpanel.people increment:@"NumberofShares" by:[NSNumber numberWithInt:1]];
-    
-    if (txtView.text.length>0)
+    NSRange range=[txtView.text rangeOfString:@"Write your caption here"];
+    if (txtView.text.length>0 && range.location==NSNotFound)
     {
-        [mixpanel track:@"ShareWithComment" properties:nil];
+        NSLog(@"Length greater");
+        [[Mixpanel sharedInstance] track:@"RPageShareButtonClicked" properties:@{@"Activity":@"ShareWithComment"}];
     }
     
     
@@ -588,8 +588,9 @@
     
     if([message.customParameters[@"audioStreamURL"] length]>0)
     {
-        Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        [mixpanel track:@"AudioShared" properties:nil];
+        //Mixpanel *mixpanel = [Mixpanel sharedInstance];
+     //   [mixpanel track:@"AudioShared" properties:nil];
+        [[Mixpanel sharedInstance] track:@"AttachButtonClicked" properties:@{@"Activity":@"AudioShared"}];
         
         [custom_Data setObject:message.customParameters[@"audioStreamURL"] forKey:@"audioID"];
     }
@@ -631,9 +632,10 @@
     
     if([[[NSUserDefaults standardUserDefaults] stringForKey:@"fb_accesstoken"] length]>0)
     {
-        Mixpanel *mixpanel = [Mixpanel sharedInstance];
-        [mixpanel track:@"AppShareandFBshare" properties:nil];
-        
+        Mixpanel *mixpanel=[Mixpanel sharedInstance];
+        [mixpanel track:@"RPageShareButtonClicked" properties:@{
+                                                                @"Activity": @"AppShareandFBshare"
+                                                                }];
         if(sharing_media.length==0)
             sharing_media = [sharing_media stringByAppendingString:@"facebook"];
         else
@@ -790,6 +792,7 @@
 }
 - (IBAction)leftSideMenuButtonPressed:(id)sender
 {
+    [[Mixpanel sharedInstance] track:@"RPageShareButtonClicked" properties:@{@"Activity":@"ShareCancelled"}];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -933,9 +936,7 @@
         [btnShare setEnabled:true];
     else
         [btnShare setEnabled:false];
-    
     appDelegate = nil;
-    
 }
 
 

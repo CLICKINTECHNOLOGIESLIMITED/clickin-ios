@@ -450,7 +450,10 @@ AppDelegate *appDelegate;
     isFromEariler = TRUE;
 }
 
--(void)showFullScreenPicture:(id)sender{
+-(void)showFullScreenPicture:(id)sender
+{
+  //  [[Mixpanel sharedInstance] track:@"ViewAttachedMedia"];
+    [[Mixpanel sharedInstance] track:@"LeftMenuTheFeedButtonClicked" properties:@{@"Activity":@"ViewAttachedMedia"}];
     UIButton* img_btn = (UIButton*)sender;
     
     PhotoViewController* photoController = [[PhotoViewController alloc] initWithImage:img_btn.imageView.image];
@@ -458,7 +461,10 @@ AppDelegate *appDelegate;
     photoController =nil;
 }
 
--(void) playAudio:(id)sender{
+-(void) playAudio:(id)sender
+{
+      //  [[Mixpanel sharedInstance] track:@"ViewAttachedMedia"];
+     [[Mixpanel sharedInstance] track:@"LeftMenuTheFeedButtonClicked" properties:@{@"Activity":@"ViewAttachedMedia"}];
     UIButton* play_btn = (UIButton*)sender;
     
     
@@ -492,7 +498,10 @@ AppDelegate *appDelegate;
 }
 
 
--(void)showFullScreenVideo:(id)sender{
+-(void)showFullScreenVideo:(id)sender
+{
+   // [[Mixpanel sharedInstance] track:@"ViewAttachedMedia"];
+     [[Mixpanel sharedInstance] track:@"LeftMenuTheFeedButtonClicked" properties:@{@"Activity":@"ViewAttachedMedia"}];
     UIButton* play_btn = (UIButton*)sender;
     
     
@@ -562,6 +571,9 @@ AppDelegate *appDelegate;
 
 -(void)commentBtnPressed:(UIButton*)sender
 {
+ //   Mixpanel *mixpanel=[Mixpanel sharedInstance];
+    [[Mixpanel sharedInstance] track:@"LeftMenuTheFeedButtonClicked"  properties:@{@"Activity":@"CommentsButtonPressed"}];
+    
     CommentsViewController *obj=[[CommentsViewController alloc] init];
     NewsfeedTableViewCell *cell ;
     if (IS_IOS_7)
@@ -585,6 +597,7 @@ AppDelegate *appDelegate;
 
 -(void)starBtnPressed:(UIButton*)sender
 {
+   
     NewsfeedTableViewCell *cell ;
     if (IS_IOS_7)
     {
@@ -610,6 +623,13 @@ AppDelegate *appDelegate;
 
 -(void)markStarredBtnPressed:(UIButton*)sender
 {
+    //Mixpanel *mixpanel=[Mixpanel sharedInstance];
+    [[Mixpanel sharedInstance] track:@"LeftMenuTheFeedButtonClicked" properties:@{@"Activity":@"StarButtonPressed"}];
+    
+    NSString *strName=[[[[ModelManager modelManager] profileManager] ownerDetails] name];
+    NSString *str=[NSString stringWithFormat:@"Starred by %@",strName];
+    [[Mixpanel sharedInstance] track:@"LeftMenuTheFeedButtonClicked" properties:@{@"Activity":str}];
+    
     UIImage *CurrentImage = [sender imageForState:UIControlStateNormal];
     
     if([CurrentImage isEqual:[UIImage imageNamed:@"star_grey_btn.png"] ])
@@ -676,6 +696,11 @@ AppDelegate *appDelegate;
 
 -(void)reportBtnPressed:(UIButton*)sender
 {
+//    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+//    [mixpanel track:@"MoreButtonClicked" properties:nil];
+    
+    [[Mixpanel sharedInstance] track:@"LeftMenuTheFeedButtonClicked" properties:@{@"Activity":@"MoreButtonClicked"}];
+    
     NewsfeedTableViewCell *cell;
     if (IS_IOS_7)
     {
@@ -2119,6 +2144,7 @@ AppDelegate *appDelegate;
 - (void) labelTap:(UITapGestureRecognizer*)gestureRecognizer
 {
     UILabel *sender = (UILabel *)[gestureRecognizer view];
+    Mixpanel *mixpanel=[Mixpanel sharedInstance];
     
     if([[sender.text uppercaseString] isEqualToString:[((Newsfeed*)[newsfeedmanager.array_model_feeds objectAtIndex:sender.tag]).senderName uppercaseString]])
     {
@@ -2126,6 +2152,8 @@ AppDelegate *appDelegate;
      
         if([((Newsfeed*)[newsfeedmanager.array_model_feeds objectAtIndex:sender.tag]).senderID isEqualToString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"QBUserName"]] ])
         {
+            [[Mixpanel sharedInstance] track:@"LeftMenuTheFeedButtonClicked" properties:@{@"Activity":@"FeedScreenMyProfileOpened"}];
+            //[mixpanel track:@"FeedScreenMyProfileOpened"];
             //open my profile
             UINavigationController *navigationController = self.menuContainerViewController.centerViewController;
             
@@ -2142,6 +2170,8 @@ AppDelegate *appDelegate;
         }
         else
         {
+           // [mixpanel track:@"FeedScreenOtherUserProfileOpened"];
+            [[Mixpanel sharedInstance] track:@"LeftMenuTheFeedButtonClicked" properties:@{@"Activity":@"FeedScreenOtherUserProfileOpened"}];
             profile_otheruser *profile_other = [[profile_otheruser alloc] initWithNibName:nil bundle:nil];
             RelationInfo *relationObj = [[RelationInfo alloc] init];
             relationObj.partnerPhoneNumber = ((Newsfeed*)[newsfeedmanager.array_model_feeds objectAtIndex:sender.tag]).senderPhoneNo;
@@ -2162,6 +2192,8 @@ AppDelegate *appDelegate;
         
         if([((Newsfeed*)[newsfeedmanager.array_model_feeds objectAtIndex:sender.tag]).receiverID isEqualToString:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"QBUserName"]] ])
         {
+            //[mixpanel track:@"FeedScreenMyProfileOpened"];
+            [[Mixpanel sharedInstance] track:@"LeftMenuTheFeedButtonClicked" properties:@{@"Activity":@"FeedScreenMyProfileOpened"}];
             //open my profile
             UINavigationController *navigationController = self.menuContainerViewController.centerViewController;
             
@@ -2178,6 +2210,8 @@ AppDelegate *appDelegate;
         }
         else
         {
+           // [mixpanel track:@"FeedScreenOtherUserProfileOpened"];
+             [[Mixpanel sharedInstance] track:@"LeftMenuTheFeedButtonClicked" properties:@{@"Activity":@"FeedScreenOtherUserProfileOpened"}];
             profile_otheruser *profile_other = [[profile_otheruser alloc] initWithNibName:nil bundle:nil];
             RelationInfo *relationObj = [[RelationInfo alloc] init];
             relationObj.partnerPhoneNumber = ((Newsfeed*)[newsfeedmanager.array_model_feeds objectAtIndex:sender.tag]).receiverPhoneNo;

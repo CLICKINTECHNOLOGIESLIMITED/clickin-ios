@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AddressBook/AddressBook.h"
 #import "profile_owner.h"
+#import "Mixpanel.h"
 
 
 @interface CurrentClickersViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MODropAlertViewDelegate>

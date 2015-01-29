@@ -726,6 +726,10 @@
             {
                 if([[jsonResponse objectForKey:@"message"] isEqualToString:@"Your account has been deactivated."])
                 {
+                    [[Mixpanel sharedInstance] track:@"LeftMenuSettingsButtonClicked" properties:@{
+                                                                            @"Activity": @"AccountDeactivated"
+                                                                            }];
+                 //   [[Mixpanel sharedInstance] track:@"AccountDeactivated"];
 //                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:nil message:@"Account has been deactivated successfully" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 //                    alert.tag = 4747;
 //                    [alert show];

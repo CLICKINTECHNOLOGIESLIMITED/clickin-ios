@@ -406,6 +406,10 @@
 
 -(void)saveNotWorkingBtnPressed:(UIButton*)sender
 {
+    //[[Mixpanel sharedInstance] track:@"ReportProblemNotWorking"];
+    [[Mixpanel sharedInstance] track:@"LeftMenuSettingsButtonClicked" properties:@{
+                                                            @"Activity": @"ReportProblemNotWorking"
+                                                            }];
     UITableViewCell *cell ;
     
     if (IS_IOS_7)
@@ -474,6 +478,8 @@
 
 -(void)saveFeedbackBtnPressed:(UIButton*)sender
 {
+    [[Mixpanel sharedInstance] track:@"LeftMenuSettingsButtonClicked" properties:@{@"Activity":@"ReportProblemGeneralFeedback"}];
+   // [[Mixpanel sharedInstance] track:@"ReportProblemGeneralFeedback"];
     UITableViewCell *cell ;
     if (IS_IOS_7)
     {
@@ -539,8 +545,10 @@
 
 -(void)yesBtnPressed:(UIButton*)sender
 {
+//    [[Mixpanel sharedInstance] track:@"Logout"];
     //[self.navigationController popToRootViewControllerAnimated:NO];
     
+    [[Mixpanel sharedInstance] track:@"LeftMenuSettingsButtonClicked" properties:@{@"Activity":@"Logout"}];
     [[QBChat instance] logout];
     
     [QBUsers logOutWithDelegate:self];
@@ -2267,12 +2275,15 @@
     
         if(!flag)
         {
+            [[Mixpanel sharedInstance] track:@"LeftMenuSettingsButtonClicked" properties:@{@"Activity":@"PushNotificationsDisabled"}];
+//            [[Mixpanel sharedInstance] track:@"PushNotificationsDisabled"];
             [[UIApplication sharedApplication] unregisterForRemoteNotifications];
             [[NSUserDefaults standardUserDefaults] setObject:@"no" forKey:@"pushEnabled"];
             //[self enablePushWebservice:false];
         }
         else
         {
+            [[Mixpanel sharedInstance] track:@"LeftMenuSettingsButtonClicked" properties:@{@"Activity":@"PushNotificationsEnabled"}];
             [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
              (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
             [[NSUserDefaults standardUserDefaults] setObject:@"yes" forKey:@"pushEnabled"];

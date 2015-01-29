@@ -459,6 +459,7 @@ AppDelegate *appDelegate;
     [txt_CountryCode resignFirstResponder];
     [txt_PhoneNo resignFirstResponder];
     [scroll setContentOffset:CGPointMake(0,0) animated:YES];
+     [[Mixpanel sharedInstance] track:@"UserPhoneNumberSubmitted"];
 
 //    int_VerifiCode=1234;
 //    btn_Go.userInteractionEnabled=YES;
@@ -631,6 +632,13 @@ AppDelegate *appDelegate;
             NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:Data options:kNilOptions error:&error];
             if([[jsonResponse objectForKey:@"message"] isEqualToString:@"User Created"])
             {
+                Mixpanel *mixpanel = [Mixpanel sharedInstance];
+                NSString *strPhoneNum=[NSString stringWithFormat:@"%@%@",txt_CountryCode.text,txt_PhoneNo.text];
+                [mixpanel createAlias:strPhoneNum
+                        forDistinctID:mixpanel.distinctId];
+                [mixpanel identify:strPhoneNum];
+                [mixpanel.people set:@{@"userId": strPhoneNum}];
+                
                 VerifyPhoneNumberViewController *verifyPhoneNo = [story instantiateViewControllerWithIdentifier:@"VerifyPhoneNumberViewController"];
                 [self.navigationController pushViewController:verifyPhoneNo animated:YES];
 
@@ -892,6 +900,8 @@ AppDelegate *appDelegate;
         
         return ;
     }
+    
+   
     [self performSelector:@selector(VerifyMyPhoneNoButtonAction) withObject:nil afterDelay:0.1];
 
 }
@@ -1105,7 +1115,10 @@ AppDelegate *appDelegate;
     }
     else if (textField == txt_PhoneNo)
     {
-        
+        if (txt_PhoneNo.text.length>0)
+        {
+            [[Mixpanel sharedInstance] track:@"UserEnteredPhoneNumber"];
+        }
     }
     else if (textField == txt_VerificationCode)
     {
@@ -1123,13 +1136,17 @@ AppDelegate *appDelegate;
         {
             [btn_CheckMeOut setBackgroundImage:[UIImage imageNamed:@"check-me-out.png"] forState:UIControlStateNormal];
             btn_CheckMeOut.userInteractionEnabled = NO;
-
         }
         else
         {
             [btn_CheckMeOut setBackgroundImage:[UIImage imageNamed:@"check-me-out-Active.png"] forState:UIControlStateNormal];
             btn_CheckMeOut.userInteractionEnabled = YES;
         }
+    }
+    else if (textField == txt_CountryCode)
+    {
+        [[Mixpanel sharedInstance] track:@"CountryCodeEdited"];
+        NSLog(@"Country Code Edited");
     }
     
 //   else if(textField==txt_VerificationCode)

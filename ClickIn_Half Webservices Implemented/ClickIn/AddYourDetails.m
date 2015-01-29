@@ -641,6 +641,10 @@ AppDelegate *appDelegate;
 
 -(BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
+    if ([textField isEqual:FirstNameTxtField])
+    {
+        [[Mixpanel sharedInstance] track:@"FillProfileInfoNatively"];
+    }
     return YES;
 }
 
@@ -1645,6 +1649,7 @@ AppDelegate *appDelegate;
     switch (state) {
         case FBSessionStateOpen:
         {
+            [[Mixpanel sharedInstance] track:@"FillProfileInfoThroughFacebook"];
             [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"fb_login"];
             NSLog(@"accessToken= %@",session.accessTokenData.accessToken);
             [[NSUserDefaults standardUserDefaults] setValue:session.accessTokenData.accessToken forKey:@"fb_accesstoken"];

@@ -32,7 +32,10 @@
 {
     [profilemanager.ownerDetails getProfileInfo:YES];
 }
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    
+}
 
 - (void)viewDidLoad
 {
@@ -499,6 +502,12 @@
 //call webservice
 -(void)reportBtnPressed:(UIButton*)sender
 {
+    
+ //   [[Mixpanel sharedInstance] track:@"ReportProblemSpamOrAbuse"];
+
+    [[Mixpanel sharedInstance] track:@"LeftMenuSettingsButtonClicked" properties:@{
+                                                            @"Activity": @"ReportProblemSpamOrAbuse"
+                                                            }];
     AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate performSelector:@selector(CheckInternetConnection)];
     if(appDelegate.internetWorking == 0)//0: internet working

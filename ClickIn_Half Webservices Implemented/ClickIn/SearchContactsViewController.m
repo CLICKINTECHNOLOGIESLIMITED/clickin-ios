@@ -528,6 +528,7 @@
     }
     else
     {
+        [[Mixpanel sharedInstance] track:@"SignUpSkipAddingPartner"];
         UIViewController *first = [story instantiateViewControllerWithIdentifier:@"CurrentClickersViewController"];
        [self.navigationController pushViewController:first animated:YES];
     }

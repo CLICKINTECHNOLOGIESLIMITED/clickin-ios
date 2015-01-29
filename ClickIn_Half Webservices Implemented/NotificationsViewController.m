@@ -109,6 +109,8 @@ AppDelegate *appDelegate;
 
 -(void)viewWillAppear:(BOOL)animated
 {
+//    Mixpanel *mixpanel=[Mixpanel sharedInstance];
+//    [mixpanel track:@"NotificationsOpened"];
 //    if(!timer)
 //        timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self
 //                                               selector:@selector(AutoRefreshNotificationsWebservice)
@@ -1216,7 +1218,12 @@ AppDelegate *appDelegate;
 {
     if(indexPath.row<notificationType.count)
     {
-    
+        //Mixpanel *mixpanel=[Mixpanel sharedInstance];
+        NSString *str=[NSString stringWithFormat:@"%@",[notificationType objectAtIndex:indexPath.row]];
+        
+         [[Mixpanel sharedInstance] track:@"NotificationsOpened" properties:@{@"ViewedNotificationName":str}];
+//        [mixpanel track:str];
+        
     if ([[notificationType objectAtIndex:indexPath.row] isEqualToString:@"newsfeed"] || [[notificationType objectAtIndex:indexPath.row] isEqualToString:@"share"] /*|| [[notificationType objectAtIndex:indexPath.row] isEqualToString:@"comment"] || [[notificationType objectAtIndex:indexPath.row] isEqualToString:@"star"]*/) //newsfeed
     {
         NewsfeedViewController *ObjNewsfeed = [[NewsfeedViewController alloc] initWithNibName:@"NewsfeedViewController" bundle:nil];

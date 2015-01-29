@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Mixpanel/Mixpanel.h"
 
 @interface NotificationsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 {

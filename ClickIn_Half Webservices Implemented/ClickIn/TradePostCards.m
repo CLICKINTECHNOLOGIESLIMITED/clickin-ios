@@ -508,14 +508,22 @@
         
         
     }
-    
 }
-
-
-
 
 -(void)categoryBtnPressed:(UIButton *)sender
 {
+    NSLog(@"ItemsContentHeading%@",categories);
+    NSDictionary *dict=[categories objectAtIndex:sender.tag-1];
+    NSString *strCat = [[dict objectForKey:@"Category"] objectForKey:@"name"];
+
+    if (strCat.length>0)
+    {
+        [[Mixpanel sharedInstance] track:@"RPageTradeButtonClicked" properties:@{
+                                                                                 @"CategorySelected": strCat
+                                                                                }];
+    }
+    
+    
     for(UIView *v in [self.view subviews])
     {
         if([v isKindOfClass:[UIScrollView class]])
@@ -620,6 +628,20 @@
 {
     PlayCardView *obj=[[PlayCardView alloc] init];
     obj.contentHeading = [[ItemsContentHeading objectAtIndex:selected_tabCount] objectAtIndex:sender.tag];
+    
+    NSString *str=[[ItemsContentHeading objectAtIndex:selected_tabCount] objectAtIndex:sender.tag];
+    NSLog(@"str is %@",str);
+    if (str.length>0)
+    {
+        Mixpanel *mixpanel=[Mixpanel sharedInstance];
+        [mixpanel track:@"RPageTradeButtonClicked" properties:@{
+                                                                @"Card Visited": str
+                                                                }];
+
+    }
+    
+    //[mixpanel.people increment:str by:[NSNumber numberWithInt:1]];
+    
     obj.content = [[ItemsContent objectAtIndex:selected_tabCount] objectAtIndex:sender.tag];
     obj.imageUrl = [[ImagesContent objectAtIndex:selected_tabCount] objectAtIndex:sender.tag];
     obj.ID = [[CardIDs objectAtIndex:selected_tabCount] objectAtIndex:sender.tag];

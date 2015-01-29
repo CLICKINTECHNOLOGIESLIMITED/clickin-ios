@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TKTintedKeyboardViewController.h"
 #import "ModelManager.h"
+#import "Mixpanel.h"
 
 @interface SearchContactsViewController : TKTintedKeyboardViewController<UIScrollViewAccessibilityDelegate,UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,QBActionStatusDelegate>
 {

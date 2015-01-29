@@ -36,7 +36,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    
+   
 //    SDImageCache *imageCache = [SDImageCache sharedImageCache];
 //    [imageCache clearMemory];
     //[self getuserrelations]; // get relations
@@ -347,14 +347,11 @@
     nonAcceptedUsersArray=[[NSMutableArray alloc] init];
     //get relations service
     //[self getuserrelations];
-    
-    
 }
 
 - (void)rightMenuToggled:(NSNotification *)notification //use notification method and logic
 {
     notification_text.text = @"0";
-    
     notification_text.textColor = [UIColor colorWithRed:(52.0/255.0) green:(63.0/255.0) blue:(96.0/255.0) alpha:1.0];
     
 }
@@ -778,6 +775,8 @@
                         }
                     }
                     
+                    Mixpanel *mixpanel=[Mixpanel sharedInstance];
+                    [mixpanel.people increment:@"RelationShipCount" by:[NSNumber numberWithInt:relationArray.count]];
                     //          relationArray=[jsonResponse objectForKey:@"relationships"];
                     [table reloadData];
                 }

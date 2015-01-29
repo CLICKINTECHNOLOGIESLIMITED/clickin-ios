@@ -1035,6 +1035,7 @@ AppDelegate *appDelegate;
     }
     else if (clk_Btn.tag == 2)
     {
+        
         [txt_PhoneNo resignFirstResponder];
         [txt_CountryCode resignFirstResponder];
         NSLog(@"Btn clicked: Send Invite");
@@ -1080,6 +1081,7 @@ AppDelegate *appDelegate;
     }
     else if (clk_Btn.tag == 5)
     {
+        
         NSLog(@"Btn clicked: Skip");
         
 //        UIViewController *addyourdetails = [story instantiateViewControllerWithIdentifier:@"AddYourDetails"];
