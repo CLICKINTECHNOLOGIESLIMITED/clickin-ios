@@ -361,20 +361,22 @@
         cardClicksTop.frame = CGRectMake(imgView.frame.origin.x+7 ,imgView.frame.origin.y-5 , 25, 25);
         cardClicksTop.numberOfLines=1;
         cardClicksTop.textAlignment=NSTextAlignmentCenter;
-        [cardClicksTop setFont:[UIFont fontWithName:@"AvenirNextLTPro-MediumCn" size:10]];
+        [cardClicksTop setFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:10]];
         [cardClicksTop setTextColor:[UIColor colorWithRed:254/255.0 green:254/255.0 blue:254/255.0 alpha:1]];
-        cardClicksTop.text = [message.customParameters[@"card_clicks"] uppercaseString];
+        cardClicksTop.text = [NSString stringWithFormat:@"%02d", [message.customParameters[@"card_clicks"] integerValue]];
         [lightGrayBGView addSubview:cardClicksTop];
         [lightGrayBGView bringSubviewToFront:cardClicksTop];
         
         
         UILabel *cardClicksBottom = [[UILabel alloc] init];
         cardClicksBottom.frame = CGRectMake(imgView.frame.origin.x+ imgView.frame.size.width - 48 ,imgView.frame.origin.y + imgView.frame.size.height - 20 , 25, 25);
+        if([message.customParameters[@"is_CustomCard"] isEqualToString:@"true"])
+            cardClicksBottom.frame = CGRectMake(imgView.frame.origin.x+ imgView.frame.size.width - 49 ,imgView.frame.origin.y + imgView.frame.size.height - 23 , 25, 25);
         cardClicksBottom.numberOfLines=1;
         cardClicksBottom.textAlignment=NSTextAlignmentRight;
-        [cardClicksBottom setFont:[UIFont fontWithName:@"AvenirNextLTPro-MediumCn" size:10]];
+        [cardClicksBottom setFont:[UIFont fontWithName:@"AvenirNextLTPro-BoldCn" size:10]];
         [cardClicksBottom setTextColor:[UIColor colorWithRed:254/255.0 green:254/255.0 blue:254/255.0 alpha:1]];
-        cardClicksBottom.text = [message.customParameters[@"card_clicks"] uppercaseString];
+        cardClicksBottom.text = [NSString stringWithFormat:@"%02d", [message.customParameters[@"card_clicks"] integerValue]];
         [lightGrayBGView addSubview:cardClicksBottom];
         [lightGrayBGView bringSubviewToFront:cardClicksBottom];
 

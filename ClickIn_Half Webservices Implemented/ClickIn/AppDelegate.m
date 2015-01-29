@@ -1228,24 +1228,26 @@
             version = [config valueForKey:@"version"];
         }
         
-        NSString *current_version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+        NSString *current_version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
         //Check your version with the version in app store
         if (![version isEqualToString:current_version])
         {
             NSArray *subVersions = [version componentsSeparatedByString:@"."];
             if(subVersions.count==2)
             {
-//                UIAlertView *createUserResponseAlert = [[UIAlertView alloc] initWithTitle:@"New Version!!" message: @"A new version of Clickin' is available to download" delegate:self cancelButtonTitle:nil otherButtonTitles: @"Download", nil];
-//                createUserResponseAlert.delegate = self;
-//                [createUserResponseAlert show];
-//                createUserResponseAlert = nil;
+                NSString *currentVersionValue = [current_version stringByReplacingOccurrencesOfString:@"." withString:@""];
                 
-                MODropAlertView *alertView = [[MODropAlertView alloc]initDropAlertWithTitle:@"New Version!!"
-                                                                                description:@"A new version of Clickin' is available to download"
-                                                                              okButtonTitle:@"Download"];
-                alertView.delegate = self;
-                [alertView show];
-                alertView = nil;
+                NSString *appStoreVersionValue = [version stringByReplacingOccurrencesOfString:@"." withString:@""];
+                
+                if([appStoreVersionValue integerValue] > [currentVersionValue integerValue])
+                {
+                    MODropAlertView *alertView = [[MODropAlertView alloc]initDropAlertWithTitle:@"New Version!!"
+                                                                                    description:@"A new version of Clickin' is available to download"
+                                                                                  okButtonTitle:@"Download"];
+                    alertView.delegate = self;
+                    [alertView show];
+                    alertView = nil;
+                }
             }
             subVersions = nil;
         }
